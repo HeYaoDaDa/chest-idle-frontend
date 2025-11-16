@@ -45,7 +45,7 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={closeModal}>
-          <div class="p-6 bg-white rounded-lg shadow-xl w-full max-w-2xl">
+          <div class="flex flex-col gap-3 min-w-[min(420px,100%)]">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-bold text-gray-900">{t('ui.consumable.selectTitle')}</h3>
             </div>
@@ -61,7 +61,7 @@ export default defineComponent({
                     return (
                       <div
                         key={item.id}
-                        class="w-16 h-16 rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex flex-col justify-center items-center p-1 relative"
+                        class="w-16 h-16 rounded bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-blue-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex flex-col justify-center items-center p-1 relative"
                         onClick={() => handleSelectConsumable(item.id)}
                       >
                         <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
