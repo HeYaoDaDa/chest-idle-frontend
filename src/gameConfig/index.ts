@@ -1,3 +1,5 @@
+import { toFixed } from '@/utils/fixedPoint'
+
 import type {
   SkillConfig,
   SlotConfig,
@@ -5,6 +7,12 @@ import type {
   ItemConfig,
   ActionConfig,
   GameConfig,
+  StatConfigInternal,
+  ItemConfigInternal,
+  ActionConfigInternal,
+  DerivedValueConfig,
+  ModifierConfig,
+  DerivedValueConfigInternal,
 } from './type'
 export type {
   SkillConfig,
@@ -20,13 +28,19 @@ export type {
   SkillLevelModifierConfig,
   ModifierConfig,
   DerivedValueConfig,
+  StatConfigInternal,
+  ItemConfigInternal,
+  ActionConfigInternal,
+  DerivedValueConfigInternal,
+  EffectConfigInternal,
+  ModifierConfigInternal,
 } from './type'
 
 export const skillConfigMap: Record<string, SkillConfig> = Object.create(null)
 export const slotConfigMap: Record<string, SlotConfig> = Object.create(null)
-export const statConfigMap: Record<string, StatConfig> = Object.create(null)
-export const itemConfigMap: Record<string, ItemConfig> = Object.create(null)
-export const actionConfigMap: Record<string, ActionConfig> = Object.create(null)
+export const statConfigMap: Record<string, StatConfigInternal> = Object.create(null)
+export const itemConfigMap: Record<string, ItemConfigInternal> = Object.create(null)
+export const actionConfigMap: Record<string, ActionConfigInternal> = Object.create(null)
 
 export const skillConfigs: SkillConfig[] = []
 export const slotConfigs: SlotConfig[] = []
@@ -36,6 +50,29 @@ export const chestConfigs: ItemConfig[] = []
 export const equipmentConfigs: ItemConfig[] = []
 export const consumableConfigs: ItemConfig[] = []
 export const actionConfigListBySkill: Record<string, ActionConfig[]> = Object.create(null)
+
+/**
+ * 将 DerivedValueConfig 转换为 DerivedValueConfigInternal
+ */
+function convertDerivedValue(config: DerivedValueConfig): DerivedValueConfigInternal {
+  const result: DerivedValueConfigInternal = {
+    baseValue: toFixed(config.baseValue),
+  }
+
+  if (config.modifiers) {
+    result.modifiers = config.modifiers.map((modifier: ModifierConfig) => {
+      if (modifier.modifierType === 'skillLevel') {
+        return {
+          ...modifier,
+          perLevelValue: toFixed(modifier.perLevelValue),
+        }
+      }
+      return modifier
+    })
+  }
+
+  return result
+}
 
 export function loadGameConfig() {
   const modules = import.meta.glob('/src/data/**/*.json', {
@@ -54,12 +91,53 @@ export function loadGameConfig() {
         slotConfigs.push(config as SlotConfig)
         break
       case 'stat':
-        statConfigMap[config.id] = config as StatConfig
+        const statInternal: StatConfigInternal = {
+          ...config,
+          base: config.base !== undefined ? toFixed(config.base) : undefined,
+        } as StatConfigInternal
+        statConfigMap[config.id] = statInternal
         statConfigs.push(config as StatConfig)
         break
       case 'item':
         const item = config as ItemConfig
-        itemConfigMap[config.id] = item
+        const itemInternal: ItemConfigInternal = {
+          ...item,
+        } as ItemConfigInternal
+
+        // 转换箱子配置
+        if (item.chest) {
+          itemInternal.chest = {
+            maxPoints: toFixed(item.chest.maxPoints),
+            loots: item.chest.loots,
+          }
+        }
+
+        // 转换装备配置
+        if (item.equipment) {
+          itemInternal.equipment = {
+            slotId: item.equipment.slotId,
+            effects: item.equipment.effects.map((effect) => ({
+              statId: effect.statId,
+              type: effect.type,
+              value: toFixed(effect.value),
+            })),
+          }
+        }
+
+        // 转换消耗品配置
+        if (item.consumable) {
+          itemInternal.consumable = {
+            duration: toFixed(item.consumable.duration),
+            consumableType: item.consumable.consumableType,
+            effects: item.consumable.effects.map((effect) => ({
+              statId: effect.statId,
+              type: effect.type,
+              value: toFixed(effect.value),
+            })),
+          }
+        }
+
+        itemConfigMap[config.id] = itemInternal
         if (item.category === 'resource') {
           resourceConfigs.push(item)
         } else if (item.category === 'chest') {
@@ -71,7 +149,13 @@ export function loadGameConfig() {
         }
         break
       case 'action':
-        actionConfigMap[config.id] = config as ActionConfig
+        const actionInternal: ActionConfigInternal = {
+          ...config,
+          duration: convertDerivedValue(config.duration),
+          xp: convertDerivedValue(config.xp),
+          chestPoints: convertDerivedValue(config.chestPoints),
+        } as ActionConfigInternal
+        actionConfigMap[config.id] = actionInternal
         actionConfigListBySkill[config.skillId] = actionConfigListBySkill[config.skillId] || []
         actionConfigListBySkill[config.skillId].push(config as ActionConfig)
         break

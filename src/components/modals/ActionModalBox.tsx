@@ -8,6 +8,7 @@ import { useActionQueueStore } from '@/stores/actionQueue'
 import { useInventoryStore } from '@/stores/inventory'
 import { useSkillStore } from '@/stores/skill'
 import { INFINITE_AMOUNT } from '@/utils/constants'
+import { fromFixed, toFixed } from '@/utils/fixedPoint'
 import { formatDurationMs, formatNumber } from '@/utils/format'
 
 export default defineComponent({
@@ -52,10 +53,12 @@ export default defineComponent({
 
     const allowAmount = computed(() => isIntegerOrInfinity(amountString.value))
     const durationDisplay = computed(() =>
-      formatDurationMs(action.value?.duration ?? 0, locale.value, { maxFractionDigits: 3 }),
+      formatDurationMs(fromFixed(action.value?.duration ?? toFixed(0)), locale.value, {
+        maxFractionDigits: 3,
+      }),
     )
-    const xpPerCycle = computed(() => action.value?.xp ?? 0)
-    const chestPointsPerCycle = computed(() => action.value?.chestPoints ?? 0)
+    const xpPerCycle = computed(() => fromFixed(action.value?.xp ?? toFixed(0)))
+    const chestPointsPerCycle = computed(() => fromFixed(action.value?.chestPoints ?? toFixed(0)))
     const hasIngredients = computed(() => (action.value?.ingredients.length ?? 0) > 0)
     const hasProducts = computed(() => (action.value?.products.length ?? 0) > 0)
     const hasCurrentAction = computed(() => !!actionQueueStore.currentAction)

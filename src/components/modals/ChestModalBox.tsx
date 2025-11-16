@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import ModalBox from '@/components/ModalBox'
 import { itemConfigMap } from '@/gameConfig'
 import { useChestPointStore } from '@/stores/chestPoint'
+import { fromFixed, toFixed } from '@/utils/fixedPoint'
 import { formatNumber, formatPercent } from '@/utils/format'
 
 export default defineComponent({
@@ -23,7 +24,7 @@ export default defineComponent({
     })
 
     const chestPoints = computed(() => {
-      if (!chest.value) return 0
+      if (!chest.value) return toFixed(0)
       return chestPointStore.getChestPoints(chest.value.id)
     })
 
@@ -33,7 +34,7 @@ export default defineComponent({
     })
 
     const chestRemaining = computed(() => {
-      if (!chest.value) return 0
+      if (!chest.value) return toFixed(0)
       return chestPointStore.getChestRemaining(chest.value.id)
     })
 
@@ -72,8 +73,12 @@ export default defineComponent({
               <div class="flex justify-between items-center py-1">
                 <span class="text-sm font-medium text-gray-700">{t('ui.currentProgress')}</span>
                 <span class="text-sm text-gray-900">
-                  {formatNumber(chestPoints.value, locale.value, 3)} /{' '}
-                  {formatNumber(chest.value?.chest?.maxPoints || 0, locale.value, 3)}
+                  {formatNumber(fromFixed(chestPoints.value), locale.value, 3)} /{' '}
+                  {formatNumber(
+                    fromFixed(chest.value?.chest?.maxPoints || toFixed(0)),
+                    locale.value,
+                    3,
+                  )}
                 </span>
               </div>
               <div class="flex justify-between items-center py-1">
@@ -85,7 +90,7 @@ export default defineComponent({
               <div class="flex justify-between items-center py-1">
                 <span class="text-sm font-medium text-gray-700">{t('ui.remainingPoints')}</span>
                 <span class="text-sm text-gray-900">
-                  {formatNumber(chestRemaining.value, locale.value, 3)}
+                  {formatNumber(fromFixed(chestRemaining.value), locale.value, 3)}
                 </span>
               </div>
 

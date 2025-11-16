@@ -2,13 +2,14 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { itemConfigMap } from '@/gameConfig'
+import { type FixedPoint, toFixed, fromFixed, fpAdd, fpSub, fpMul, fpDiv } from '@/utils/fixedPoint'
 
 import { useInventoryStore } from './inventory'
 import { useStatStore } from './stat'
 
 interface ConsumableSlot {
   itemId: string | null
-  remaining: number // 剩余时间（毫秒）
+  remaining: FixedPoint // 剩余时间（毫秒）
 }
 
 const SLOT_COUNT = 3 // 每个技能固定3个槽位
@@ -27,7 +28,7 @@ export const useConsumableStore = defineStore('consumable', () => {
     if (!slotMap.value[skillId]) {
       slotMap.value[skillId] = Array.from({ length: SLOT_COUNT }, () => ({
         itemId: null,
-        remaining: 0,
+        remaining: toFixed(0),
       }))
     }
     return slotMap.value[skillId]
@@ -36,10 +37,10 @@ export const useConsumableStore = defineStore('consumable', () => {
   /**
    * 获取某个 source 的总可用时间
    */
-  function getTotalAvailableMsForSource(sourceId: string): number {
+  function getTotalAvailableMsForSource(sourceId: string): FixedPoint {
     // sourceId 格式: "consumable:skillId:slotIndex"
     const parts = sourceId.split(':')
-    if (parts.length !== 3 || parts[0] !== 'consumable') return 0
+    if (parts.length !== 3 || parts[0] !== 'consumable') return toFixed(0)
 
     const skillId = parts[1]
     const slotIndex = parseInt(parts[2])
@@ -47,40 +48,43 @@ export const useConsumableStore = defineStore('consumable', () => {
     const slots = getSlots(skillId)
     const slot = slots[slotIndex]
 
-    if (!slot || !slot.itemId) return 0
+    if (!slot || !slot.itemId) return toFixed(0)
 
     const item = itemConfigMap[slot.itemId]
-    if (!item.consumable) return 0
+    if (!item.consumable) return toFixed(0)
 
     const inventoryCount = inventoryStore.inventoryMap[slot.itemId] ?? 0
-    return slot.remaining + inventoryCount * item.consumable.duration
+    return fpAdd(slot.remaining, fpMul(toFixed(inventoryCount), item.consumable.duration))
   }
 
   /**
    * 估算在消耗品限制下能执行的最大行动次数
    */
-  function estimateBuffedCounts(skillId: string, actionDuration: number): number {
+  function estimateBuffedCounts(skillId: string, actionDuration: FixedPoint): number {
     const slots = getSlots(skillId)
     let minCount = Infinity
 
     for (let i = 0; i < slots.length; i++) {
       const slot = slots[i]
+      // 槽位为空，跳过（不限制）
       if (!slot.itemId) continue
 
       const totalAvailable = getTotalAvailableMsForSource(`consumable:${skillId}:${i}`)
+      // 时间不足，跳过（buff不生效，不限制）
       if (totalAvailable < actionDuration) continue
 
-      const count = Math.floor(totalAvailable / actionDuration)
+      const count = Math.floor(fromFixed(fpDiv(totalAvailable, actionDuration)))
       minCount = Math.min(minCount, count)
     }
 
-    return minCount
+    // 如果所有槽位都被跳过了，返回 Infinity（不限制）
+    return minCount === Infinity ? Infinity : minCount
   }
 
   /**
    * 消耗 buffs，返回需要从库存扣除的物品列表
    */
-  function consumeBuffs(skillId: string, consumedDuration: number): [string, number][] {
+  function consumeBuffs(skillId: string, consumedDuration: FixedPoint): [string, number][] {
     const itemsToRemove: [string, number][] = []
     const slots = getSlots(skillId)
 
@@ -96,11 +100,15 @@ export const useConsumableStore = defineStore('consumable', () => {
 
       // 计算需要消耗多少瓶
       const usedBottles = Math.ceil(
-        Math.max(0, consumedDuration - slot.remaining) / item.consumable.duration,
+        Math.max(0, fromFixed(fpSub(consumedDuration, slot.remaining))) /
+          fromFixed(item.consumable.duration),
       )
 
       // 更新剩余时间
-      slot.remaining = slot.remaining + usedBottles * item.consumable.duration - consumedDuration
+      slot.remaining = fpSub(
+        fpAdd(slot.remaining, fpMul(toFixed(usedBottles), item.consumable.duration)),
+        consumedDuration,
+      )
 
       // 记录需要扣除的库存
       if (usedBottles > 0) {
@@ -111,7 +119,7 @@ export const useConsumableStore = defineStore('consumable', () => {
       if (slot.remaining <= 0) {
         statStore.removeEffectsFromSource(`consumable:${skillId}:${i}`)
         slot.itemId = null
-        slot.remaining = 0
+        slot.remaining = toFixed(0)
       }
     }
 
@@ -153,7 +161,7 @@ export const useConsumableStore = defineStore('consumable', () => {
             // 自动卸载冲突的消耗品
             statStore.removeEffectsFromSource(`consumable:${skillId}:${i}`)
             otherSlot.itemId = null
-            otherSlot.remaining = 0
+            otherSlot.remaining = toFixed(0)
           }
         }
       }
@@ -165,7 +173,7 @@ export const useConsumableStore = defineStore('consumable', () => {
     if (slot.itemId && slot.itemId !== itemId) {
       statStore.removeEffectsFromSource(`consumable:${skillId}:${slotIndex}`)
       slot.itemId = null
-      slot.remaining = 0
+      slot.remaining = toFixed(0)
     }
 
     // 解析模板 statId 并添加效果
@@ -179,7 +187,7 @@ export const useConsumableStore = defineStore('consumable', () => {
 
     // 设置槽位 - 装备时不扣库存，只清空剩余时间
     slot.itemId = itemId
-    slot.remaining = 0
+    slot.remaining = toFixed(0)
 
     return true
   }
@@ -195,7 +203,7 @@ export const useConsumableStore = defineStore('consumable', () => {
     if (slot.itemId) {
       statStore.removeEffectsFromSource(`consumable:${skillId}:${slotIndex}`)
       slot.itemId = null
-      slot.remaining = 0
+      slot.remaining = toFixed(0)
     }
   }
 

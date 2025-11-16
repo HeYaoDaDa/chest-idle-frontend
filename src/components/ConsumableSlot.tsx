@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n'
 
 import { itemConfigMap } from '@/gameConfig'
 import { useConsumableStore } from '@/stores/consumable'
+import { fromFixed } from '@/utils/fixedPoint'
 import { formatDurationMs } from '@/utils/format'
 
 export default defineComponent({
@@ -22,7 +23,9 @@ export default defineComponent({
 
     const remainingTime = computed(() => {
       if (slot.value?.remaining && slot.value.remaining > 0) {
-        return formatDurationMs(slot.value.remaining, locale.value, { maxFractionDigits: 0 })
+        return formatDurationMs(fromFixed(slot.value.remaining), locale.value, {
+          maxFractionDigits: 0,
+        })
       }
       return ''
     })

@@ -3,22 +3,23 @@ import { computed, ref } from 'vue'
 
 import {
   statConfigMap,
-  type DerivedValueConfig,
+  type DerivedValueConfigInternal,
   type EffectType,
-  type ModifierConfig,
+  type ModifierConfigInternal,
 } from '@/gameConfig'
+import { type FixedPoint, toFixed, fpAdd, fpMul, fpDiv } from '@/utils/fixedPoint'
 
 import { useConsumableStore } from './consumable'
 
 interface Effect {
   statId: string
   type: EffectType
-  value: number
+  value: FixedPoint
 }
 
 interface Modifier {
   type: EffectType
-  value: number
+  value: FixedPoint
   availableMs: number
 }
 
@@ -27,8 +28,8 @@ interface Stat {
   sort: number
   name: string
   description: string
-  base: number
-  value: number
+  base: FixedPoint
+  value: FixedPoint
   modifiers: Modifier[]
 }
 export const useStatStore = defineStore('stat', () => {
@@ -84,36 +85,40 @@ export const useStatStore = defineStore('stat', () => {
     const value = getStatValue(statId)
     return {
       ...statConfig,
-      base: statConfig.base ?? 0,
+      base: statConfig.base ?? toFixed(0),
       value,
       modifiers,
     }
   }
 
-  function getStatValue(statId: string, duration: number = 0): number {
+  function getStatValue(statId: string, duration: number = 0): FixedPoint {
     const statConfig = statConfigMap[statId]
-    if (!statConfig) return 0
+    if (!statConfig) return toFixed(0)
     const modifiers = getModifiersByStatId(statId).filter(
       (modifier) => modifier.availableMs >= duration,
     )
-    let sumAdd = 0
-    let sumPercent = 0
-    let sumDivisor = 0
+    let sumAdd = toFixed(0)
+    let sumPercent = toFixed(0)
+    let sumDivisor = toFixed(0)
 
     for (const { type, value } of modifiers) {
       switch (type) {
         case 'flat':
-          sumAdd += value
+          sumAdd = fpAdd(sumAdd, value)
           break
         case 'percentage':
-          sumPercent += value
+          sumPercent = fpAdd(sumPercent, value)
           break
         case 'inversePercentage':
-          sumDivisor += value
+          sumDivisor = fpAdd(sumDivisor, value)
           break
       }
     }
-    return (((statConfig.base ?? 0) + sumAdd) * (1 + sumPercent)) / (1 + sumDivisor)
+    const base = statConfig.base ?? toFixed(0)
+    return fpDiv(
+      fpMul(fpAdd(base, sumAdd), fpAdd(toFixed(1), sumPercent)),
+      fpAdd(toFixed(1), sumDivisor),
+    )
   }
 
   function getDerivedStatValue(
@@ -121,24 +126,24 @@ export const useStatStore = defineStore('stat', () => {
       statId: string
       type: EffectType
     }[],
-    baseValue: number = 0,
+    baseValue: FixedPoint = toFixed(0),
     ...extendModifiers: Modifier[]
-  ): number {
-    let sumAdd = 0
-    let sumPercent = 0
-    let sumDivisor = 0
+  ): FixedPoint {
+    let sumAdd = toFixed(0)
+    let sumPercent = toFixed(0)
+    let sumDivisor = toFixed(0)
 
     for (const { statId, type } of derivedStatConfigs) {
       const statValue = getStatValue(statId)
       switch (type) {
         case 'flat':
-          sumAdd += statValue
+          sumAdd = fpAdd(sumAdd, statValue)
           break
         case 'percentage':
-          sumPercent += statValue
+          sumPercent = fpAdd(sumPercent, statValue)
           break
         case 'inversePercentage':
-          sumDivisor += statValue
+          sumDivisor = fpAdd(sumDivisor, statValue)
           break
       }
     }
@@ -146,34 +151,37 @@ export const useStatStore = defineStore('stat', () => {
     for (const { type, value } of extendModifiers) {
       switch (type) {
         case 'flat':
-          sumAdd += value
+          sumAdd = fpAdd(sumAdd, value)
           break
         case 'percentage':
-          sumPercent += value
+          sumPercent = fpAdd(sumPercent, value)
           break
         case 'inversePercentage':
-          sumDivisor += value
+          sumDivisor = fpAdd(sumDivisor, value)
           break
       }
     }
 
-    return ((baseValue + sumAdd) * (1 + sumPercent)) / (1 + sumDivisor)
+    return fpDiv(
+      fpMul(fpAdd(baseValue, sumAdd), fpAdd(toFixed(1), sumPercent)),
+      fpAdd(toFixed(1), sumDivisor),
+    )
   }
 
   function calculateDerivedValue(
-    config: DerivedValueConfig,
+    config: DerivedValueConfigInternal,
     duration: number | 'self' = 0,
-    resolveModifierValue?: (modifier: ModifierConfig) => number | undefined,
-  ): number {
+    resolveModifierValue?: (modifier: ModifierConfigInternal) => FixedPoint | undefined,
+  ): FixedPoint {
     // 处理 'self' 模式：迭代计算直到收敛
     if (duration === 'self') {
-      let prevValue = 0 // 从 0 开始，假设所有效果都可用
+      let prevValue = toFixed(0) // 从 0 开始，假设所有效果都可用
       let iterations = 0
       const maxIterations = 10 // 防止无限循环
 
       while (iterations < maxIterations) {
         const currentValue = calculateWithDuration(config, prevValue, resolveModifierValue)
-        if (Math.abs(currentValue - prevValue) < 0.001) {
+        if (Math.abs(currentValue - prevValue) < 1) {
           return currentValue
         }
         prevValue = currentValue
@@ -182,34 +190,34 @@ export const useStatStore = defineStore('stat', () => {
       return prevValue
     }
 
-    return calculateWithDuration(config, duration as number, resolveModifierValue)
+    return calculateWithDuration(config, toFixed(duration as number), resolveModifierValue)
   }
 
   function calculateWithDuration(
-    config: DerivedValueConfig,
-    duration: number,
-    resolveModifierValue?: (modifier: ModifierConfig) => number | undefined,
-  ): number {
+    config: DerivedValueConfigInternal,
+    duration: FixedPoint,
+    resolveModifierValue?: (modifier: ModifierConfigInternal) => FixedPoint | undefined,
+  ): FixedPoint {
     const modifiers = config.modifiers ?? []
 
     if (modifiers.length === 0) {
       return config.baseValue
     }
 
-    let sumAdd = 0
-    let sumPercent = 0
-    let sumDivisor = 0
+    let sumAdd = toFixed(0)
+    let sumPercent = toFixed(0)
+    let sumDivisor = toFixed(0)
 
-    const applyModifier = (type: EffectType, value: number) => {
+    const applyModifier = (type: EffectType, value: FixedPoint) => {
       switch (type) {
         case 'flat':
-          sumAdd += value
+          sumAdd = fpAdd(sumAdd, value)
           break
         case 'percentage':
-          sumPercent += value
+          sumPercent = fpAdd(sumPercent, value)
           break
         case 'inversePercentage':
-          sumDivisor += value
+          sumDivisor = fpAdd(sumDivisor, value)
           break
       }
     }
@@ -228,7 +236,10 @@ export const useStatStore = defineStore('stat', () => {
       }
     }
 
-    return ((config.baseValue + sumAdd) * (1 + sumPercent)) / (1 + sumDivisor)
+    return fpDiv(
+      fpMul(fpAdd(config.baseValue, sumAdd), fpAdd(toFixed(1), sumPercent)),
+      fpAdd(toFixed(1), sumDivisor),
+    )
   }
 
   return {

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 import i18n from '@/i18n'
 import { isInfiniteAmount, toFiniteForCompute, fromComputeResult } from '@/utils/amount'
+import { toFixed, fromFixed, fpMul, fpDiv, fpLt, fpFloor } from '@/utils/fixedPoint'
 
 import { useActionQueueStore } from './actionQueue'
 import { useChestPointStore } from './chestPoint'
@@ -34,14 +35,10 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     }
 
     if (actionQueueStore.actionStartDate && actionQueueStore.currentActionDetail) {
-      const elapsed = performance.now() - actionQueueStore.actionStartDate
+      const elapsed = toFixed(performance.now() - actionQueueStore.actionStartDate)
+      const duration = actionQueueStore.currentActionDetail.duration
       actionQueueStore.progress =
-        Math.min(
-          actionQueueStore.currentActionDetail.duration > 0
-            ? elapsed / actionQueueStore.currentActionDetail.duration
-            : 0,
-          1,
-        ) * 100
+        Math.min(duration > 0 ? fromFixed(fpDiv(elapsed, duration)) : 0, 1) * 100
     } else {
       actionQueueStore.progress = 0
     }
@@ -56,27 +53,39 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     const action = actionQueueStore.currentActionDetail
     const skill = skillStore.getSkill(action.skillId)
 
-    if (elapsed < action.duration) {
+    const elapsedFixed = toFixed(elapsed)
+
+    if (fpLt(elapsedFixed, action.duration)) {
       return 0
     } else {
       let computedAmount = toFiniteForCompute(amount)
-      computedAmount = Math.min(computedAmount, Math.floor(elapsed / action.duration))
+
+      // 计算基于时间可以执行的次数
+      const timeBasedAmount = Math.floor(fromFixed(fpFloor(fpDiv(elapsedFixed, action.duration))))
+      computedAmount = Math.min(computedAmount, timeBasedAmount)
+
+      let xpBasedAmount = Infinity
       if (skill) {
-        computedAmount = Math.min(
-          computedAmount,
-          Math.ceil(skill.remainingXpForUpgrade / action.xp),
-        )
+        xpBasedAmount = Math.ceil(fromFixed(fpDiv(skill.remainingXpForUpgrade, action.xp)))
+        computedAmount = Math.min(computedAmount, xpBasedAmount)
       }
 
       // 用消耗品限制行动次数
-      computedAmount = Math.min(
-        computedAmount,
-        consumableStore.estimateBuffedCounts(action.skillId, action.duration),
-      )
+      const buffBasedAmount = consumableStore.estimateBuffedCounts(action.skillId, action.duration)
+      computedAmount = Math.min(computedAmount, buffBasedAmount)
+
+      // 确保是正整数
+      computedAmount = Math.max(0, Math.floor(computedAmount))
+
+      // 如果计算出的次数为 0，说明无法执行，移除当前行动
+      if (computedAmount === 0) {
+        actionQueueStore.removeAction(0)
+        return 0
+      }
 
       computeAction(action, computedAmount)
 
-      const computedElapsedTime = action.duration * computedAmount
+      const computedElapsedTime = fromFixed(fpMul(action.duration, toFixed(computedAmount)))
 
       const remainedElapsed = elapsed - computedElapsedTime
 
@@ -99,7 +108,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     // 收集消耗品消耗
     const consumableItems = consumableStore.consumeBuffs(
       action.skillId,
-      action.duration * computedAmount,
+      fpMul(action.duration, toFixed(computedAmount)),
     )
     itemsToRemove.push(...consumableItems)
 
@@ -108,11 +117,11 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       inventoryStore.removeManyItems(itemsToRemove)
     }
 
-    skillStore.addSkillXp(action.skillId, action.xp * computedAmount)
+    skillStore.addSkillXp(action.skillId, fpMul(action.xp, toFixed(computedAmount)))
 
     const chestCount = chestPointStore.addChestPoints(
       action.chestId,
-      action.chestPoints * computedAmount,
+      fpMul(action.chestPoints, toFixed(computedAmount)),
     )
 
     const rewards: [string, number][] = []

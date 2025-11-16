@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n'
 
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { isInfiniteAmount } from '@/utils/amount'
+import { fromFixed } from '@/utils/fixedPoint'
 import { formatDurationMs } from '@/utils/format'
 
 import { ActionQueueModal } from './modals'
@@ -26,9 +27,13 @@ export default defineComponent({
 
     const runningActionDurationDisplay = computed(() => {
       if (!actionQueueStore.currentActionDetail) return ''
-      return formatDurationMs(actionQueueStore.currentActionDetail.duration, locale.value, {
-        maxFractionDigits: 3,
-      })
+      return formatDurationMs(
+        fromFixed(actionQueueStore.currentActionDetail.duration),
+        locale.value,
+        {
+          maxFractionDigits: 3,
+        },
+      )
     })
 
     const hasQueuedActions = computed(() => actionQueueStore.pendingActions.length > 0)

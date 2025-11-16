@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 
 import { skillConfigMap, skillConfigs } from '@/gameConfig'
 import i18n from '@/i18n'
+import { type FixedPoint, toFixed, fpAdd, fpSub, fpMax } from '@/utils/fixedPoint'
 
 import { useNotificationStore } from './notification'
 
@@ -11,46 +12,46 @@ export interface Skill {
   name: string
   description: string
   sort: number
-  xp: number
+  xp: FixedPoint
   level: number
-  remainingXpForUpgrade: number
+  remainingXpForUpgrade: FixedPoint
   upgradeProgress: number
 }
 
 export const useSkillStore = defineStore('skill', () => {
   const notificationStore = useNotificationStore()
 
-  const skillXpMap = ref<Record<string, number>>(Object.create(null))
+  const skillXpMap = ref<Record<string, FixedPoint>>(Object.create(null))
 
-  function getSkillXp(skillId: string): number {
-    return skillXpMap.value[skillId] ?? 0
+  function getSkillXp(skillId: string): FixedPoint {
+    return skillXpMap.value[skillId] ?? toFixed(0)
   }
 
   function getSkillLevel(skillId: string): number {
     return getLevelFromXp(getSkillXp(skillId))
   }
 
-  function getRemainingXpForUpgrade(skillId: string): number {
+  function getRemainingXpForUpgrade(skillId: string): FixedPoint {
     const currentXp = getSkillXp(skillId)
     const currentLevel = getLevelFromXp(currentXp)
-    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? Infinity
-    return Math.max(0, nextLevelXp - currentXp)
+    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? (Infinity as any as FixedPoint)
+    return fpMax(toFixed(0), fpSub(nextLevelXp, currentXp))
   }
 
   function getUpgradeProgress(skillId: string): number {
     const currentXp = getSkillXp(skillId)
     const currentLevel = getLevelFromXp(currentXp)
-    const currentLevelXp = XP_TABLE[currentLevel] ?? 0
-    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? Infinity
+    const currentLevelXp = XP_TABLE[currentLevel] ?? toFixed(0)
+    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? (Infinity as any as FixedPoint)
 
-    if (nextLevelXp === Infinity) return 1
+    if (nextLevelXp === (Infinity as any)) return 1
 
     return (currentXp - currentLevelXp) / (nextLevelXp - currentLevelXp)
   }
 
-  function addSkillXp(skillId: string, xp: number): void {
+  function addSkillXp(skillId: string, xp: FixedPoint): void {
     const previousLevel = getLevelFromXp(getSkillXp(skillId))
-    const newXp = getSkillXp(skillId) + xp
+    const newXp = fpAdd(getSkillXp(skillId), xp)
     skillXpMap.value[skillId] = newXp
     const currentLevel = getLevelFromXp(newXp)
 
@@ -96,7 +97,7 @@ export const useSkillStore = defineStore('skill', () => {
   }
 })
 
-function getLevelFromXp(xp: number): number {
+function getLevelFromXp(xp: FixedPoint): number {
   let left = 0
   let right = XP_TABLE.length - 1
   let result = 0
@@ -112,7 +113,7 @@ function getLevelFromXp(xp: number): number {
   return result
 }
 
-const XP_TABLE = [
+const XP_TABLE: readonly FixedPoint[] = [
   0, 33, 76, 132, 202, 286, 386, 503, 637, 791, 964, 1159, 1377, 1620, 1891, 2192, 2525, 2893, 3300,
   3750, 4247, 4795, 5400, 6068, 6805, 7618, 8517, 9508, 10604, 11814, 13151, 14629, 16262, 18068,
   20064, 22271, 24712, 27411, 30396, 33697, 37346, 41381, 45842, 50773, 56222, 62243, 68895, 76242,
@@ -133,4 +134,4 @@ const XP_TABLE = [
   18942428633, 20611406335, 22424231139, 24393069640, 26531098945, 28852589138, 31372992363,
   34109039054, 37078841860, 40302007875, 43799759843, 47595067021, 51712786465, 56179815564,
   61025256696, 66280594953, 71979889960, 78159982881, 84860719814, 92125192822, 100000000000,
-]
+].map(toFixed)

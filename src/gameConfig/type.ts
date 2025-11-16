@@ -114,3 +114,77 @@ interface LootEntryConfig {
   min: number
   max: number
 }
+
+// ==================== 内部类型（使用定点数） ====================
+
+import type { FixedPoint } from '@/utils/fixedPoint'
+
+/**
+ * 派生值配置（内部使用定点数）
+ */
+export interface DerivedValueConfigInternal {
+  baseValue: FixedPoint
+  modifiers?: ModifierConfigInternal[]
+}
+
+/**
+ * 修饰符配置（内部使用定点数）
+ */
+export type ModifierConfigInternal = StatModifierConfigInternal | SkillLevelModifierConfigInternal
+
+export interface StatModifierConfigInternal {
+  modifierType: 'stat'
+  statId: string
+  type: EffectType
+}
+
+export interface SkillLevelModifierConfigInternal {
+  modifierType: 'skillLevel'
+  type: EffectType
+  perLevelValue: FixedPoint
+}
+
+/**
+ * 效果配置（内部使用定点数）
+ */
+export interface EffectConfigInternal {
+  statId: string
+  type: EffectType
+  value: FixedPoint
+}
+
+/**
+ * 属性配置（内部使用定点数）
+ */
+export interface StatConfigInternal extends Omit<StatConfig, 'base'> {
+  base?: FixedPoint
+}
+
+/**
+ * 行动配置（内部使用定点数）
+ */
+export interface ActionConfigInternal
+  extends Omit<ActionConfig, 'duration' | 'xp' | 'chestPoints'> {
+  duration: DerivedValueConfigInternal
+  xp: DerivedValueConfigInternal
+  chestPoints: DerivedValueConfigInternal
+}
+
+/**
+ * 物品配置（内部使用定点数）
+ */
+export interface ItemConfigInternal extends Omit<ItemConfig, 'chest' | 'equipment' | 'consumable'> {
+  chest?: {
+    maxPoints: FixedPoint
+    loots: LootEntryConfig[]
+  }
+  equipment?: {
+    slotId: string
+    effects: EffectConfigInternal[]
+  }
+  consumable?: {
+    duration: FixedPoint
+    consumableType: string
+    effects: EffectConfigInternal[]
+  }
+}

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
-import { actionConfigMap, type ModifierConfig } from '@/gameConfig'
+import { actionConfigMap, type ModifierConfigInternal } from '@/gameConfig'
+import { type FixedPoint, toFixed, fpMul } from '@/utils/fixedPoint'
 
 import { useSkillStore } from './skill'
 import { useStatStore } from './stat'
@@ -17,9 +18,9 @@ export interface Action {
   ingredients: { itemId: string; count: number }[]
   products: { itemId: string; count: number }[]
 
-  duration: number
-  xp: number
-  chestPoints: number
+  duration: FixedPoint
+  xp: FixedPoint
+  chestPoints: FixedPoint
 }
 
 export const useActionStore = defineStore('action', () => {
@@ -33,10 +34,10 @@ export const useActionStore = defineStore('action', () => {
     }
 
     // Resolver function to handle skillLevel modifiers
-    const resolveModifier = (modifier: ModifierConfig) => {
+    const resolveModifier = (modifier: ModifierConfigInternal): FixedPoint | undefined => {
       if (modifier.modifierType === 'skillLevel') {
         const currentLevel = skillStore.getSkillLevel(actionConfig.skillId)
-        return (currentLevel - actionConfig.minLevel) * modifier.perLevelValue
+        return fpMul(toFixed(currentLevel - actionConfig.minLevel), modifier.perLevelValue)
       }
       return undefined // Let stat.ts handle stat modifiers
     }
@@ -44,9 +45,10 @@ export const useActionStore = defineStore('action', () => {
     const speedMultiplier = import.meta.env.DEV ? 0.01 : 1
 
     // 先计算 duration（使用 'self' 模式）
-    const duration =
-      statStore.calculateDerivedValue(actionConfig.duration, 'self', resolveModifier) *
-      speedMultiplier
+    const duration = fpMul(
+      statStore.calculateDerivedValue(actionConfig.duration, 'self', resolveModifier),
+      toFixed(speedMultiplier),
+    )
 
     return {
       ...actionConfig,

@@ -12,6 +12,7 @@ import {
 } from '@/gameConfig'
 import { useConsumableStore } from '@/stores/consumable'
 import { useSkillStore } from '@/stores/skill'
+import { fromFixed } from '@/utils/fixedPoint'
 import { formatNumber } from '@/utils/format'
 
 export default defineComponent({
@@ -111,13 +112,13 @@ export default defineComponent({
               <div class="flex flex-col">
                 <span class="text-xs text-gray-500 uppercase">{t('ui.xp')}</span>
                 <span class="text-base font-semibold text-gray-900">
-                  {formatNumber(skill.value.xp, locale.value)}
+                  {formatNumber(fromFixed(skill.value.xp), locale.value)}
                 </span>
               </div>
               <div class="flex flex-col">
                 <span class="text-xs text-gray-500 uppercase">{t('ui.nextLevel')}</span>
                 <span class="text-base font-semibold text-gray-900">
-                  {formatNumber(skill.value.remainingXpForUpgrade, locale.value)}
+                  {formatNumber(fromFixed(skill.value.remainingXpForUpgrade), locale.value)}
                 </span>
               </div>
             </div>
