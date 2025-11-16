@@ -2,7 +2,7 @@ import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import ModalBox from '@/components/ModalBox'
-import { consumableConfigs, itemConfigMap } from '@/gameConfig'
+import { consumableConfigs } from '@/gameConfig'
 import { useConsumableStore } from '@/stores/consumable'
 import { useInventoryStore } from '@/stores/inventory'
 
