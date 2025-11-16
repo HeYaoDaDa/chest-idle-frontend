@@ -54,5 +54,133 @@
     "sort": 7,
     "name": "stat.brewingSpeed.name",
     "description": "stat.brewingSpeed.description"
+  },
+  {
+    "type": "stat",
+    "id": "miningXpGain",
+    "sort": 100,
+    "base": 0,
+    "name": "stat.miningXpGain.name",
+    "description": "stat.miningXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "miningChestPointsGain",
+    "sort": 101,
+    "base": 0,
+    "name": "stat.miningChestPointsGain.name",
+    "description": "stat.miningChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "woodcuttingXpGain",
+    "sort": 102,
+    "base": 0,
+    "name": "stat.woodcuttingXpGain.name",
+    "description": "stat.woodcuttingXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "woodcuttingChestPointsGain",
+    "sort": 103,
+    "base": 0,
+    "name": "stat.woodcuttingChestPointsGain.name",
+    "description": "stat.woodcuttingChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "foragingXpGain",
+    "sort": 104,
+    "base": 0,
+    "name": "stat.foragingXpGain.name",
+    "description": "stat.foragingXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "foragingChestPointsGain",
+    "sort": 105,
+    "base": 0,
+    "name": "stat.foragingChestPointsGain.name",
+    "description": "stat.foragingChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "smithingXpGain",
+    "sort": 106,
+    "base": 0,
+    "name": "stat.smithingXpGain.name",
+    "description": "stat.smithingXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "smithingChestPointsGain",
+    "sort": 107,
+    "base": 0,
+    "name": "stat.smithingChestPointsGain.name",
+    "description": "stat.smithingChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "woodworkingXpGain",
+    "sort": 108,
+    "base": 0,
+    "name": "stat.woodworkingXpGain.name",
+    "description": "stat.woodworkingXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "woodworkingChestPointsGain",
+    "sort": 109,
+    "base": 0,
+    "name": "stat.woodworkingChestPointsGain.name",
+    "description": "stat.woodworkingChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "tailoringXpGain",
+    "sort": 110,
+    "base": 0,
+    "name": "stat.tailoringXpGain.name",
+    "description": "stat.tailoringXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "tailoringChestPointsGain",
+    "sort": 111,
+    "base": 0,
+    "name": "stat.tailoringChestPointsGain.name",
+    "description": "stat.tailoringChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "cookingXpGain",
+    "sort": 112,
+    "base": 0,
+    "name": "stat.cookingXpGain.name",
+    "description": "stat.cookingXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "cookingChestPointsGain",
+    "sort": 113,
+    "base": 0,
+    "name": "stat.cookingChestPointsGain.name",
+    "description": "stat.cookingChestPointsGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "brewingXpGain",
+    "sort": 114,
+    "base": 0,
+    "name": "stat.brewingXpGain.name",
+    "description": "stat.brewingXpGain.description"
+  },
+  {
+    "type": "stat",
+    "id": "brewingChestPointsGain",
+    "sort": 115,
+    "base": 0,
+    "name": "stat.brewingChestPointsGain.name",
+    "description": "stat.brewingChestPointsGain.description"
   }
 ]

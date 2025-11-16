@@ -34,6 +34,7 @@ export const statConfigs: StatConfig[] = []
 export const resourceConfigs: ItemConfig[] = []
 export const chestConfigs: ItemConfig[] = []
 export const equipmentConfigs: ItemConfig[] = []
+export const consumableConfigs: ItemConfig[] = []
 export const actionConfigListBySkill: Record<string, ActionConfig[]> = Object.create(null)
 
 export function loadGameConfig() {
@@ -65,6 +66,8 @@ export function loadGameConfig() {
           chestConfigs.push(item)
         } else if (item.category === 'equipment') {
           equipmentConfigs.push(item)
+        } else if (item.category === 'consumable') {
+          consumableConfigs.push(item)
         }
         break
       case 'action':
@@ -81,6 +84,7 @@ export function loadGameConfig() {
   resourceConfigs.sort((a, b) => a.sort - b.sort)
   chestConfigs.sort((a, b) => a.sort - b.sort)
   equipmentConfigs.sort((a, b) => a.sort - b.sort)
+  consumableConfigs.sort((a, b) => a.sort - b.sort)
   for (const actionConfigs of Object.values(actionConfigListBySkill)) {
     actionConfigs.sort((a, b) => a.sort - b.sort)
   }

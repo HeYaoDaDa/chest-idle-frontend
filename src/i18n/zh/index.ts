@@ -59,6 +59,11 @@ export default {
     possibleRewards: '可能获得的奖励',
     dropChance: '掉落概率',
     chest: '宝箱',
+    consumable: {
+      empty: '空槽',
+      selectTitle: '选择消耗品',
+      noItems: '没有可用的消耗品',
+    },
   },
   skill: {
     mining: { name: '采矿', description: '采矿。' },
@@ -446,6 +451,43 @@ export default {
     volcanoChest: {
       name: '火山宝箱',
       description: '装有火山产品和相关奖励的宝箱。',
+    },
+
+    speedCoffeeLow: {
+      name: '低级速度咖啡',
+      description: '提升技能速度 8%，持续 1 分钟。',
+    },
+    speedCoffeeMid: {
+      name: '中级速度咖啡',
+      description: '提升技能速度 15%，持续 2 分钟。',
+    },
+    speedCoffeeHigh: {
+      name: '高级速度咖啡',
+      description: '提升技能速度 25%，持续 3 分钟。',
+    },
+    xpCoffeeLow: {
+      name: '低级经验咖啡',
+      description: '提升经验获取 10%，持续 1 分钟。',
+    },
+    xpCoffeeMid: {
+      name: '中级经验咖啡',
+      description: '提升经验获取 20%，持续 2 分钟。',
+    },
+    xpCoffeeHigh: {
+      name: '高级经验咖啡',
+      description: '提升经验获取 35%，持续 3 分钟。',
+    },
+    pointsCoffeeLow: {
+      name: '低级点数咖啡',
+      description: '提升宝箱点数获取 10%，持续 1 分钟。',
+    },
+    pointsCoffeeMid: {
+      name: '中级点数咖啡',
+      description: '提升宝箱点数获取 20%，持续 2 分钟。',
+    },
+    pointsCoffeeHigh: {
+      name: '高级点数咖啡',
+      description: '提升宝箱点数获取 35%，持续 3 分钟。',
     },
   },
   action: {
@@ -850,6 +892,92 @@ export default {
     silkworm: {
       name: '蚕',
       description: '在火山中采集蚕。',
+    },
+    speedCoffeeLow: {
+      name: '低级速度咖啡',
+      description: '提升技能速度 8%，持续 1 分钟。',
+    },
+    speedCoffeeMid: {
+      name: '中级速度咖啡',
+      description: '提升技能速度 15%，持续 2 分钟。',
+    },
+    speedCoffeeHigh: {
+      name: '高级速度咖啡',
+      description: '提升技能速度 25%，持续 3 分钟。',
+    },
+    xpCoffeeLow: {
+      name: '低级经验咖啡',
+      description: '提升经验获取 10%，持续 1 分钟。',
+    },
+    xpCoffeeMid: {
+      name: '中级经验咖啡',
+      description: '提升经验获取 20%，持续 2 分钟。',
+    },
+    xpCoffeeHigh: {
+      name: '高级经验咖啡',
+      description: '提升经验获取 35%，持续 3 分钟。',
+    },
+    pointsCoffeeLow: {
+      name: '低级点数咖啡',
+      description: '提升宝箱点数获取 10%，持续 1 分钟。',
+    },
+    pointsCoffeeMid: {
+      name: '中级点数咖啡',
+      description: '提升宝箱点数获取 20%，持续 2 分钟。',
+    },
+    pointsCoffeeHigh: {
+      name: '高级点数咖啡',
+      description: '提升宝箱点数获取 35%，持续 3 分钟。',
+    },
+  },
+  stat: {
+    miningSpeed: { name: '采矿速度', description: '提升采矿技能的速度。' },
+    woodcuttingSpeed: { name: '伐木速度', description: '提升伐木技能的速度。' },
+    foragingSpeed: { name: '采摘速度', description: '提升采摘技能的速度。' },
+    smithingSpeed: { name: '锻造速度', description: '提升锻造技能的速度。' },
+    woodworkingSpeed: { name: '木工速度', description: '提升木工技能的速度。' },
+    tailoringSpeed: { name: '裁缝速度', description: '提升裁缝技能的速度。' },
+    cookingSpeed: { name: '烹饪速度', description: '提升烹饪技能的速度。' },
+    brewingSpeed: { name: '酿造速度', description: '提升酿造技能的速度。' },
+    miningXpGain: { name: '采矿经验加成', description: '提升采矿技能的经验获取。' },
+    miningChestPointsGain: {
+      name: '采矿宝箱点数加成',
+      description: '提升采矿技能的宝箱点数获取。',
+    },
+    woodcuttingXpGain: { name: '伐木经验加成', description: '提升伐木技能的经验获取。' },
+    woodcuttingChestPointsGain: {
+      name: '伐木宝箱点数加成',
+      description: '提升伐木技能的宝箱点数获取。',
+    },
+    foragingXpGain: { name: '采摘经验加成', description: '提升采摘技能的经验获取。' },
+    foragingChestPointsGain: {
+      name: '采摘宝箱点数加成',
+      description: '提升采摘技能的宝箱点数获取。',
+    },
+    smithingXpGain: { name: '锻造经验加成', description: '提升锻造技能的经验获取。' },
+    smithingChestPointsGain: {
+      name: '锻造宝箱点数加成',
+      description: '提升锻造技能的宝箱点数获取。',
+    },
+    woodworkingXpGain: { name: '木工经验加成', description: '提升木工技能的经验获取。' },
+    woodworkingChestPointsGain: {
+      name: '木工宝箱点数加成',
+      description: '提升木工技能的宝箱点数获取。',
+    },
+    tailoringXpGain: { name: '裁缝经验加成', description: '提升裁缝技能的经验获取。' },
+    tailoringChestPointsGain: {
+      name: '裁缝宝箱点数加成',
+      description: '提升裁缝技能的宝箱点数获取。',
+    },
+    cookingXpGain: { name: '烹饪经验加成', description: '提升烹饪技能的经验获取。' },
+    cookingChestPointsGain: {
+      name: '烹饪宝箱点数加成',
+      description: '提升烹饪技能的宝箱点数获取。',
+    },
+    brewingXpGain: { name: '酿造经验加成', description: '提升酿造技能的经验获取。' },
+    brewingChestPointsGain: {
+      name: '酿造宝箱点数加成',
+      description: '提升酿造技能的宝箱点数获取。',
     },
   },
 }

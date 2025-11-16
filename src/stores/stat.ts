@@ -8,6 +8,8 @@ import {
   type ModifierConfig,
 } from '@/gameConfig'
 
+import { useConsumableStore } from './consumable'
+
 interface Effect {
   statId: string
   type: EffectType
@@ -17,6 +19,7 @@ interface Effect {
 interface Modifier {
   type: EffectType
   value: number
+  availableMs: number
 }
 
 interface Stat {
@@ -54,12 +57,19 @@ export const useStatStore = defineStore('stat', () => {
 
   function getModifiersByStatId(statId: string): Modifier[] {
     const modifiers: Modifier[] = []
-    for (const effects of Object.values(sourceIdEffectsMap.value)) {
+    for (const [sourceId, effects] of Object.entries(sourceIdEffectsMap.value)) {
+      let availableMs = Infinity
+      if (sourceId.startsWith('consumable:')) {
+        // 从 consumable store 获取可用时间
+        const consumableStore = useConsumableStore()
+        availableMs = consumableStore.getTotalAvailableMsForSource(sourceId)
+      }
       for (const effect of effects) {
         if (effect.statId === statId) {
           modifiers.push({
             type: effect.type,
             value: effect.value,
+            availableMs,
           })
         }
       }
@@ -80,10 +90,12 @@ export const useStatStore = defineStore('stat', () => {
     }
   }
 
-  function getStatValue(statId: string): number {
+  function getStatValue(statId: string, duration: number = 0): number {
     const statConfig = statConfigMap[statId]
     if (!statConfig) return 0
-    const modifiers = getModifiersByStatId(statId)
+    const modifiers = getModifiersByStatId(statId).filter(
+      (modifier) => modifier.availableMs >= duration,
+    )
     let sumAdd = 0
     let sumPercent = 0
     let sumDivisor = 0
@@ -150,6 +162,32 @@ export const useStatStore = defineStore('stat', () => {
 
   function calculateDerivedValue(
     config: DerivedValueConfig,
+    duration: number | 'self' = 0,
+    resolveModifierValue?: (modifier: ModifierConfig) => number | undefined,
+  ): number {
+    // 处理 'self' 模式：迭代计算直到收敛
+    if (duration === 'self') {
+      let prevValue = 0 // 从 0 开始，假设所有效果都可用
+      let iterations = 0
+      const maxIterations = 10 // 防止无限循环
+
+      while (iterations < maxIterations) {
+        const currentValue = calculateWithDuration(config, prevValue, resolveModifierValue)
+        if (Math.abs(currentValue - prevValue) < 0.001) {
+          return currentValue
+        }
+        prevValue = currentValue
+        iterations++
+      }
+      return prevValue
+    }
+
+    return calculateWithDuration(config, duration as number, resolveModifierValue)
+  }
+
+  function calculateWithDuration(
+    config: DerivedValueConfig,
+    duration: number,
     resolveModifierValue?: (modifier: ModifierConfig) => number | undefined,
   ): number {
     const modifiers = config.modifiers ?? []
@@ -184,8 +222,8 @@ export const useStatStore = defineStore('stat', () => {
         // Caller provided a value
         applyModifier(modifier.type, customValue)
       } else if (modifier.modifierType === 'stat') {
-        // Default handling for stat modifiers
-        const statValue = getStatValue(modifier.statId)
+        // Default handling for stat modifiers - 传递 duration 参数来过滤效果
+        const statValue = getStatValue(modifier.statId, duration)
         applyModifier(modifier.type, statValue)
       }
     }

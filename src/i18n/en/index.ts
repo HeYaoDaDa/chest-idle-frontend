@@ -59,6 +59,11 @@ export default {
     possibleRewards: 'Possible Rewards',
     dropChance: 'Drop Chance',
     chest: 'Chest',
+    consumable: {
+      empty: 'Empty',
+      selectTitle: 'Select Consumable',
+      noItems: 'No consumables available',
+    },
   },
   skill: {
     mining: { name: 'Mining', description: 'Mining.' },
@@ -546,6 +551,43 @@ export default {
     volcanoChest: {
       name: 'Volcano Chest',
       description: 'A chest containing volcano produce and related rewards.',
+    },
+
+    speedCoffeeLow: {
+      name: 'Low-Grade Speed Coffee',
+      description: 'Increases skill speed by 8% for 1 minute.',
+    },
+    speedCoffeeMid: {
+      name: 'Mid-Grade Speed Coffee',
+      description: 'Increases skill speed by 15% for 2 minutes.',
+    },
+    speedCoffeeHigh: {
+      name: 'High-Grade Speed Coffee',
+      description: 'Increases skill speed by 25% for 3 minutes.',
+    },
+    xpCoffeeLow: {
+      name: 'Low-Grade XP Coffee',
+      description: 'Increases XP gain by 10% for 1 minute.',
+    },
+    xpCoffeeMid: {
+      name: 'Mid-Grade XP Coffee',
+      description: 'Increases XP gain by 20% for 2 minutes.',
+    },
+    xpCoffeeHigh: {
+      name: 'High-Grade XP Coffee',
+      description: 'Increases XP gain by 35% for 3 minutes.',
+    },
+    pointsCoffeeLow: {
+      name: 'Low-Grade Points Coffee',
+      description: 'Increases chest points gain by 10% for 1 minute.',
+    },
+    pointsCoffeeMid: {
+      name: 'Mid-Grade Points Coffee',
+      description: 'Increases chest points gain by 20% for 2 minutes.',
+    },
+    pointsCoffeeHigh: {
+      name: 'High-Grade Points Coffee',
+      description: 'Increases chest points gain by 35% for 3 minutes.',
     },
   },
   action: {
@@ -1130,6 +1172,104 @@ export default {
     silkworm: {
       name: 'Silkworm',
       description: 'Gather silkworm at the volcano.',
+    },
+    speedCoffeeLow: {
+      name: 'Low-Grade Speed Coffee',
+      description: 'Increases skill speed by 8% for 1 minute.',
+    },
+    speedCoffeeMid: {
+      name: 'Mid-Grade Speed Coffee',
+      description: 'Increases skill speed by 15% for 2 minutes.',
+    },
+    speedCoffeeHigh: {
+      name: 'High-Grade Speed Coffee',
+      description: 'Increases skill speed by 25% for 3 minutes.',
+    },
+    xpCoffeeLow: {
+      name: 'Low-Grade XP Coffee',
+      description: 'Increases XP gain by 10% for 1 minute.',
+    },
+    xpCoffeeMid: {
+      name: 'Mid-Grade XP Coffee',
+      description: 'Increases XP gain by 20% for 2 minutes.',
+    },
+    xpCoffeeHigh: {
+      name: 'High-Grade XP Coffee',
+      description: 'Increases XP gain by 35% for 3 minutes.',
+    },
+    pointsCoffeeLow: {
+      name: 'Low-Grade Points Coffee',
+      description: 'Increases chest points gain by 10% for 1 minute.',
+    },
+    pointsCoffeeMid: {
+      name: 'Mid-Grade Points Coffee',
+      description: 'Increases chest points gain by 20% for 2 minutes.',
+    },
+    pointsCoffeeHigh: {
+      name: 'High-Grade Points Coffee',
+      description: 'Increases chest points gain by 35% for 3 minutes.',
+    },
+  },
+  stat: {
+    miningSpeed: { name: 'Mining Speed', description: 'Increases mining skill speed.' },
+    woodcuttingSpeed: {
+      name: 'Woodcutting Speed',
+      description: 'Increases woodcutting skill speed.',
+    },
+    foragingSpeed: { name: 'Foraging Speed', description: 'Increases foraging skill speed.' },
+    smithingSpeed: { name: 'Smithing Speed', description: 'Increases smithing skill speed.' },
+    woodworkingSpeed: {
+      name: 'Woodworking Speed',
+      description: 'Increases woodworking skill speed.',
+    },
+    tailoringSpeed: { name: 'Tailoring Speed', description: 'Increases tailoring skill speed.' },
+    cookingSpeed: { name: 'Cooking Speed', description: 'Increases cooking skill speed.' },
+    brewingSpeed: { name: 'Brewing Speed', description: 'Increases brewing skill speed.' },
+    miningXpGain: { name: 'Mining XP Gain', description: 'Increases mining XP gain.' },
+    miningChestPointsGain: {
+      name: 'Mining Chest Points Gain',
+      description: 'Increases mining chest points gain.',
+    },
+    woodcuttingXpGain: {
+      name: 'Woodcutting XP Gain',
+      description: 'Increases woodcutting XP gain.',
+    },
+    woodcuttingChestPointsGain: {
+      name: 'Woodcutting Chest Points Gain',
+      description: 'Increases woodcutting chest points gain.',
+    },
+    foragingXpGain: { name: 'Foraging XP Gain', description: 'Increases foraging XP gain.' },
+    foragingChestPointsGain: {
+      name: 'Foraging Chest Points Gain',
+      description: 'Increases foraging chest points gain.',
+    },
+    smithingXpGain: { name: 'Smithing XP Gain', description: 'Increases smithing XP gain.' },
+    smithingChestPointsGain: {
+      name: 'Smithing Chest Points Gain',
+      description: 'Increases smithing chest points gain.',
+    },
+    woodworkingXpGain: {
+      name: 'Woodworking XP Gain',
+      description: 'Increases woodworking XP gain.',
+    },
+    woodworkingChestPointsGain: {
+      name: 'Woodworking Chest Points Gain',
+      description: 'Increases woodworking chest points gain.',
+    },
+    tailoringXpGain: { name: 'Tailoring XP Gain', description: 'Increases tailoring XP gain.' },
+    tailoringChestPointsGain: {
+      name: 'Tailoring Chest Points Gain',
+      description: 'Increases tailoring chest points gain.',
+    },
+    cookingXpGain: { name: 'Cooking XP Gain', description: 'Increases cooking XP gain.' },
+    cookingChestPointsGain: {
+      name: 'Cooking Chest Points Gain',
+      description: 'Increases cooking chest points gain.',
+    },
+    brewingXpGain: { name: 'Brewing XP Gain', description: 'Increases brewing XP gain.' },
+    brewingChestPointsGain: {
+      name: 'Brewing Chest Points Gain',
+      description: 'Increases brewing chest points gain.',
     },
   },
 }

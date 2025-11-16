@@ -3,8 +3,14 @@ import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { onBeforeRouteUpdate, useRoute } from 'vue-router'
 
-import { ActionModalBox } from '@/components/modals'
-import { actionConfigListBySkill, getSkillTabActionConfigsMapBySkillId } from '@/gameConfig'
+import ConsumableSlot from '@/components/ConsumableSlot'
+import { ActionModalBox, ConsumableSelectModal } from '@/components/modals'
+import {
+  actionConfigListBySkill,
+  getSkillTabActionConfigsMapBySkillId,
+  skillConfigMap,
+} from '@/gameConfig'
+import { useConsumableStore } from '@/stores/consumable'
 import { useSkillStore } from '@/stores/skill'
 import { formatNumber } from '@/utils/format'
 
@@ -16,10 +22,13 @@ export default defineComponent({
     const skillId = ref(route.params.id as string)
 
     const skillStore = useSkillStore()
+    const consumableStore = useConsumableStore()
 
     const currentTab = ref<string>('')
     const modalVisible = ref(false)
     const selectedActionId = shallowRef<string | undefined>(undefined)
+    const consumableModalVisible = ref(false)
+    const selectedSlotIndex = ref<number>(0)
 
     const skill = computed(() => skillStore.getSkill(skillId.value))
     const skillActionTabs = computed(() => getSkillTabActionConfigsMapBySkillId(skillId.value))
@@ -58,6 +67,20 @@ export default defineComponent({
       selectedActionId.value = undefined
     }
 
+    const openConsumableModal = (slotIndex: number) => {
+      selectedSlotIndex.value = slotIndex
+      consumableModalVisible.value = true
+    }
+
+    const closeConsumableModal = () => {
+      consumableModalVisible.value = false
+    }
+
+    const isProductionSkill = computed(() => {
+      const skillConfig = skillConfigMap[skillId.value]
+      return skillConfig?.skillType === 'production'
+    })
+
     watch(
       () => skillId.value,
       () => {
@@ -75,7 +98,7 @@ export default defineComponent({
       if (!skill.value) return null
 
       return (
-        <div class="flex flex-col gap-2 p-8">
+        <div class="flex flex-col gap-2 p-8 pb-32">
           <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
             <div class="flex justify-between items-baseline mb-2">
               <h2 class="text-2xl font-bold text-gray-900">{t(skill.value.name)}</h2>
@@ -142,6 +165,28 @@ export default defineComponent({
             show={modalVisible.value}
             onClose={closeModal}
             actionId={selectedActionId.value}
+          />
+
+          {isProductionSkill.value && (
+            <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent py-4 px-8 border-t border-gray-200 shadow-lg">
+              <div class="flex justify-center gap-4">
+                {[0, 1, 2].map((slotIndex) => (
+                  <ConsumableSlot
+                    key={slotIndex}
+                    skillId={skillId.value}
+                    slotIndex={slotIndex}
+                    onSlotClick={openConsumableModal}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          <ConsumableSelectModal
+            show={consumableModalVisible.value}
+            skillId={skillId.value}
+            slotIndex={selectedSlotIndex.value}
+            onClose={closeConsumableModal}
           />
         </div>
       )

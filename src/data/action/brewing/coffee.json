@@ -1,0 +1,227 @@
+[
+  {
+    "type": "action",
+    "id": "speedCoffeeLow",
+    "skillId": "brewing",
+    "minLevel": 0,
+    "sort": 0,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 10
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "speedCoffeeLow",
+        "count": 1
+      }
+    ],
+    "name": "item.speedCoffeeLow.name",
+    "description": "item.speedCoffeeLow.description"
+  },
+  {
+    "type": "action",
+    "id": "speedCoffeeMid",
+    "skillId": "brewing",
+    "minLevel": 5,
+    "sort": 1,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 20
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "speedCoffeeMid",
+        "count": 1
+      }
+    ],
+    "name": "item.speedCoffeeMid.name",
+    "description": "item.speedCoffeeMid.description"
+  },
+  {
+    "type": "action",
+    "id": "speedCoffeeHigh",
+    "skillId": "brewing",
+    "minLevel": 10,
+    "sort": 2,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 30
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "speedCoffeeHigh",
+        "count": 1
+      }
+    ],
+    "name": "item.speedCoffeeHigh.name",
+    "description": "item.speedCoffeeHigh.description"
+  },
+  {
+    "type": "action",
+    "id": "xpCoffeeLow",
+    "skillId": "brewing",
+    "minLevel": 0,
+    "sort": 10,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 10
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "xpCoffeeLow",
+        "count": 1
+      }
+    ],
+    "name": "item.xpCoffeeLow.name",
+    "description": "item.xpCoffeeLow.description"
+  },
+  {
+    "type": "action",
+    "id": "xpCoffeeMid",
+    "skillId": "brewing",
+    "minLevel": 5,
+    "sort": 11,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 20
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "xpCoffeeMid",
+        "count": 1
+      }
+    ],
+    "name": "item.xpCoffeeMid.name",
+    "description": "item.xpCoffeeMid.description"
+  },
+  {
+    "type": "action",
+    "id": "xpCoffeeHigh",
+    "skillId": "brewing",
+    "minLevel": 10,
+    "sort": 12,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 30
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "xpCoffeeHigh",
+        "count": 1
+      }
+    ],
+    "name": "item.xpCoffeeHigh.name",
+    "description": "item.xpCoffeeHigh.description"
+  },
+  {
+    "type": "action",
+    "id": "pointsCoffeeLow",
+    "skillId": "brewing",
+    "minLevel": 0,
+    "sort": 20,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 10
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "pointsCoffeeLow",
+        "count": 1
+      }
+    ],
+    "name": "item.pointsCoffeeLow.name",
+    "description": "item.pointsCoffeeLow.description"
+  },
+  {
+    "type": "action",
+    "id": "pointsCoffeeMid",
+    "skillId": "brewing",
+    "minLevel": 5,
+    "sort": 21,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 20
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "pointsCoffeeMid",
+        "count": 1
+      }
+    ],
+    "name": "item.pointsCoffeeMid.name",
+    "description": "item.pointsCoffeeMid.description"
+  },
+  {
+    "type": "action",
+    "id": "pointsCoffeeHigh",
+    "skillId": "brewing",
+    "minLevel": 10,
+    "sort": 22,
+    "duration": {
+      "baseValue": 1000
+    },
+    "xp": {
+      "baseValue": 30
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 0
+    },
+    "products": [
+      {
+        "itemId": "pointsCoffeeHigh",
+        "count": 1
+      }
+    ],
+    "name": "item.pointsCoffeeHigh.name",
+    "description": "item.pointsCoffeeHigh.description"
+  }
+]

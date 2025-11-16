@@ -43,14 +43,23 @@ export const useActionStore = defineStore('action', () => {
 
     const speedMultiplier = import.meta.env.DEV ? 0.01 : 1
 
+    // 先计算 duration（使用 'self' 模式）
+    const duration =
+      statStore.calculateDerivedValue(actionConfig.duration, 'self', resolveModifier) *
+      speedMultiplier
+
     return {
       ...actionConfig,
       ingredients: actionConfig.ingredients ?? [],
       products: actionConfig.products ?? [],
-      duration:
-        statStore.calculateDerivedValue(actionConfig.duration, resolveModifier) * speedMultiplier,
-      xp: statStore.calculateDerivedValue(actionConfig.xp, resolveModifier),
-      chestPoints: statStore.calculateDerivedValue(actionConfig.chestPoints, resolveModifier),
+      duration,
+      // xp 和 chestPoints 使用计算出的 duration
+      xp: statStore.calculateDerivedValue(actionConfig.xp, duration, resolveModifier),
+      chestPoints: statStore.calculateDerivedValue(
+        actionConfig.chestPoints,
+        duration,
+        resolveModifier,
+      ),
     }
   }
 

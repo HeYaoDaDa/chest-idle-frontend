@@ -5,6 +5,7 @@ import { isInfiniteAmount, toFiniteForCompute, fromComputeResult } from '@/utils
 
 import { useActionQueueStore } from './actionQueue'
 import { useChestPointStore } from './chestPoint'
+import { useConsumableStore } from './consumable'
 import { useInventoryStore } from './inventory'
 import { useNotificationStore } from './notification'
 import { useSkillStore } from './skill'
@@ -17,6 +18,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
   const actionQueueStore = useActionQueueStore()
   const notificationStore = useNotificationStore()
   const chestPointStore = useChestPointStore()
+  const consumableStore = useConsumableStore()
 
   function start(): void {
     requestAnimationFrame(update)
@@ -66,6 +68,12 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
         )
       }
 
+      // 用消耗品限制行动次数
+      computedAmount = Math.min(
+        computedAmount,
+        consumableStore.estimateBuffedCounts(action.skillId, action.duration),
+      )
+
       computeAction(action, computedAmount)
 
       const computedElapsedTime = action.duration * computedAmount
@@ -79,12 +87,25 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
   }
 
   function computeAction(action: Action, computedAmount: number): void {
+    const itemsToRemove: [string, number][] = []
+
+    // 收集材料消耗
     if (action.ingredients) {
-      const ingredients: [string, number][] = []
       for (const ingredient of action.ingredients) {
-        ingredients.push([ingredient.itemId, ingredient.count * computedAmount])
+        itemsToRemove.push([ingredient.itemId, ingredient.count * computedAmount])
       }
-      inventoryStore.removeManyItems(ingredients)
+    }
+
+    // 收集消耗品消耗
+    const consumableItems = consumableStore.consumeBuffs(
+      action.skillId,
+      action.duration * computedAmount,
+    )
+    itemsToRemove.push(...consumableItems)
+
+    // 统一扣除库存
+    if (itemsToRemove.length > 0) {
+      inventoryStore.removeManyItems(itemsToRemove)
     }
 
     skillStore.addSkillXp(action.skillId, action.xp * computedAmount)

@@ -20,6 +20,7 @@ interface SkillConfig {
   type: 'skill'
   id: string
   sort: number
+  skillType: 'production' | 'combat'
   name: string
   description: string
 }
@@ -43,7 +44,7 @@ interface StatConfig {
 
 interface ItemConfig {
   type: 'item'
-  category: 'resource' | 'chest' | 'equipment'
+  category: 'resource' | 'chest' | 'equipment' | 'consumable'
   id: string
   sort: number
   chest?: {
@@ -52,6 +53,11 @@ interface ItemConfig {
   }
   equipment?: {
     slotId: string
+    effects: EffectConfig[]
+  }
+  consumable?: {
+    duration: number
+    consumableType: string
     effects: EffectConfig[]
   }
   name: string
