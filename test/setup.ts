@@ -33,6 +33,8 @@ export const createTestI18n = () => {
           consumable: {
             empty: 'Empty',
           },
+          progressPercentage: 'Progress',
+          currentProgress: 'Current Progress',
         },
         action: {
           test: {

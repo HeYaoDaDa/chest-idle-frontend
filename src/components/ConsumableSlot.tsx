@@ -35,9 +35,11 @@ export default defineComponent({
     }
 
     return () => (
-      <div
+      <button
+        type="button"
         class="flex flex-col items-center gap-1 p-2 bg-white border-2 border-gray-300 rounded-lg shadow-sm hover:shadow-md hover:border-primary transition cursor-pointer min-w-24"
         onClick={handleClick}
+        aria-label={item.value ? t(item.value.name) : t('ui.consumable.empty')}
       >
         {item.value ? (
           <>
@@ -49,7 +51,7 @@ export default defineComponent({
         ) : (
           <div class="text-sm text-gray-400 italic">{t('ui.consumable.empty')}</div>
         )}
-      </div>
+      </button>
     )
   },
 })

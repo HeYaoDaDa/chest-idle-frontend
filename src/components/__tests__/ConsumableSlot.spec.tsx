@@ -203,7 +203,7 @@ describe('ConsumableSlot Component', () => {
         },
       })
 
-      const container = wrapper.find('div')
+      const container = wrapper.find('button')
       expect(container.classes()).toContain('flex')
       expect(container.classes()).toContain('flex-col')
       expect(container.classes()).toContain('items-center')
@@ -222,7 +222,7 @@ describe('ConsumableSlot Component', () => {
         },
       })
 
-      const container = wrapper.find('div')
+      const container = wrapper.find('button')
       expect(container.classes()).toContain('hover:shadow-md')
       expect(container.classes()).toContain('hover:border-primary')
     })

@@ -88,7 +88,14 @@ export default defineComponent({
         </div>
 
         <div class="relative flex items-center min-w-64">
-          <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            class="w-full h-3 bg-gray-200 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={Math.round(actionQueueStore.progress)}
+            aria-label={t('ui.progressPercentage')}
+          >
             <div
               class="h-full bg-gradient-to-r from-cyan-400 to-primary transition-all duration-75"
               style={{ width: progress.value }}

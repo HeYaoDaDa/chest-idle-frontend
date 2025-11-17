@@ -1,9 +1,10 @@
-import { defineComponent, Teleport, Transition, onMounted, onUnmounted } from 'vue'
+import { defineComponent, Teleport, Transition, onMounted, onUnmounted, ref } from 'vue'
 
 export default defineComponent({
   name: 'ModalBox',
   emits: ['close'],
   setup(props, { emit, slots }) {
+    const dialogRef = ref<HTMLElement | null>(null)
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         emit('close')
@@ -12,6 +13,8 @@ export default defineComponent({
 
     onMounted(() => {
       window.addEventListener('keydown', handleKeydown)
+      // Focus container for screen readers and keyboard navigation
+      if (dialogRef.value) dialogRef.value.focus()
     })
 
     onUnmounted(() => {
@@ -37,7 +40,15 @@ export default defineComponent({
             appear
           >
             <div class="relative max-h-[min(720px,90vh)] w-[min(480px,100%)] bg-white rounded-lg shadow-2xl overflow-auto p-3 lg:p-4">
-              {slots.default?.()}
+              <div
+                ref={dialogRef}
+                tabindex={-1}
+                role="dialog"
+                aria-modal="true"
+                class="outline-none"
+              >
+                {slots.default?.()}
+              </div>
             </div>
           </Transition>
         </div>

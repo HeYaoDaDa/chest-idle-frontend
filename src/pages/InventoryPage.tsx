@@ -138,10 +138,12 @@ export default defineComponent({
           {activeTab.value === 'inventory' && (
             <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
               {inventoryStore.inventoryItems.map((inventoryItem) => (
-                <div
+                <button
                   key={inventoryItem.item.id}
                   class="w-16 h-16 rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex flex-col justify-center items-center p-1 relative"
+                  type="button"
                   onClick={() => openInventoryModal(inventoryItem)}
+                  aria-label={t(inventoryItem.item.name)}
                 >
                   <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
                     {t(inventoryItem.item.name)}
@@ -151,7 +153,7 @@ export default defineComponent({
                       x{inventoryItem.count}
                     </div>
                   )}
-                </div>
+                </button>
               ))}
             </div>
           )}
@@ -161,14 +163,16 @@ export default defineComponent({
               {slotList.value.map((slot) => (
                 <div key={slot.id} class="w-16 h-16">
                   {equippedBySlot.value[slot.id] ? (
-                    <div
+                    <button
                       class="w-full h-full rounded bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex items-center justify-center p-1"
+                      type="button"
                       onClick={() => openSlotEquipment(slot.id)}
+                      aria-label={t(equippedItemNameBySlot.value[slot.id])}
                     >
                       <div class="text-xs font-semibold text-primary text-center leading-tight">
                         {t(equippedItemNameBySlot.value[slot.id])}
                       </div>
-                    </div>
+                    </button>
                   ) : (
                     <div class="w-full h-full rounded bg-gray-100 border border-dashed border-gray-400 flex items-center justify-center p-1">
                       <span class="text-[10px] text-gray-500 text-center leading-tight">

@@ -124,6 +124,11 @@ export default defineComponent({
               <div
                 class="h-full bg-gradient-to-r from-cyan-400 to-primary transition-all"
                 style={{ width: skill.value.upgradeProgress * 100 + '%' }}
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow={Math.round(skill.value.upgradeProgress * 100)}
+                aria-label={t('ui.progressPercentage')}
               ></div>
             </div>
           </div>
@@ -148,15 +153,17 @@ export default defineComponent({
 
           <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
             {displayedActions.value.map((action) => (
-              <div
+              <button
                 key={action.id}
+                type="button"
                 class="w-16 h-16 rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex items-center justify-center p-2"
                 onClick={() => openModal(action.id)}
+                aria-label={t(action.name)}
               >
                 <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
                   {t(action.name)}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 

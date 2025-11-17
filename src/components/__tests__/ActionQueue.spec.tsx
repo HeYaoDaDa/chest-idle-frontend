@@ -134,6 +134,23 @@ describe('ActionQueue Component', () => {
       const buttons = wrapper.findAll('button')
       expect(buttons.length).toBeGreaterThan(1)
     })
+
+    it('should have a progressbar with ARIA attributes', () => {
+      const actionQueueStore = useActionQueueStore()
+      actionQueueStore.addAction('test-action', 1)
+      actionQueueStore.progress = 42
+
+      const wrapper = mount(ActionQueue, {
+        global: {
+          plugins: [createTestI18n()],
+        },
+      })
+
+      const progressbar = wrapper.find('[role="progressbar"]')
+      expect(progressbar.exists()).toBe(true)
+      expect(progressbar.attributes('aria-valuenow')).toBe('42')
+      expect(progressbar.attributes('aria-valuemax')).toBe('100')
+    })
   })
 
   describe('interactions', () => {

@@ -48,6 +48,11 @@ export default defineComponent({
                 <div
                   class="progress-bar duration-75"
                   style={{ width: skill.upgradeProgress * 100 + '%' }}
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow={Math.round(skill.upgradeProgress * 100)}
+                  aria-label={t('ui.progressPercentage')}
                 ></div>
               </div>
             </div>
