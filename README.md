@@ -52,6 +52,31 @@ npm run lint
 npm run format
 ```
 
+## Testing
+
+This project has comprehensive test coverage (73.34%):
+
+```sh
+# Run tests once
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+
+# Open Vitest UI
+npm run test:ui
+```
+
+See [docs/TESTING.md](docs/TESTING.md) for detailed testing guide.
+
+## Documentation
+
+- [Testing Guide](docs/TESTING.md) - Complete testing documentation
+- [Test Summary](docs/TEST_SUMMARY.md) - Test coverage and statistics
+
 ## UnoCSS Inspector
 
 Open `http://localhost:5173/__unocss/` while dev server is running to inspect UnoCSS classes.

@@ -10,7 +10,6 @@ import {
   getSkillTabActionConfigsMapBySkillId,
   skillConfigMap,
 } from '@/gameConfig'
-import { useConsumableStore } from '@/stores/consumable'
 import { useSkillStore } from '@/stores/skill'
 import { fromFixed } from '@/utils/fixedPoint'
 import { formatNumber } from '@/utils/format'
@@ -23,7 +22,6 @@ export default defineComponent({
     const skillId = ref(route.params.id as string)
 
     const skillStore = useSkillStore()
-    const consumableStore = useConsumableStore()
 
     const currentTab = ref<string>('')
     const modalVisible = ref(false)

@@ -34,7 +34,7 @@ export const useSkillStore = defineStore('skill', () => {
   function getRemainingXpForUpgrade(skillId: string): FixedPoint {
     const currentXp = getSkillXp(skillId)
     const currentLevel = getLevelFromXp(currentXp)
-    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? (Infinity as any as FixedPoint)
+    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? (Infinity as unknown as FixedPoint)
     return fpMax(toFixed(0), fpSub(nextLevelXp, currentXp))
   }
 
@@ -42,9 +42,9 @@ export const useSkillStore = defineStore('skill', () => {
     const currentXp = getSkillXp(skillId)
     const currentLevel = getLevelFromXp(currentXp)
     const currentLevelXp = XP_TABLE[currentLevel] ?? toFixed(0)
-    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? (Infinity as any as FixedPoint)
+    const nextLevelXp = XP_TABLE[currentLevel + 1] ?? (Infinity as unknown as FixedPoint)
 
-    if (nextLevelXp === (Infinity as any)) return 1
+    if (nextLevelXp === (Infinity as unknown as number)) return 1
 
     return (currentXp - currentLevelXp) / (nextLevelXp - currentLevelXp)
   }
