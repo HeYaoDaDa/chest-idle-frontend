@@ -172,7 +172,7 @@ export default defineComponent({
                 <div key={slot.id} class="w-16 h-16">
                   {equippedBySlot.value[slot.id] ? (
                     <button
-                      class="card-item w-full h-full bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition flex items-center justify-center p-1"
+                      class="card-item w-full h-full bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition flex items-center justify-center p-1 select-none"
                       type="button"
                       onClick={() => openSlotEquipment(slot.id)}
                       aria-label={t(equippedItemNameBySlot.value[slot.id])}
@@ -185,7 +185,7 @@ export default defineComponent({
                       </div>
                     </button>
                   ) : (
-                    <div class="w-full h-full rounded bg-gray-100 border border-dashed border-gray-400 flex items-center justify-center p-1">
+                    <div class="w-full h-full rounded bg-gray-100 border border-dashed border-gray-400 flex items-center justify-center p-1 select-none">
                       <span class="text-[10px] text-gray-500 text-center leading-tight">
                         {t(slot.name)}
                       </span>
