@@ -110,7 +110,7 @@ describe('ConsumableSlot Component', () => {
       })
 
       expect(wrapper.text()).toContain('Coffee')
-      expect(wrapper.find('.min-w-24').exists()).toBe(true)
+      expect(wrapper.find('.w-16').exists()).toBe(true)
     })
 
     it('should display remaining time when slot has item with remaining time', async () => {
@@ -225,8 +225,8 @@ describe('ConsumableSlot Component', () => {
       expect(container.classes()).toContain('flex')
       expect(container.classes()).toContain('flex-col')
       expect(container.classes()).toContain('items-center')
-      // card-item shortcut contains cursor, hover and transition behavior
-      expect(container.classes()).toContain('card-item')
+      // button contains cursor, hover and transition behavior
+      expect(container.classes()).toContain('rounded')
     })
 
     it('should have hover styles', () => {
@@ -242,8 +242,8 @@ describe('ConsumableSlot Component', () => {
       })
 
       const container = wrapper.find('button')
-      // `card-item` includes hover/transition behavior; verify the shortcut was applied
-      expect(container.classes()).toContain('card-item')
+      // button includes hover/transition behavior; verify styles were applied
+      expect(container.classes()).toContain('transition')
     })
 
     it('should have proper styling for empty slot', () => {

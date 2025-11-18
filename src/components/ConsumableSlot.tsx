@@ -39,7 +39,7 @@ export default defineComponent({
     return () => (
       <button
         type="button"
-        class="card-item flex flex-col items-center gap-1 p-2 min-w-24"
+        class="card-item w-16 h-16 flex flex-col items-center justify-center gap-1 p-1 select-none bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition rounded cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         onClick={handleClick}
         aria-label={item.value ? t(item.value.name) : t('ui.consumable.empty')}
         aria-expanded={props.expanded}
