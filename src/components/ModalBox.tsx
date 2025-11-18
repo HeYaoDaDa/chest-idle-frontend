@@ -1,13 +1,20 @@
 import { defineComponent, Teleport, Transition, onMounted, onUnmounted, ref } from 'vue'
 
+// A lightweight modal stack to ensure only the top modal responds to Escape/backdrop
+const modalStack: string[] = []
+
 export default defineComponent({
   name: 'ModalBox',
   emits: ['close'],
   setup(props, { emit, slots }) {
     const dialogRef = ref<HTMLElement | null>(null)
     let previousActiveElement: HTMLElement | null = null
+    const modalId = `modal-${Math.random().toString(36).slice(2)}`
+
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        // Only the top-most modal should handle Escape
+        if (modalStack[modalStack.length - 1] !== modalId) return
         emit('close')
       }
     }
@@ -15,6 +22,8 @@ export default defineComponent({
     // Focus trap: trap Tab key inside modal
     const trapKeydown = (event: KeyboardEvent) => {
       if (event.key !== 'Tab') return
+      // Only the top most modal traps Tab keynavigation
+      if (modalStack[modalStack.length - 1] !== modalId) return
       if (!dialogRef.value) return
 
       const focusableSelector =
@@ -41,6 +50,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      modalStack.push(modalId)
       window.addEventListener('keydown', handleKeydown)
       window.addEventListener('keydown', trapKeydown)
       // Focus container for screen readers and keyboard navigation
@@ -62,6 +72,13 @@ export default defineComponent({
     onUnmounted(() => {
       window.removeEventListener('keydown', handleKeydown)
       window.removeEventListener('keydown', trapKeydown)
+      // Only remove this modal from stack if present
+      const top = modalStack[modalStack.length - 1]
+      if (top === modalId) modalStack.pop()
+      else {
+        const idx = modalStack.indexOf(modalId)
+        if (idx !== -1) modalStack.splice(idx, 1)
+      }
       if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
         previousActiveElement.focus()
       }
@@ -75,7 +92,8 @@ export default defineComponent({
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
-              emit('close')
+              // Only the top modal should close when backdrop clicked
+              if (modalStack[modalStack.length - 1] === modalId) emit('close')
             }}
           />
           <Transition

@@ -1,6 +1,7 @@
 import { computed, defineComponent, type PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import ItemTag from '@/components/ItemTag'
 import { itemConfigMap } from '@/gameConfig'
 import { useConsumableStore } from '@/stores/consumable'
 import { fromFixed } from '@/utils/fixedPoint'
@@ -45,7 +46,9 @@ export default defineComponent({
       >
         {item.value ? (
           <>
-            <div class="text-sm font-bold text-gray-900 text-center">{t(item.value.name)}</div>
+            <div class="text-sm font-bold text-gray-900 text-center leading-tight">
+              <ItemTag itemId={item.value.id} />
+            </div>
             {remainingTime.value && (
               <div class="text-xs text-primary font-medium">{remainingTime.value}</div>
             )}

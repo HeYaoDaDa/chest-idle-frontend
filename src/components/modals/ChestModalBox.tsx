@@ -1,6 +1,7 @@
 import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import ItemTag from '@/components/ItemTag'
 import ModalBox from '@/components/ModalBox'
 import { itemConfigMap } from '@/gameConfig'
 import { useChestPointStore } from '@/stores/chestPoint'
@@ -108,7 +109,7 @@ export default defineComponent({
                   >
                     <div class="flex justify-between items-center">
                       <span class="font-semibold text-gray-900 text-sm">
-                        {t(itemConfigMap[loot.itemId].name)}
+                        <ItemTag itemId={loot.itemId} />
                       </span>
                       <span class="text-xs text-gray-600 font-medium">
                         ×

@@ -45,6 +45,7 @@ export default {
     open: '打开',
     chestOpenResults: '开箱结果',
     noItemsObtained: '未获得任何物品',
+    viewItem: '查看物品：{item}',
     confirm: '确认',
     close: '关闭',
     inventory: '背包',

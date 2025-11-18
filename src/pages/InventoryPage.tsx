@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n'
 
 import { ChestResultsModal, ItemModal } from '@/components/modals'
 import { slotConfigs, itemConfigMap } from '@/gameConfig'
+import { useChestResultsStore } from '@/stores/chestResults'
 import { useEquippedItemStore } from '@/stores/equippedItem'
 import { useInventoryStore, type InventoryItem } from '@/stores/inventory'
 
@@ -15,7 +16,7 @@ export default defineComponent({
 
     const selectedItemId = shallowRef<string | null>(null)
     const selectedContext = shallowRef<'inventory' | 'equipped' | null>(null)
-    const chestOpenResults = shallowRef<{ itemId: string; amount: number }[] | null>(null)
+    const chestResults = useChestResultsStore()
     const activeTab = shallowRef<'inventory' | 'equipment' | 'abilities'>('inventory')
 
     const selectedInventoryItem = computed(() => {
@@ -64,7 +65,7 @@ export default defineComponent({
     const openInventoryModal = (item: InventoryItem): void => {
       selectedItemId.value = item.item.id
       selectedContext.value = 'inventory'
-      chestOpenResults.value = null
+      chestResults.close()
     }
 
     const closeItemModal = (): void => {
@@ -84,14 +85,14 @@ export default defineComponent({
         const amountToOpen = amount ?? 1
         if (amountToOpen >= 1 && amountToOpen <= maxChestAmount.value) {
           const results = inventoryStore.openChest(selectedInventoryItem.value, amountToOpen)
-          chestOpenResults.value = results
+          chestResults.open(results)
           closeItemModal()
         }
       }
     }
 
     const closeChestResults = (): void => {
-      chestOpenResults.value = null
+      chestResults.close()
     }
 
     const openSlotEquipment = (slotId: string): void => {
@@ -211,8 +212,8 @@ export default defineComponent({
         />
 
         <ChestResultsModal
-          show={!!chestOpenResults.value}
-          results={chestOpenResults.value}
+          show={!!chestResults.results}
+          results={chestResults.results}
           onClose={closeChestResults}
         />
       </div>

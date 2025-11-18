@@ -28,6 +28,13 @@ export const createTestI18n = () => {
         nothing: 'Nothing',
         stop: 'Stop',
         ui: {
+          viewItem: 'View item: {item}',
+          chestOpenResults: 'Chest Opening Results',
+          chests: 'Chests',
+          chestsDescription: 'View all chest progress',
+          remainingPoints: 'Remaining',
+          possibleRewards: 'Possible Rewards',
+          dropChance: 'Drop Chance',
           currentAction: 'Current Action',
           queue: 'Queue',
           consumable: {
@@ -40,6 +47,12 @@ export const createTestI18n = () => {
           close: 'Close',
           progressPercentage: 'Progress',
           currentProgress: 'Current Progress',
+          quantity: 'Quantity',
+          type: 'Type',
+          slot: 'Slot',
+          equip: 'Equip',
+          unequip: 'Unequip',
+          open: 'Open',
         },
         action: {
           test: {
@@ -47,6 +60,8 @@ export const createTestI18n = () => {
           },
         },
         item: {
+          copperMineChest: { name: 'Copper Mine Chest' },
+          copperPickaxe: { name: 'Copper Pickaxe' },
           coffee: {
             name: 'Coffee',
           },

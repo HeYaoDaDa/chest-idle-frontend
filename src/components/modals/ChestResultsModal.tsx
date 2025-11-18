@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import ItemTag from '@/components/ItemTag'
 import ModalBox from '@/components/ModalBox'
 
 interface ChestResult {
@@ -41,7 +42,7 @@ export default defineComponent({
                       class="flex justify-between items-center p-2 bg-gray-50 rounded"
                     >
                       <span class="font-medium text-gray-900">
-                        {t(`item.${result.itemId}.name`)}
+                        <ItemTag itemId={result.itemId} />
                       </span>
                       <span class="text-gray-600">×{result.amount}</span>
                     </div>

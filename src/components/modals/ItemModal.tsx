@@ -11,7 +11,7 @@ export default defineComponent({
   props: {
     show: { type: Boolean, required: true },
     itemId: { type: String, required: true },
-    mode: { type: String as PropType<'inventory' | 'equipped'>, required: false },
+    mode: { type: String as PropType<'inventory' | 'equipped' | 'view'>, required: false },
   },
   emits: ['close', 'unequip', 'equip', 'openChest'],
   setup(props, { emit }) {
@@ -26,9 +26,10 @@ export default defineComponent({
       Object.values(equippedItemStore.equippedBySlot).includes(props.itemId),
     )
 
-    const explicitMode = computed(() => props.mode as 'inventory' | 'equipped' | undefined)
+    const explicitMode = computed(() => props.mode as 'inventory' | 'equipped' | 'view' | undefined)
 
     // If caller provides explicit mode, prefer it. Otherwise infer from inventory presence.
+    const isViewMode = computed(() => explicitMode.value === 'view')
     const isInventoryMode = computed(() =>
       explicitMode.value ? explicitMode.value === 'inventory' : !!inventoryItem.value,
     )
@@ -111,68 +112,72 @@ export default defineComponent({
               )}
             </div>
 
-            <div class="flex flex-col gap-3">
-              {/* Equipment mode: Unequip button */}
-              {isEquipmentMode.value && (
-                <button
-                  type="button"
-                  class="btn-secondary w-full py-3 px-4 rounded-lg font-semibold transition-all"
-                  onClick={unequip}
-                >
-                  {t('ui.unequip')}
-                </button>
-              )}
+            {!isViewMode.value && (
+              <div class="flex flex-col gap-3">
+                {/* Equipment mode: Unequip button */}
+                {isEquipmentMode.value && (
+                  <button
+                    type="button"
+                    class="btn-secondary w-full py-3 px-4 rounded-lg font-semibold transition-all"
+                    onClick={unequip}
+                  >
+                    {t('ui.unequip')}
+                  </button>
+                )}
 
-              {/* Inventory mode: Equip or Open chest */}
-              {isInventoryMode.value && (
-                <>
-                  {inventoryItem.value?.item.equipment && (
-                    <button
-                      type="button"
-                      class="btn-primary w-full py-3 px-4 rounded-lg font-semibold transition-all"
-                      onClick={equip}
-                    >
-                      {t('ui.equip')}
-                    </button>
-                  )}
-
-                  {isChest.value && (
-                    <div class="flex flex-col gap-2">
-                      {maxChestAmount.value > 1 && (
-                        <div class="flex gap-2">
-                          <input
-                            type="number"
-                            min={1}
-                            max={maxChestAmount.value}
-                            value={chestOpenAmount.value}
-                            onInput={(e) =>
-                              (chestOpenAmount.value = Number((e.target as HTMLInputElement).value))
-                            }
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder={String(maxChestAmount.value)}
-                          />
-                          <button
-                            type="button"
-                            class="btn-secondary px-4 py-2 rounded-lg font-semibold"
-                            onClick={setMaxChestAmount}
-                          >
-                            Max
-                          </button>
-                        </div>
-                      )}
+                {/* Inventory mode: Equip or Open chest */}
+                {isInventoryMode.value && (
+                  <>
+                    {inventoryItem.value?.item.equipment && (
                       <button
                         type="button"
-                        class="btn-primary w-full py-3 px-4 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled={!isValidChestAmount.value}
-                        onClick={openChest}
+                        class="btn-primary w-full py-3 px-4 rounded-lg font-semibold transition-all"
+                        onClick={equip}
                       >
-                        {t('ui.open')}
+                        {t('ui.equip')}
                       </button>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+                    )}
+
+                    {isChest.value && (
+                      <div class="flex flex-col gap-2">
+                        {maxChestAmount.value > 1 && (
+                          <div class="flex gap-2">
+                            <input
+                              type="number"
+                              min={1}
+                              max={maxChestAmount.value}
+                              value={chestOpenAmount.value}
+                              onInput={(e) =>
+                                (chestOpenAmount.value = Number(
+                                  (e.target as HTMLInputElement).value,
+                                ))
+                              }
+                              class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder={String(maxChestAmount.value)}
+                            />
+                            <button
+                              type="button"
+                              class="btn-secondary px-4 py-2 rounded-lg font-semibold"
+                              onClick={setMaxChestAmount}
+                            >
+                              Max
+                            </button>
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          class="btn-primary w-full py-3 px-4 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          disabled={!isValidChestAmount.value}
+                          onClick={openChest}
+                        >
+                          {t('ui.open')}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </ModalBox>
       )

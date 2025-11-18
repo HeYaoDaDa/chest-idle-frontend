@@ -101,6 +101,33 @@ describe('ModalBox Component', () => {
       wrapper.unmount()
     })
 
+    it('should only close top most modal with Escape', async () => {
+      const wrapper1 = mount(ModalBox, {
+        slots: { default: '<div>One</div>' },
+        attachTo: document.body,
+      })
+
+      const wrapper2 = mount(ModalBox, {
+        slots: { default: '<div>Two</div>' },
+        attachTo: document.body,
+      })
+
+      // Press Escape should only close the topmost
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+      await wrapper2.vm.$nextTick()
+
+      expect(wrapper2.emitted('close')).toBeTruthy()
+      expect(wrapper1.emitted('close')).toBeFalsy()
+
+      // Manually unmount wrapper2 and press again — should close wrapper1
+      wrapper2.unmount()
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+      await wrapper1.vm.$nextTick()
+      expect(wrapper1.emitted('close')).toBeTruthy()
+
+      wrapper1.unmount()
+    })
+
     it('should not emit close event when other keys are pressed', async () => {
       const wrapper = mount(ModalBox, {
         slots: {

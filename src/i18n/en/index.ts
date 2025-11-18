@@ -45,6 +45,7 @@ export default {
     open: 'Open',
     chestOpenResults: 'Chest Opening Results',
     noItemsObtained: 'No items obtained',
+    viewItem: 'View item: {item}',
     confirm: 'Confirm',
     close: 'Close',
     inventory: 'Inventory',

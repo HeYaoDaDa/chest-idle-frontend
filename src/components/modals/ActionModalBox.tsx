@@ -1,6 +1,7 @@
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import ItemTag from '@/components/ItemTag'
 import ModalBox from '@/components/ModalBox'
 import { itemConfigMap } from '@/gameConfig'
 import { useActionStore } from '@/stores/action'
@@ -199,7 +200,7 @@ export default defineComponent({
               <div class="flex justify-between items-center py-1">
                 <span class="text-sm font-medium text-gray-700">{t('ui.chest')}</span>
                 <span class="text-sm text-gray-900">
-                  {t(itemConfigMap[action.value.chestId].name)}
+                  <ItemTag itemId={action.value.chestId} />
                 </span>
               </div>
 
@@ -214,8 +215,11 @@ export default defineComponent({
                   {hasIngredients.value && action.value ? (
                     action.value.ingredients.map((ingredient, idx) => (
                       <span key={ingredient.itemId}>
-                        {t(itemConfigMap[ingredient.itemId].name)} ×
-                        {formatNumber(ingredient.count, locale.value)}
+                        <ItemTag itemId={ingredient.itemId} />
+                        <span class="text-xs text-gray-600 font-medium">
+                          {' '}
+                          ×{formatNumber(ingredient.count, locale.value)}
+                        </span>
                         {idx < action.value!.ingredients.length - 1 && '，'}
                       </span>
                     ))
@@ -231,8 +235,11 @@ export default defineComponent({
                   {hasProducts.value && action.value ? (
                     action.value.products.map((product, idx) => (
                       <span key={product.itemId}>
-                        {t(itemConfigMap[product.itemId].name)} ×
-                        {formatNumber(product.count, locale.value)}
+                        <ItemTag itemId={product.itemId} />
+                        <span class="text-xs text-gray-600 font-medium">
+                          {' '}
+                          ×{formatNumber(product.count, locale.value)}
+                        </span>
                         {idx < action.value!.products.length - 1 && '，'}
                       </span>
                     ))
