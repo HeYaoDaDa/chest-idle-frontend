@@ -26,6 +26,7 @@ export default defineComponent({
           {notificationStore.notifications.map((entry) => (
             <div
               key={entry.id}
+              role={entry.type === 'error' ? 'alert' : 'status'}
               class={`
                 pointer-events-auto min-w-60 max-w-90
                 p-2.5 px-3 rounded bg-white shadow-lg
@@ -41,10 +42,7 @@ export default defineComponent({
               `}
             >
               <span class="flex-1 text-sm text-gray-800">{t(entry.key, entry.params ?? {})}</span>
-              <button
-                class="border-none bg-transparent text-base cursor-pointer p-0 leading-none hover:opacity-70"
-                onClick={() => dismiss(entry.id)}
-              >
+              <button class="btn-ghost" onClick={() => dismiss(entry.id)} aria-label="close">
                 ×
               </button>
             </div>

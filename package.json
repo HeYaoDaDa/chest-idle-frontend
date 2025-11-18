@@ -15,6 +15,7 @@
     "test": "vitest run",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
+    "test:a11y": "vitest run src/components/__tests__/a11y.spec.ts",
     "test:ui": "vitest --ui",
     "verify": "run-s type-check test lint"
   },
@@ -35,16 +36,18 @@
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "axe-core": "^4.11.0",
     "eslint": "^9.21.0",
     "eslint-plugin-import": "^2.32.0",
-    "jsdom": "^25.0.1",
     "jiti": "^2.4.2",
+    "jsdom": "^25.0.1",
     "npm-run-all2": "^7.0.2",
     "prettier": "3.5.3",
     "typescript": "~5.8.0",
     "unocss": "^66.5.6",
     "vite": "^6.2.1",
     "vitest": "^2.1.8",
+    "vitest-axe": "^0.1.0",
     "vue-tsc": "^2.2.8"
   }
 }

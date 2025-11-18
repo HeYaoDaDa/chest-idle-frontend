@@ -69,7 +69,7 @@ export default defineComponent({
             {actionQueueStore.currentAction && (
               <button
                 type="button"
-                class="border-none rounded-full px-2.5 py-2 font-semibold text-sm cursor-pointer transition whitespace-nowrap bg-red-100 text-red-700 hover:bg-red-200"
+                class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm cursor-pointer transition whitespace-nowrap bg-red-100 text-red-700 hover:bg-red-200"
                 onClick={stopCurrentAction}
               >
                 {t('stop')}
@@ -78,7 +78,7 @@ export default defineComponent({
             {hasQueuedActions.value && (
               <button
                 type="button"
-                class="border-none rounded-full px-2.5 py-2 font-semibold text-sm cursor-pointer transition whitespace-nowrap bg-blue-100 text-primary hover:bg-blue-200"
+                class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm cursor-pointer transition whitespace-nowrap bg-blue-100 text-primary hover:bg-blue-200"
                 onClick={openQueueModal}
               >
                 {t('ui.queue')} ({unifiedLength.value})
@@ -96,10 +96,7 @@ export default defineComponent({
             aria-valuenow={Math.round(actionQueueStore.progress)}
             aria-label={t('ui.progressPercentage')}
           >
-            <div
-              class="h-full bg-gradient-to-r from-cyan-400 to-primary transition-all duration-75"
-              style={{ width: progress.value }}
-            ></div>
+            <div class="h-full progress-bar duration-75" style={{ width: progress.value }}></div>
           </div>
           {runningActionDurationDisplay.value && (
             <span class="absolute left-1/2 -translate-x-1/2 text-xs text-gray-700 pointer-events-none">

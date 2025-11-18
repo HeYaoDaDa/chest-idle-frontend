@@ -256,7 +256,7 @@ export default defineComponent({
                   />
                   <button
                     type="button"
-                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded font-medium transition-colors"
+                    class="btn btn-secondary"
                     title={t('ui.unlimited')}
                     onClick={() => (amountString.value = '∞')}
                   >

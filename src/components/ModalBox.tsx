@@ -5,20 +5,66 @@ export default defineComponent({
   emits: ['close'],
   setup(props, { emit, slots }) {
     const dialogRef = ref<HTMLElement | null>(null)
+    let previousActiveElement: HTMLElement | null = null
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         emit('close')
       }
     }
 
+    // Focus trap: trap Tab key inside modal
+    const trapKeydown = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return
+      if (!dialogRef.value) return
+
+      const focusableSelector =
+        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      const focusable = Array.from(dialogRef.value.querySelectorAll<HTMLElement>(focusableSelector))
+
+      if (focusable.length === 0) {
+        event.preventDefault()
+        return
+      }
+
+      // const first = focusable[0]
+      // const last = focusable[focusable.length - 1]
+
+      // Manually move focus as jsdom doesn't perform default tab navigation
+      const currentIndex = focusable.indexOf(document.activeElement as HTMLElement)
+      const current = currentIndex === -1 ? 0 : currentIndex
+      const nextIndex = event.shiftKey
+        ? (current - 1 + focusable.length) % focusable.length
+        : (current + 1) % focusable.length
+
+      event.preventDefault()
+      focusable[nextIndex].focus()
+    }
+
     onMounted(() => {
       window.addEventListener('keydown', handleKeydown)
+      window.addEventListener('keydown', trapKeydown)
       // Focus container for screen readers and keyboard navigation
-      if (dialogRef.value) dialogRef.value.focus()
+      previousActiveElement = document.activeElement as HTMLElement | null
+      if (dialogRef.value) {
+        const focusableSelector =
+          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        const focusables = Array.from(
+          dialogRef.value.querySelectorAll<HTMLElement>(focusableSelector),
+        )
+        if (focusables.length > 0) {
+          focusables[0].focus()
+        } else {
+          dialogRef.value.focus()
+        }
+      }
     })
 
     onUnmounted(() => {
       window.removeEventListener('keydown', handleKeydown)
+      window.removeEventListener('keydown', trapKeydown)
+      if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+        previousActiveElement.focus()
+      }
     })
 
     return () => (

@@ -122,7 +122,7 @@ export default defineComponent({
             </div>
             <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
               <div
-                class="h-full bg-gradient-to-r from-cyan-400 to-primary transition-all"
+                class="h-full progress-bar"
                 style={{ width: skill.value.upgradeProgress * 100 + '%' }}
                 role="progressbar"
                 aria-valuemin="0"
@@ -138,11 +138,12 @@ export default defineComponent({
               {tabEntries.value.map((tab) => (
                 <button
                   key={tab.id}
-                  class={`px-4 py-2 font-semibold transition border-b-2 ${
+                  class={`btn font-semibold transition border-b-2 ${
                     currentTab.value === tab.id
                       ? 'border-primary text-primary'
                       : 'border-transparent text-gray-600 hover:text-gray-900'
                   }`}
+                  aria-pressed={currentTab.value === tab.id}
                   onClick={() => (currentTab.value = tab.id)}
                 >
                   {tab.label}
@@ -156,9 +157,10 @@ export default defineComponent({
               <button
                 key={action.id}
                 type="button"
-                class="w-16 h-16 rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex items-center justify-center p-2"
+                class="card-item w-16 h-16 flex items-center justify-center p-2"
                 onClick={() => openModal(action.id)}
                 aria-label={t(action.name)}
+                aria-expanded={modalVisible.value && selectedActionId.value === action.id}
               >
                 <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
                   {t(action.name)}
@@ -182,6 +184,7 @@ export default defineComponent({
                     skillId={skillId.value}
                     slotIndex={slotIndex}
                     onSlotClick={openConsumableModal}
+                    expanded={consumableModalVisible.value && selectedSlotIndex.value === slotIndex}
                   />
                 ))}
               </div>

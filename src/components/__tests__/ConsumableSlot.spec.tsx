@@ -143,6 +143,24 @@ describe('ConsumableSlot Component', () => {
       expect(wrapper.find('.text-primary').exists()).toBe(true)
     })
 
+    it('should reflect expanded state for aria-expanded', async () => {
+      const onSlotClick = vi.fn()
+      const wrapper = mount(ConsumableSlot, {
+        props: {
+          skillId: 'mining',
+          slotIndex: 0,
+          onSlotClick,
+          expanded: true,
+        },
+        global: {
+          plugins: [createTestI18n()],
+        },
+      })
+
+      const container = wrapper.find('button')
+      expect(container.attributes('aria-expanded')).toBe('true')
+    })
+
     it('should not display remaining time when time is zero', () => {
       const inventoryStore = useInventoryStore()
       inventoryStore.inventoryMap = { coffee: 5 }
@@ -207,7 +225,8 @@ describe('ConsumableSlot Component', () => {
       expect(container.classes()).toContain('flex')
       expect(container.classes()).toContain('flex-col')
       expect(container.classes()).toContain('items-center')
-      expect(container.classes()).toContain('cursor-pointer')
+      // card-item shortcut contains cursor, hover and transition behavior
+      expect(container.classes()).toContain('card-item')
     })
 
     it('should have hover styles', () => {
@@ -223,8 +242,8 @@ describe('ConsumableSlot Component', () => {
       })
 
       const container = wrapper.find('button')
-      expect(container.classes()).toContain('hover:shadow-md')
-      expect(container.classes()).toContain('hover:border-primary')
+      // `card-item` includes hover/transition behavior; verify the shortcut was applied
+      expect(container.classes()).toContain('card-item')
     })
 
     it('should have proper styling for empty slot', () => {

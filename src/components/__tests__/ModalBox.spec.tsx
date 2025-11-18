@@ -121,6 +121,60 @@ describe('ModalBox Component', () => {
     })
   })
 
+  it('should focus first focusable element when opened and restore focus on close', async () => {
+    // Add outside element to receive focus on close
+    const outerButton = document.createElement('button')
+    outerButton.id = 'outer'
+    document.body.appendChild(outerButton)
+    outerButton.focus()
+
+    const wrapper = mount(ModalBox, {
+      slots: {
+        default: '<div><button id="a">A</button><button id="b">B</button></div>',
+      },
+      attachTo: document.body,
+    })
+
+    await wrapper.vm.$nextTick()
+    // First focusable inside modal should be focused
+    const first = document.getElementById('a')
+    expect(document.activeElement).toBe(first)
+
+    wrapper.unmount()
+    await wrapper.vm.$nextTick()
+    // Focus should restore to the outer button
+    expect(document.activeElement?.id).toBe('outer')
+
+    // cleanup
+    outerButton.remove()
+  })
+
+  it('should trap focus inside the modal', async () => {
+    const wrapper = mount(ModalBox, {
+      slots: {
+        default: '<div><button id="first">First</button><button id="second">Second</button></div>',
+      },
+      attachTo: document.body,
+    })
+
+    await wrapper.vm.$nextTick()
+
+    // initial focus: first
+    const first = document.getElementById('first') as HTMLElement
+    const second = document.getElementById('second') as HTMLElement
+    expect(document.activeElement).toBe(first)
+
+    // Tab: go to second
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab' }))
+    expect(document.activeElement).toBe(second)
+
+    // Tab again: wrap to first
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab' }))
+    expect(document.activeElement).toBe(first)
+
+    wrapper.unmount()
+  })
+
   describe('layout', () => {
     it('should have fixed positioning', () => {
       const wrapper = mount(ModalBox, {

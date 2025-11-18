@@ -76,7 +76,7 @@ export default defineComponent({
                     <div class="flex gap-2">
                       <button
                         type="button"
-                        class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        class="btn btn-secondary px-2 py-1 text-xs"
                         title="Top"
                         disabled
                       >
@@ -84,7 +84,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        class="btn btn-secondary px-2 py-1 text-xs"
                         title="Up"
                         disabled
                       >
@@ -92,7 +92,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-200"
+                        class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
                         title="Down"
                         disabled={unifiedLength.value <= 1}
                         onClick={() => moveActionDown(0)}
@@ -101,7 +101,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-200"
+                        class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
                         title="Bottom"
                         disabled={unifiedLength.value <= 1}
                         onClick={() => moveActionToBottom(0)}
@@ -111,7 +111,7 @@ export default defineComponent({
                     </div>
                     <button
                       type="button"
-                      class="px-4 py-2 bg-red-100 text-red-700 rounded-full text-sm font-semibold cursor-pointer transition-all hover:bg-red-200 hover:shadow-lg flex-shrink-0"
+                      class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm bg-red-100 text-red-700 hover:bg-red-200 hover:shadow-lg flex-shrink-0"
                       onClick={stopCurrentAction}
                     >
                       {t('stop')}
@@ -142,7 +142,7 @@ export default defineComponent({
                       <div class="flex gap-2">
                         <button
                           type="button"
-                          class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
                           title="Top"
                           disabled={unifiedIndex === 0}
                           onClick={() => moveActionToTop(unifiedIndex)}
@@ -151,7 +151,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
                           title="Up"
                           disabled={unifiedIndex === 0}
                           onClick={() => moveActionUp(unifiedIndex)}
@@ -160,7 +160,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
                           title="Down"
                           disabled={unifiedIndex >= unifiedLength.value - 1}
                           onClick={() => moveActionDown(unifiedIndex)}
@@ -169,7 +169,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="px-2 py-1 border border-gray-300 bg-gray-100 text-gray-900 rounded text-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
                           title="Bottom"
                           disabled={unifiedIndex >= unifiedLength.value - 1}
                           onClick={() => moveActionToBottom(unifiedIndex)}
@@ -179,7 +179,7 @@ export default defineComponent({
                       </div>
                       <button
                         type="button"
-                        class="px-4 py-2 bg-red-100 text-red-700 rounded-full text-sm font-semibold cursor-pointer transition-all hover:bg-red-200 hover:shadow-lg flex-shrink-0"
+                        class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm bg-red-100 text-red-700 hover:bg-red-200 hover:shadow-lg flex-shrink-0"
                         onClick={() => removeQueuedAction(index)}
                       >
                         {t('remove')}

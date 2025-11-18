@@ -33,6 +33,11 @@ export const createTestI18n = () => {
           consumable: {
             empty: 'Empty',
           },
+          inventory: 'Inventory',
+          equipment: 'Equipment',
+          abilities: 'Abilities',
+          confirm: 'Confirm',
+          close: 'Close',
           progressPercentage: 'Progress',
           currentProgress: 'Current Progress',
         },

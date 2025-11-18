@@ -18,7 +18,7 @@
 
 ## 2. 已完成的基础更改（参考）
 
-- 在 `uno.config.ts` 中新增 `btn`, `btn-secondary`, `interactive` shortcuts；为 `card-item` 添加 focus-visible ring。
+- 在 `uno.config.ts` 中新增 `btn`, `btn-secondary`, `btn-ghost` shortcuts；为 `card-item` 添加 focus-visible ring。
 - 将 `ModalBox` 增加 `role="dialog"` 与 `aria-modal="true"`，初步聚焦 modal 容器。
 - 将 `ConsumableSlot`, `ChestPage`, `InventoryPage`, `SkillPage` 的卡片改成 `<button>`，并为进度条添加 `role="progressbar"` 和 `aria-valuenow`。
 - 更新测试并运行 `npm run verify` 通过：315 个测试通过。
@@ -53,15 +53,18 @@
 1. LeftSidebar
 
    - 变更：`nav-link` 中添加 focus-visible；进度条腾出 aria 支持（已更新）。
+   - 完成：已把 `nav-link` 添加 `focus-visible:ring`，并为侧边栏进度添加 ARIA。
    - 测试：Tab 顺序和类存在。
 
 2. ActionQueue
 
    - 变更：progressbar 节点已有 aria（已补充）；将按钮类替换为 `btn` 或 `btn-secondary` 来统一视觉风格。
+   - 完成：已将 ActionQueue 的按钮添加 `btn`，保持颜色与行为不变。
    - 测试：动作按钮依然工作、进度 aria 测试。
 
 3. NotificationCenter
    - 变更：确保 dismiss/action 使用 `<button>`，并考虑 `aria-live="polite"` 或 `role="status"`。
+   - 完成：已为通知项添加 `role`（error -> `alert`; others -> `status`）并为关闭按钮添加 `aria-label`，同时补充测试。
    - 测试：消息可读性与 aria-live 的存在。
 
 ---
@@ -71,6 +74,11 @@
 - 集成 axe-core 检查（可选：`vitest-axe` 或 `jest-axe`）以自动扫描主要页面：`GamePage`, `InventoryPage`, `SkillPage`, `ChestPage`。
 - 颜色对比测试：对 `text-gray-500`/`text-gray-600` 等文本运行对比检查（WCAG 4.5:1 规则）。
 - CI 建议：添加 `npm run test:a11y` 或把 axe tests 放到 `npm run verify` 的 extended job。
+- 集成 axe-core 检查（已集成 `axe-core` + `vitest-axe`），并编写基础 a11y 测试覆盖关键组件（ActionQueue, LeftSidebar, NotificationCenter, ConsumableSlot）。
+  - 注意：jsdom 在 color-contrast 检测上需要 canvas 上下文，测试环境中该规则将被禁用（`color-contrast` rule disabled）以避免 jsdom 限制导致假阳性。
+  - 针对页面级 landmark 检查（`region` rule）：在组件级孤立检测时可能触发无关规则；已在组件测试中禁用该检查（建议在集成/端到端测试中启用）。
+- 颜色对比测试：对 `text-gray-500`/`text-gray-600` 等文本运行对比检查（WCAG 4.5:1 规则）。建议在 e2e 或可选的 CI job 中运行。
+- CI 建议：添加 `npm run test:a11y`（已在 `package.json` 添加）或把 axe tests 放到 `npm run verify` 的 extended job（建议作为可选 job 以减少干扰）。
 
 ---
 
@@ -79,6 +87,9 @@
 - 聚焦锁（Focus Trap）: 在模态打开时 lock focus（例如 `focus-trap` 或自实现）。
 - 无障碍替代：当必须使用非语义元素时，确保 `role=button`, `tabindex=0` 与键盘行为（Space/Enter）。
 - 为切换按钮使用 `aria-pressed`, 为折叠区使用 `aria-controls` + `aria-expanded` 等。
+- 完成：已经在 `ModalBox` 中实现了 focus-trap（Tab/Shift+Tab 循环）和恢复上次焦点；
+  同时 `Inventory` 与 `Skill` 的 tab 按钮添加了 `aria-pressed`，并为打开模态的按钮（Chest/Inventory item/Action/consumable）添加了 `aria-expanded`。
+  所有变更配套了单元测试与 axe 检查（见 `src/components/__tests__` 与 `src/pages/__tests__`）。
 
 ---
 
@@ -98,7 +109,9 @@
 ```ts
 shortcuts: {
   btn: 'px-4 py-2 rounded-md font-semibold transition inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-40',
-  'btn-secondary': 'bg-gray-100 text-gray-900 border border-gray-300 hover:bg-gray-200',
+   'btn-secondary': 'btn bg-gray-100 text-gray-900 border border-gray-300 hover:bg-gray-200',
+   'btn-ghost': 'btn bg-transparent border-none p-0 hover:opacity-70 leading-none',
+   'btn-primary': 'btn bg-primary text-white hover:bg-primary/90 border-none shadow-sm',
   'card-item': 'rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
 }
 ```
@@ -113,15 +126,31 @@ shortcuts: {
 - focus 可见性：`focus-visible:ring-2` 或 `outline-none` 结合 ring。
 - 文本对比：核心操作文本保证对比足够（更改 `text-gray-600` -> `text-gray-700` 若需要）。
 
+按钮使用准则：
+
+- `btn`：基础按钮，包含 padding、圆角与焦点 ring。
+- `btn-primary`：用于页面或弹窗中的主操作（例如 Submit/Open/Start） — 背景使用 `primary` 色，并配白色文字。
+- `btn-secondary`：用于次要动作或取消，保持灰色背景和边框。
+
+示例：`<button class="btn btn-primary">Start</button>` 或 `<button class="btn btn-secondary">Cancel</button>`。
+或者透明图标按钮：`<button class="btn-ghost" aria-label="close">×</button>`。
+
 ---
 
 ## 7. 验证命令（给开发者）
 
 - 运行完整验证（type-check + tests + lint）：
 
-```bash
+````bash
 npm run verify
+
+注意：`check-shortcuts` 脚本已移除；若需检查未使用的 UnoCSS shortcut，可使用以下手动命令（或自行编写小脚本）：
+
+```bash
+rg "class=\"(btn|btn-secondary|card-item|progress-bar|panel|nav-link)" src/ || true
 ```
+
+````
 
 - 运行单元测试：
 

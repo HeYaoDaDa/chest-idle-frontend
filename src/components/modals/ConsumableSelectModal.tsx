@@ -61,7 +61,7 @@ export default defineComponent({
                     return (
                       <div
                         key={item.id}
-                        class="w-16 h-16 rounded bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-blue-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex flex-col justify-center items-center p-1 relative"
+                        class="card-item w-16 h-16 mt-0 relative"
                         onClick={() => handleSelectConsumable(item.id)}
                       >
                         <div class="text-xs font-semibold text-gray-900 text-center leading-tight">

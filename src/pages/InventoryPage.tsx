@@ -103,31 +103,34 @@ export default defineComponent({
       <div class="flex-1 flex flex-col h-full overflow-hidden">
         <div class="flex gap-1 border-b border-gray-200 px-4 pt-4">
           <button
-            class={`px-4 py-2 font-semibold transition border-b-2 ${
+            class={`btn font-semibold transition border-b-2 ${
               activeTab.value === 'inventory'
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
             }`}
+            aria-pressed={activeTab.value === 'inventory'}
             onClick={() => (activeTab.value = 'inventory')}
           >
             {t('ui.inventory')}
           </button>
           <button
-            class={`px-4 py-2 font-semibold transition border-b-2 ${
+            class={`btn font-semibold transition border-b-2 ${
               activeTab.value === 'equipment'
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
             }`}
+            aria-pressed={activeTab.value === 'equipment'}
             onClick={() => (activeTab.value = 'equipment')}
           >
             {t('ui.equipment')}
           </button>
           <button
-            class={`px-4 py-2 font-semibold transition border-b-2 ${
+            class={`btn font-semibold transition border-b-2 ${
               activeTab.value === 'abilities'
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
             }`}
+            aria-pressed={activeTab.value === 'abilities'}
             onClick={() => (activeTab.value = 'abilities')}
           >
             {t('ui.abilities')}
@@ -140,10 +143,14 @@ export default defineComponent({
               {inventoryStore.inventoryItems.map((inventoryItem) => (
                 <button
                   key={inventoryItem.item.id}
-                  class="w-16 h-16 rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex flex-col justify-center items-center p-1 relative"
+                  class="card-item w-16 h-16 relative"
                   type="button"
                   onClick={() => openInventoryModal(inventoryItem)}
                   aria-label={t(inventoryItem.item.name)}
+                  aria-expanded={
+                    selectedContext.value === 'inventory' &&
+                    selectedItemId.value === inventoryItem.item.id
+                  }
                 >
                   <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
                     {t(inventoryItem.item.name)}
@@ -164,10 +171,13 @@ export default defineComponent({
                 <div key={slot.id} class="w-16 h-16">
                   {equippedBySlot.value[slot.id] ? (
                     <button
-                      class="w-full h-full rounded bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex items-center justify-center p-1"
+                      class="card-item w-full h-full bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition flex items-center justify-center p-1"
                       type="button"
                       onClick={() => openSlotEquipment(slot.id)}
                       aria-label={t(equippedItemNameBySlot.value[slot.id])}
+                      aria-expanded={
+                        selectedContext.value === 'equipped' && selectedSlotId.value === slot.id
+                      }
                     >
                       <div class="text-xs font-semibold text-primary text-center leading-tight">
                         {t(equippedItemNameBySlot.value[slot.id])}

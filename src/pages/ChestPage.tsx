@@ -46,9 +46,10 @@ export default defineComponent({
             <button
               key={chest.id}
               type="button"
-              class="w-16 h-16 rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer flex flex-col justify-center items-center p-1"
+              class="card-item w-16 h-16 flex flex-col justify-center items-center p-1"
               onClick={() => openModal(chest.id)}
               aria-label={t(chest.name)}
+              aria-expanded={modalVisible.value && selectedChestId.value === chest.id}
             >
               <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
                 {t(chest.name)}
@@ -62,7 +63,7 @@ export default defineComponent({
                 aria-label={t('ui.progressPercentage')}
               >
                 <div
-                  class="h-full bg-gradient-to-r from-cyan-400 to-primary transition-all"
+                  class="h-full progress-bar"
                   style={{ width: chest.progress * 100 + '%' }}
                 ></div>
               </div>
