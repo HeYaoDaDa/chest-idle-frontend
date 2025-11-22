@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import { itemConfigMap, slotConfigs } from '@/gameConfig'
+import log from '@/utils/log'
 
 import { useInventoryStore } from './inventory'
 import { useStatStore } from './stat'
@@ -37,7 +38,7 @@ export const useEquippedItemStore = defineStore('equippedItem', () => {
   function equipItem(itemId: string): void {
     const itemConfig = itemConfigMap[itemId]
     if (itemConfig.category !== 'equipment' || !itemConfig.equipment) {
-      console.error(`Item ${itemConfig.id} is not equipment`)
+      log.error(`Item ${itemConfig.id} is not equipment`, { itemId: itemConfig.id })
       return
     }
 

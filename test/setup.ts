@@ -2,6 +2,8 @@ import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, vi } from 'vitest'
 import { createI18n } from 'vue-i18n'
 
+import log from '@/utils/log'
+
 // Mock virtual:uno.css import to prevent resolution errors
 vi.mock('virtual:uno.css', () => ({}))
 
@@ -9,6 +11,8 @@ vi.mock('virtual:uno.css', () => ({}))
 beforeEach(() => {
   const pinia = createPinia()
   setActivePinia(pinia)
+  // Silence logger during tests to avoid noise and external transport
+  log.setLevel('silent')
 })
 
 // Clean up after each test

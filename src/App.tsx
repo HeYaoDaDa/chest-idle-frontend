@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router'
 import { ItemModal } from '@/components/modals'
 import NotificationCenter from '@/components/NotificationCenter'
 import { useItemModalStore } from '@/stores/itemModal'
+import log from '@/utils/log'
 
 export default defineComponent({
   name: 'App',
@@ -15,15 +16,15 @@ export default defineComponent({
     // is only opened via ItemTag with mode='view' which hides all action buttons.
     // They are defined here to satisfy TypeScript and catch logic errors.
     const onEquip = () => {
-      console.error('ItemModal equip event triggered in App context - this should not happen')
+      log.error('ItemModal equip event triggered in App context - this should not happen', { event: 'equip' })
       throw new Error('Equip action not supported in global item modal (view mode only)')
     }
     const onUnequip = () => {
-      console.error('ItemModal unequip event triggered in App context - this should not happen')
+      log.error('ItemModal unequip event triggered in App context - this should not happen', { event: 'unequip' })
       throw new Error('Unequip action not supported in global item modal (view mode only)')
     }
     const onOpenChest = () => {
-      console.error('ItemModal openChest event triggered in App context - this should not happen')
+      log.error('ItemModal openChest event triggered in App context - this should not happen', { event: 'openChest' })
       throw new Error('OpenChest action not supported in global item modal (view mode only)')
     }
 

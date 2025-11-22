@@ -24,7 +24,8 @@
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
     "vue-i18n": "10",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "loglevel": "^1.8.1"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
@@ -48,6 +49,7 @@
     "vite": "^6.2.1",
     "vitest": "^2.1.8",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^2.2.8"
+    "vue-tsc": "^2.2.8",
+    "@types/loglevel": "^1.4.6"
   }
 }

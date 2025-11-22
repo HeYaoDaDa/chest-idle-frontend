@@ -1,6 +1,8 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import log from '@/utils/log'
+
 import { useAppStore } from '../app'
 
 // Mock implementations
@@ -68,7 +70,7 @@ describe('App Store', () => {
       })
 
       const appStore = useAppStore()
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const consoleErrorSpy = vi.spyOn(log, 'error').mockImplementation(() => {})
 
       await appStore.loadApplication()
 
@@ -84,7 +86,7 @@ describe('App Store', () => {
       })
 
       const appStore = useAppStore()
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const consoleErrorSpy = vi.spyOn(log, 'error').mockImplementation(() => {})
 
       await appStore.loadApplication()
 

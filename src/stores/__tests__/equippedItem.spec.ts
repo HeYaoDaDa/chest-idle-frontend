@@ -1,6 +1,8 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import log from '@/utils/log'
+
 import { useEquippedItemStore } from '../equippedItem'
 import { useInventoryStore } from '../inventory'
 import { useStatStore } from '../stat'
@@ -186,11 +188,14 @@ describe('EquippedItem Store', () => {
     })
 
     it('should handle non-equipment item gracefully', () => {
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const consoleErrorSpy = vi.spyOn(log, 'error').mockImplementation(() => {})
 
       equippedItemStore.equipItem('notEquipment')
 
-      expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('is not equipment'))
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        expect.stringContaining('is not equipment'),
+        expect.objectContaining({ itemId: 'notEquipment' }),
+      )
       consoleErrorSpy.mockRestore()
     })
 

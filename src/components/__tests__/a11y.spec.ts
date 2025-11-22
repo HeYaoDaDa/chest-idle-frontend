@@ -7,6 +7,7 @@ import ActionQueue from '@/components/ActionQueue'
 import ConsumableSlot from '@/components/ConsumableSlot'
 import LeftSidebar from '@/components/LeftSidebar'
 import NotificationCenter from '@/components/NotificationCenter'
+import log from '@/utils/log'
 
 import { createTestI18n } from '@/../test/setup'
 
@@ -25,7 +26,7 @@ describe('Accessibility (axe) checks', () => {
     })
     // debug:
 
-    console.log('ActionQueue violations', JSON.stringify(results.violations, null, 2))
+    log.debug('ActionQueue violations', { violations: results.violations })
     expect(results.violations.length).toBe(0)
   })
 

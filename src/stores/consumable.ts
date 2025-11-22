@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 import { itemConfigMap } from '@/gameConfig'
 import { type FixedPoint, toFixed, fromFixed, fpAdd, fpSub, fpMul, fpDiv } from '@/utils/fixedPoint'
+import log from '@/utils/log'
 
 import { useInventoryStore } from './inventory'
 import { useStatStore } from './stat'
@@ -132,20 +133,20 @@ export const useConsumableStore = defineStore('consumable', () => {
   function applyConsumable(skillId: string, slotIndex: number, itemId: string): boolean {
     const item = itemConfigMap[itemId]
     if (item.category !== 'consumable' || !item.consumable) {
-      console.error(`Item ${itemId} is not a consumable`)
+      log.error(`Item ${itemId} is not a consumable`, { itemId, skillId, slotIndex })
       return false
     }
 
     // 从库存检查
     const inventoryCount = inventoryStore.inventoryMap[itemId] ?? 0
     if (inventoryCount <= 0) {
-      console.error(`Not enough ${itemId} in inventory`)
+      log.error(`Not enough ${itemId} in inventory`, { itemId, skillId })
       return false
     }
 
     const slots = getSlots(skillId)
     if (slotIndex < 0 || slotIndex >= slots.length) {
-      console.error(`Invalid slot index ${slotIndex}`)
+      log.error(`Invalid slot index ${slotIndex}`, { slotIndex, skillId })
       return false
     }
 

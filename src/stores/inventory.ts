@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import { itemConfigMap, type ItemConfig } from '@/gameConfig'
+import log from '@/utils/log'
 
 export interface InventoryItem {
   item: ItemConfig
@@ -70,7 +71,7 @@ export const useInventoryStore = defineStore('inventory', () => {
   ): { itemId: string; amount: number }[] {
     const item = inventoryItem.item
     if (!item.chest) {
-      console.error(`Item ${item.id} is not a chest`)
+      log.error(`Item ${item.id} is not a chest`, { itemId: item.id })
       return []
     }
 

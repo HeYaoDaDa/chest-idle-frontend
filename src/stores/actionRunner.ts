@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import i18n from '@/i18n'
 import { isInfiniteAmount, toFiniteForCompute, fromComputeResult } from '@/utils/amount'
 import { toFixed, fromFixed, fpMul, fpDiv, fpLt, fpFloor } from '@/utils/fixedPoint'
+import log from '@/utils/log'
 
 import { useActionQueueStore } from './actionQueue'
 import { useChestPointStore } from './chestPoint'
@@ -146,9 +147,11 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
 
     const currentLevel = skillStore.getSkillLevel(action.skillId)
     if (currentLevel < action.minLevel) {
-      console.warn(
-        `Required level ${action.minLevel} for action ${action.id}, but current level is ${currentLevel}`,
-      )
+      log.warn(`Required level ${action.minLevel} for action ${action.id}, but current level is ${currentLevel}`, {
+        actionId: action.id,
+        requiredLevel: action.minLevel,
+        currentLevel,
+      })
       const skillConfig = skillStore.getSkill(action.skillId)
       notificationStore.warning('notification.levelTooLow', {
         skill: skillConfig ? i18n.global.t(skillConfig.name) : action.skillId,

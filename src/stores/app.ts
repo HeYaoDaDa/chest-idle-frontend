@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { loadGameConfig } from '@/gameConfig'
+import log from '@/utils/log'
 
 import { useActionRunnerStore } from './actionRunner'
 
@@ -16,7 +17,7 @@ export const useAppStore = defineStore('app', () => {
       actionRunnerStore.start()
       state.value = 'ready'
     } catch (error) {
-      console.error('Failed to load application:', error)
+      log.error('Failed to load application:', { error: `${error}` })
       state.value = 'error'
     }
   }
