@@ -8,7 +8,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [vueJsx(), UnoCSS()],
   server: {
-    open: true,
+    host: '0.0.0.0',
   },
   resolve: {
     alias: {
