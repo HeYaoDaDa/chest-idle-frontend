@@ -1,0 +1,1 @@
+import{d as t,c as e,a as r}from"./index-CWEXVC7m.js";const a=t({name:"ErrorNotFoundPage",setup(){return()=>e("div",{class:"h-screen flex justify-center items-center"},[e("h1",{class:"text-6xl font-bold text-gray-800"},[r("404")])])}});export{a as default};
