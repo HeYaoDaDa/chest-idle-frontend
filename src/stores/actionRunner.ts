@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 
+import { enemyConfigMap } from '@/gameConfig'
 import i18n from '@/i18n'
 import { isInfiniteAmount, toFiniteForCompute, fromComputeResult } from '@/utils/amount'
 import { toFixed, fromFixed, fpMul, fpDiv, fpLt, fpFloor } from '@/utils/fixedPoint'
@@ -7,6 +8,7 @@ import log from '@/utils/log'
 
 import { useActionQueueStore } from './actionQueue'
 import { useChestPointStore } from './chestPoint'
+import { useCombatStore } from './combat'
 import { useConsumableStore } from './consumable'
 import { useInventoryStore } from './inventory'
 import { useNotificationStore } from './notification'
@@ -21,6 +23,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
   const notificationStore = useNotificationStore()
   const chestPointStore = useChestPointStore()
   const consumableStore = useConsumableStore()
+  const combatStore = useCombatStore()
 
   function start(): void {
     requestAnimationFrame(update)
@@ -31,19 +34,148 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       const now = performance.now()
       let remainedElapsed = now - actionQueueStore.actionStartDate
       while (actionQueueStore.currentAction && remainedElapsed > 0) {
-        remainedElapsed = updateCurrentAction(remainedElapsed)
+        if (actionQueueStore.isCombatAction) {
+          remainedElapsed = updateCombatAction(remainedElapsed)
+        } else {
+          remainedElapsed = updateCurrentAction(remainedElapsed)
+        }
       }
     }
 
-    if (actionQueueStore.actionStartDate && actionQueueStore.currentActionDetail) {
+    // 更新进度条
+    if (actionQueueStore.actionStartDate && actionQueueStore.currentAction) {
       const elapsed = toFixed(performance.now() - actionQueueStore.actionStartDate)
-      const duration = actionQueueStore.currentActionDetail.duration
-      actionQueueStore.progress =
-        Math.min(duration > 0 ? fromFixed(fpDiv(elapsed, duration)) : 0, 1) * 100
+
+      if (actionQueueStore.isCombatAction) {
+        // 战斗行动使用 combatDuration
+        const duration = actionQueueStore.currentAction.combatDuration || 0
+        actionQueueStore.progress =
+          Math.min(duration > 0 ? fromFixed(fpDiv(elapsed, toFixed(duration))) : 0, 1) * 100
+      } else if (actionQueueStore.currentActionDetail) {
+        // 生产行动使用 action.duration
+        const duration = actionQueueStore.currentActionDetail.duration
+        actionQueueStore.progress =
+          Math.min(duration > 0 ? fromFixed(fpDiv(elapsed, duration)) : 0, 1) * 100
+      } else {
+        actionQueueStore.progress = 0
+      }
     } else {
       actionQueueStore.progress = 0
     }
     requestAnimationFrame(update)
+  }
+
+  /**
+   * 处理战斗行动的更新
+   */
+  function updateCombatAction(elapsed: number): number {
+    if (!actionQueueStore.actionStartDate || !actionQueueStore.currentAction) return 0
+
+    const actionItem = actionQueueStore.currentAction
+    const duration = actionItem.combatDuration || 0
+
+    // 更新攻击冷却进度和HP
+    if (combatStore.currentBattle) {
+      const battle = combatStore.currentBattle
+      const currentTime = performance.now()
+      const battleElapsed = currentTime - battle.startTime
+
+      // 玩家攻击进度
+      const playerInterval = combatStore.currentAttackInterval
+      const playerProgress = (battleElapsed % playerInterval) / playerInterval
+      battle.playerAttackProgress = Math.min(playerProgress, 1)
+
+      // 敌人攻击进度
+      const enemy = enemyConfigMap[battle.enemyId]
+      if (enemy) {
+        const enemyInterval = enemy.attackInterval
+        const enemyProgress = (battleElapsed % enemyInterval) / enemyInterval
+        battle.enemyAttackProgress = Math.min(enemyProgress, 1)
+      }
+
+      // 根据战斗事件流更新HP
+      const events = battle.representativeLog
+      let lastPlayerHp = combatStore.maxHp
+      let lastEnemyHp = enemy?.hp || 0
+
+      for (const event of events) {
+        if (event.time > battleElapsed) break
+
+        if (event.actorSide === 'player') {
+          // 玩家攻击敌人
+          lastEnemyHp = event.targetHpAfter
+        } else {
+          // 敌人攻击玩家
+          lastPlayerHp = event.targetHpAfter
+        }
+      }
+
+      battle.playerCurrentHp = lastPlayerHp
+      battle.enemyCurrentHp = lastEnemyHp
+    }
+
+    if (elapsed < duration) {
+      // 战斗未完成
+      return 0
+    }
+
+    // 战斗完成，调用 combatStore 完成战斗并获取奖励
+    const battleRewards = combatStore.completeBattle()
+
+    // 结算战斗奖励
+    if (battleRewards) {
+      // 添加战斗技能经验
+      const xpGains = battleRewards.xpGains
+      if (xpGains.melee > 0) skillStore.addSkillXpRaw('melee', xpGains.melee)
+      if (xpGains.ranged > 0) skillStore.addSkillXpRaw('ranged', xpGains.ranged)
+      if (xpGains.magic > 0) skillStore.addSkillXpRaw('magic', xpGains.magic)
+      if (xpGains.defense > 0) skillStore.addSkillXpRaw('defense', xpGains.defense)
+      if (xpGains.stamina > 0) skillStore.addSkillXpRaw('stamina', xpGains.stamina)
+      if (xpGains.intelligence > 0) skillStore.addSkillXpRaw('intelligence', xpGains.intelligence)
+
+      // 添加掉落物品到背包
+      if (battleRewards.lootItems.length > 0) {
+        const itemsToAdd: [string, number][] = battleRewards.lootItems.map((loot) => [
+          loot.itemId,
+          loot.count,
+        ])
+        inventoryStore.addManyItems(itemsToAdd)
+      }
+
+      // 添加宝箱点数
+      for (const cp of battleRewards.chestPoints) {
+        const chestCount = chestPointStore.addChestPoints(cp.chestId, toFixed(cp.points))
+        if (chestCount > 0) {
+          inventoryStore.addItem(cp.chestId, chestCount)
+        }
+      }
+    }
+
+    // 计算实际消耗的时间
+    const computedElapsedTime = duration
+    const remainedElapsed = elapsed - computedElapsedTime
+
+    // 完成当前行动（减少计数）
+    actionQueueStore.completeCurrentAction(computedElapsedTime, 1)
+
+    // 如果还有剩余战斗次数，刷新战斗属性并继续下一场
+    if (actionQueueStore.currentAction && actionQueueStore.isCombatAction) {
+      // 重新模拟以获取最新的玩家属性
+      const newDuration = combatStore.refreshBattleStats()
+      if (newDuration !== null) {
+        // 更新队列中的战斗时长
+        actionQueueStore.currentAction.combatDuration = newDuration
+      } else {
+        // 无法继续战斗，清除战斗状态并移除队列
+        combatStore.clearBattle()
+        actionQueueStore.removeAction(0)
+      }
+    } else {
+      // 所有战斗完成，清除战斗状态
+      combatStore.clearBattle()
+    }
+
+    return remainedElapsed
   }
 
   function updateCurrentAction(elapsed: number): number {

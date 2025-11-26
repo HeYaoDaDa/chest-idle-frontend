@@ -66,6 +66,14 @@ export const useSkillStore = defineStore('skill', () => {
     }
   }
 
+  /**
+   * 添加技能经验（使用原始数值）
+   * 用于战斗系统等不使用 FixedPoint 的场景
+   */
+  function addSkillXpRaw(skillId: string, xp: number): void {
+    addSkillXp(skillId, toFixed(xp))
+  }
+
   function getSkill(skillId: string): Skill | undefined {
     const skillConfig = skillConfigMap[skillId]
     if (!skillConfig) return undefined
@@ -94,6 +102,7 @@ export const useSkillStore = defineStore('skill', () => {
     getSkill,
     getSkillLevel,
     addSkillXp,
+    addSkillXpRaw,
   }
 })
 

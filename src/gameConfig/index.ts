@@ -6,6 +6,7 @@ import type {
   StatConfig,
   ItemConfig,
   ActionConfig,
+  EnemyConfig,
   GameConfig,
   StatConfigInternal,
   ItemConfigInternal,
@@ -20,6 +21,7 @@ export type {
   StatConfig,
   ItemConfig,
   ActionConfig,
+  EnemyConfig,
   GameConfig,
   EffectType,
   EffectConfig,
@@ -41,6 +43,7 @@ export const slotConfigMap: Record<string, SlotConfig> = Object.create(null)
 export const statConfigMap: Record<string, StatConfigInternal> = Object.create(null)
 export const itemConfigMap: Record<string, ItemConfigInternal> = Object.create(null)
 export const actionConfigMap: Record<string, ActionConfigInternal> = Object.create(null)
+export const enemyConfigMap: Record<string, EnemyConfig> = Object.create(null)
 
 export const skillConfigs: SkillConfig[] = []
 export const slotConfigs: SlotConfig[] = []
@@ -49,6 +52,7 @@ export const resourceConfigs: ItemConfig[] = []
 export const chestConfigs: ItemConfig[] = []
 export const equipmentConfigs: ItemConfig[] = []
 export const consumableConfigs: ItemConfig[] = []
+export const enemyConfigs: EnemyConfig[] = []
 export const actionConfigListBySkill: Record<string, ActionConfig[]> = Object.create(null)
 
 /**
@@ -159,6 +163,10 @@ export function loadGameConfig() {
         actionConfigListBySkill[config.skillId] = actionConfigListBySkill[config.skillId] || []
         actionConfigListBySkill[config.skillId].push(config as ActionConfig)
         break
+      case 'enemy':
+        enemyConfigMap[config.id] = config as EnemyConfig
+        enemyConfigs.push(config as EnemyConfig)
+        break
     }
   }
 
@@ -169,6 +177,7 @@ export function loadGameConfig() {
   chestConfigs.sort((a, b) => a.sort - b.sort)
   equipmentConfigs.sort((a, b) => a.sort - b.sort)
   consumableConfigs.sort((a, b) => a.sort - b.sort)
+  enemyConfigs.sort((a, b) => a.sort - b.sort)
   for (const actionConfigs of Object.values(actionConfigListBySkill)) {
     actionConfigs.sort((a, b) => a.sort - b.sort)
   }

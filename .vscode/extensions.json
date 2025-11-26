@@ -1,11 +1,10 @@
 {
   "recommendations": [
     "antfu.unocss",
+    "christian-kohler.path-intellisense",
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
-    "lokalise.i18n-ally",
-    "usernamehw.errorlens",
-    "christian-kohler.path-intellisense"
+    "usernamehw.errorlens"
   ]
 }

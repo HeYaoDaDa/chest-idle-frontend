@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import ChestPage from '@/pages/ChestPage'
+import CombatPage from '@/pages/CombatPage'
 import GamePage from '@/pages/GamePage'
 import InventoryPage from '@/pages/InventoryPage'
 import LoadPage from '@/pages/LoadPage'
@@ -32,6 +33,11 @@ const router = createRouter({
           path: 'chests',
           name: 'chests',
           component: ChestPage,
+        },
+        {
+          path: 'combat',
+          name: 'combat',
+          component: CombatPage,
         },
         {
           path: ':id',

@@ -4,6 +4,7 @@ export type {
   StatConfig,
   ItemConfig,
   ActionConfig,
+  EnemyConfig,
   GameConfig,
   EffectType,
   EffectConfig,
@@ -14,7 +15,7 @@ export type {
   DerivedValueConfig,
 }
 
-type GameConfig = SkillConfig | SlotConfig | StatConfig | ItemConfig | ActionConfig
+type GameConfig = SkillConfig | SlotConfig | StatConfig | ItemConfig | ActionConfig | EnemyConfig
 
 interface SkillConfig {
   type: 'skill'
@@ -113,6 +114,20 @@ interface LootEntryConfig {
   chance: number
   min: number
   max: number
+}
+
+interface EnemyConfig {
+  type: 'enemy'
+  id: string
+  sort: number
+  hp: number
+  attack: number
+  attackInterval: number
+  xpReward: number
+  fixedLootItems: { itemId: string; count: number }[]
+  fixedChestPoints: { chestId: string; points: number }[]
+  name: string
+  description: string
 }
 
 // ==================== 内部类型（使用定点数） ====================

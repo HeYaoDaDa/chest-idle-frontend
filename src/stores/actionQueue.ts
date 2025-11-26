@@ -6,15 +6,29 @@ import { INFINITE_AMOUNT } from '@/utils/constants'
 
 import { useActionStore } from './action'
 
+/**
+ * 队列中的行动项类型
+ */
+export type ActionQueueItemType = 'production' | 'combat'
+
+/**
+ * 队列中的行动项
+ */
+export interface ActionQueueItem {
+  /** 行动类型 */
+  type: ActionQueueItemType
+  /** 行动 ID（生产行动）或敌人 ID（战斗行动） */
+  actionId: string
+  /** 剩余次数 */
+  amount: number
+  /** 战斗总时长（仅战斗行动，毫秒） */
+  combatDuration?: number
+}
+
 export const useActionQueueStore = defineStore('actionQueue', () => {
   const actionStore = useActionStore()
 
-  const actionQueue = ref<
-    {
-      actionId: string
-      amount: number
-    }[]
-  >([])
+  const actionQueue = ref<ActionQueueItem[]>([])
   const actionStartDate = ref<number | null>(null)
   const progress = ref<number>(0)
 
@@ -22,27 +36,71 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
   const pendingActions = computed(() => actionQueue.value.slice(1))
   const queueLength = computed(() => actionQueue.value.length)
 
+  /** 当前行动是否为战斗 */
+  const isCombatAction = computed(() => currentAction.value?.type === 'combat')
+
   const actionQueueDetails = computed(() =>
     actionQueue.value.map((actionItem) => {
+      if (actionItem.type === 'combat') {
+        // 战斗行动没有 action detail，返回 null
+        return null
+      }
       return actionStore.getActionById(actionItem.actionId)
     }),
   )
   const currentActionDetail = computed(() => {
     const actionItem = actionQueue.value[0]
     if (!actionItem) return null
+    if (actionItem.type === 'combat') return null
     return actionStore.getActionById(actionItem.actionId)
   })
 
   function startImmediately(actionId: string, amount: number = INFINITE_AMOUNT): void {
-    actionQueue.value.unshift({ actionId, amount })
+    actionQueue.value.unshift({ type: 'production', actionId, amount })
     actionStartDate.value = performance.now()
   }
 
   function addAction(actionId: string, amount: number = INFINITE_AMOUNT): void {
-    actionQueue.value.push({ actionId, amount })
+    actionQueue.value.push({ type: 'production', actionId, amount })
     if (actionQueue.value.length === 1) {
       actionStartDate.value = performance.now()
     }
+  }
+
+  /**
+   * 添加战斗行动到队列
+   *
+   * @param enemyId 敌人 ID
+   * @param amount 战斗次数
+   * @param duration 战斗总时长（毫秒）
+   */
+  function addCombatAction(enemyId: string, amount: number, duration: number): void {
+    actionQueue.value.push({
+      type: 'combat',
+      actionId: enemyId,
+      amount,
+      combatDuration: duration,
+    })
+    if (actionQueue.value.length === 1) {
+      actionStartDate.value = performance.now()
+    }
+  }
+
+  /**
+   * 立即开始战斗行动
+   *
+   * @param enemyId 敌人 ID
+   * @param amount 战斗次数
+   * @param duration 战斗总时长（毫秒）
+   */
+  function startCombatImmediately(enemyId: string, amount: number, duration: number): void {
+    actionQueue.value.unshift({
+      type: 'combat',
+      actionId: enemyId,
+      amount,
+      combatDuration: duration,
+    })
+    actionStartDate.value = performance.now()
   }
 
   function removeAction(index: number): void {
@@ -132,13 +190,16 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
     currentAction,
     pendingActions,
     queueLength,
+    isCombatAction,
 
     actionQueueDetails,
     currentActionDetail,
 
     addAction,
+    addCombatAction,
     removeAction,
     startImmediately,
+    startCombatImmediately,
     completeCurrentAction,
 
     moveUp,

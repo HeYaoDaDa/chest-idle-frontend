@@ -2,6 +2,7 @@ import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import ModalBox from '@/components/ModalBox'
+import { enemyConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { isInfiniteAmount } from '@/utils/amount'
 
@@ -50,7 +51,7 @@ export default defineComponent({
 
             <div class="max-h-96 overflow-y-auto">
               <ul class="flex flex-col gap-3 list-none p-0 m-0">
-                {actionQueueStore.currentActionDetail && (
+                {actionQueueStore.currentAction && (
                   <li class="flex flex-wrap justify-between items-center gap-4 bg-blue-50 border border-blue-300 rounded-lg p-3 transition-all hover:bg-blue-100">
                     <div class="flex items-center gap-4 flex-1 min-w-0">
                       <span class="flex items-center justify-center w-7 h-7 bg-blue-100 text-blue-600 rounded-full text-sm font-bold flex-shrink-0">
@@ -58,21 +59,25 @@ export default defineComponent({
                       </span>
                       <div class="flex flex-col gap-1 flex-1 min-w-0">
                         <span class="text-sm font-semibold text-gray-900 truncate">
-                          {t(actionQueueStore.currentActionDetail.name)}
+                          {actionQueueStore.isCombatAction
+                            ? t(enemyConfigMap[actionQueueStore.currentAction.actionId]?.name || 'ui.combat.title')
+                            : t(actionQueueStore.currentActionDetail?.name || 'nothing')}
                         </span>
                         <span class="text-sm text-gray-500">
                           ×{runningActionAmountDisplay.value}
                         </span>
                       </div>
                     </div>
-                    <div class="w-full order-10">
-                      <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                          class="h-full bg-blue-500 transition-all"
-                          style={{ width: progress.value }}
-                        ></div>
+                    {!actionQueueStore.isCombatAction && (
+                      <div class="w-full order-10">
+                        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            class="h-full bg-blue-500 transition-all"
+                            style={{ width: progress.value }}
+                          ></div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                     <div class="flex gap-2">
                       <button
                         type="button"
@@ -121,6 +126,12 @@ export default defineComponent({
 
                 {actionQueueStore.pendingActions.map((action, index) => {
                   const unifiedIndex = actionQueueStore.currentAction ? index + 1 : index
+                  const detail = actionQueueStore.actionQueueDetails[unifiedIndex]
+                  const isCombat = action.type === 'combat'
+                  const displayName = isCombat
+                    ? enemyConfigMap[action.actionId]?.name
+                    : detail?.name
+                  if (!displayName) return null
                   return (
                     <li
                       key={index}
@@ -132,7 +143,7 @@ export default defineComponent({
                         </span>
                         <div class="flex flex-col gap-1 flex-1 min-w-0">
                           <span class="text-sm font-semibold text-gray-900 truncate">
-                            {t(`action.${action.actionId}.name`)}
+                            {t(displayName)}
                           </span>
                           <span class="text-sm text-gray-500">
                             ×{isInfiniteAmount(action.amount) ? '∞' : action.amount}
