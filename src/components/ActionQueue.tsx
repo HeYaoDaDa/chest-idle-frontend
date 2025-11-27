@@ -1,7 +1,7 @@
 import { defineComponent, computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { enemyConfigMap } from '@/gameConfig'
+import { enemyConfigMap, skillConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { useCombatStore } from '@/stores/combat'
 import { isInfiniteAmount } from '@/utils/amount'
@@ -18,25 +18,43 @@ export default defineComponent({
     const combatStore = useCombatStore()
     const showQueueModal = ref(false)
 
-    const runningActionDisplay = computed(() => {
+    const runningActionPrefix = computed(() => {
+      const action = actionQueueStore.currentAction
+      if (!action) return t('ui.currentAction')
+      if (action.type === 'combat') {
+        return t('ui.combat.title')
+      }
+      const detail = actionQueueStore.currentActionDetail
+      if (detail) {
+        const skillConfig = skillConfigMap[detail.skillId]
+        if (skillConfig) {
+          return t(skillConfig.name)
+        }
+      }
+      return t('ui.currentAction')
+    })
+
+    const runningActionName = computed(() => {
       if (actionQueueStore.isCombatAction && actionQueueStore.currentAction) {
         const enemyId = actionQueueStore.currentAction.actionId
         const enemy = enemyConfigMap[enemyId]
-        return enemy
-          ? `${t(enemy.name)} · ${
-              isInfiniteAmount(actionQueueStore.currentAction.amount)
-                ? '∞'
-                : actionQueueStore.currentAction.amount
-            }`
-          : `${t('ui.combat.title')}...`
+        return enemy ? t(enemy.name) : t('ui.combat.title')
       }
       return actionQueueStore.currentActionDetail
-        ? `${t(actionQueueStore.currentActionDetail.name)} · ${
-            isInfiniteAmount(actionQueueStore.currentAction.amount)
-              ? '∞'
-              : actionQueueStore.currentAction.amount
-          }`
-        : `${t('nothing')}...`
+        ? t(actionQueueStore.currentActionDetail.name)
+        : t('nothing')
+    })
+
+    const runningActionAmount = computed(() => {
+      const action = actionQueueStore.currentAction
+      if (!action) return ''
+      return isInfiniteAmount(action.amount) ? '∞' : `${action.amount}`
+    })
+
+    const runningActionDisplay = computed(() => {
+      if (!actionQueueStore.currentAction) return t('nothing')
+      const amount = runningActionAmount.value ? ` · ${runningActionAmount.value}` : ''
+      return `${runningActionPrefix.value} · ${runningActionName.value}${amount}`
     })
 
     const runningActionDurationDisplay = computed(() => {
@@ -59,9 +77,20 @@ export default defineComponent({
 
     const mpProgress = computed(() => 100) // MP始终满值
 
-    const hasQueuedActions = computed(() => actionQueueStore.pendingActions.length > 0)
-    const unifiedLength = computed(() => actionQueueStore.queueLength)
+    const queueButtonLabel = computed(() => `${t('ui.queue')} (${actionQueueStore.queueLength})`)
+    const canOpenQueue = computed(() => actionQueueStore.queueLength > 0)
     const progress = computed(() => actionQueueStore.progress + '%')
+    const hasRunningAction = computed(() => Boolean(actionQueueStore.currentAction))
+
+    const hpDisplayText = computed(() => {
+      if (!combatStore.currentBattle) return ''
+      return `${formatNumber(combatStore.currentBattle.playerCurrentHp, locale.value)} / ${formatNumber(combatStore.maxHp, locale.value)}`
+    })
+
+    const mpDisplayText = computed(
+      () =>
+        `${formatNumber(combatStore.maxMp, locale.value)} / ${formatNumber(combatStore.maxMp, locale.value)}`,
+    )
 
     const openQueueModal = () => {
       showQueueModal.value = true
@@ -78,86 +107,83 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="flex flex-col gap-2.5">
-        <div class="flex justify-between items-center gap-2.5">
-          <div class="flex flex-col gap-0.5 flex-1 min-w-0">
-            <span class="text-xs uppercase tracking-wider text-gray-500">
-              {t('ui.currentAction')}
-            </span>
-            <span class="text-base font-semibold text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">
-              {runningActionDisplay.value}
-            </span>
-          </div>
-          <div class="flex gap-1.5 flex-shrink-0 flex-col lg:flex-row">
-            {actionQueueStore.currentAction && (
+      <div class="flex flex-col gap-2.5 w-full max-w-2xl">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span class="text-base font-semibold text-gray-900 flex-1 min-w-0 truncate">
+            {runningActionDisplay.value}
+          </span>
+          {hasRunningAction.value && (
+            <div class="flex gap-1.5 flex-shrink-0">
               <button
                 type="button"
-                class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm cursor-pointer transition whitespace-nowrap bg-red-100 text-red-700 hover:bg-red-200"
+                class="btn border-none rounded-full px-3 py-2 font-semibold text-sm whitespace-nowrap transition disabled:opacity-50 disabled:cursor-not-allowed bg-blue-100 text-primary hover:bg-blue-200"
+                onClick={openQueueModal}
+                disabled={!canOpenQueue.value}
+              >
+                {queueButtonLabel.value}
+              </button>
+              <button
+                type="button"
+                class="btn border-none rounded-full px-3 py-2 font-semibold text-sm whitespace-nowrap transition bg-red-100 text-red-700 hover:bg-red-200"
                 onClick={stopCurrentAction}
               >
                 {t('stop')}
               </button>
-            )}
-            {hasQueuedActions.value && (
-              <button
-                type="button"
-                class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm cursor-pointer transition whitespace-nowrap bg-blue-100 text-primary hover:bg-blue-200"
-                onClick={openQueueModal}
-              >
-                {t('ui.queue')} ({unifiedLength.value})
-              </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* 战斗时显示HP/MP进度条，非战斗时显示普通进度条 */}
-        {isCombatAction.value && combatStore.currentBattle ? (
+        {hasRunningAction.value && isCombatAction.value && combatStore.currentBattle ? (
           <div class="flex flex-col gap-1.5">
-            {/* HP进度条 */}
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-red-600 font-semibold min-w-[24px]">HP</span>
-              <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  class="h-full bg-red-500 transition-all duration-300"
-                  style={{ width: `${hpProgress.value}%` }}
-                />
-              </div>
-              <span class="text-xs text-gray-600 min-w-[60px] text-right">
-                {formatNumber(combatStore.currentBattle.playerCurrentHp, locale.value)}/{formatNumber(combatStore.maxHp, locale.value)}
+            <div
+              class="relative h-3 w-full bg-gray-200 rounded-full overflow-hidden"
+              aria-label="HP"
+            >
+              <div
+                class="h-full bg-red-500 transition-all duration-300"
+                style={{ width: `${hpProgress.value}%` }}
+              />
+              <span class="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white drop-shadow">
+                {hpDisplayText.value}
               </span>
             </div>
-            {/* MP进度条 */}
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-blue-600 font-semibold min-w-[24px]">MP</span>
-              <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  class="h-full bg-blue-500 transition-all duration-300"
-                  style={{ width: `${mpProgress.value}%` }}
-                />
-              </div>
-              <span class="text-xs text-gray-600 min-w-[60px] text-right">
-                {formatNumber(combatStore.maxMp, locale.value)}/{formatNumber(combatStore.maxMp, locale.value)}
+            <div
+              class="relative h-3 w-full bg-gray-200 rounded-full overflow-hidden"
+              aria-label="MP"
+            >
+              <div
+                class="h-full bg-blue-500 transition-all duration-300"
+                style={{ width: `${mpProgress.value}%` }}
+              />
+              <span class="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white drop-shadow">
+                {mpDisplayText.value}
               </span>
             </div>
           </div>
         ) : (
-          <div class="relative flex items-center min-w-64">
-            <div
-              class="w-full h-3 bg-gray-200 rounded-full overflow-hidden"
-              role="progressbar"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow={Math.round(actionQueueStore.progress)}
-              aria-label={t('ui.progressPercentage')}
-            >
-              <div class="h-full progress-bar duration-75" style={{ width: progress.value }}></div>
+          hasRunningAction.value && (
+            <div class="relative flex items-center min-w-64">
+              <div
+                class="w-full h-3 bg-gray-200 rounded-full overflow-hidden"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow={Math.round(actionQueueStore.progress)}
+                aria-label={t('ui.progressPercentage')}
+              >
+                <div
+                  class="h-full progress-bar duration-75"
+                  style={{ width: progress.value }}
+                ></div>
+              </div>
+              {runningActionDurationDisplay.value && (
+                <span class="absolute left-1/2 -translate-x-1/2 text-xs text-gray-700 pointer-events-none">
+                  {runningActionDurationDisplay.value}
+                </span>
+              )}
             </div>
-            {runningActionDurationDisplay.value && (
-              <span class="absolute left-1/2 -translate-x-1/2 text-xs text-gray-700 pointer-events-none">
-                {runningActionDurationDisplay.value}
-              </span>
-            )}
-          </div>
+          )
         )}
 
         <ActionQueueModal show={showQueueModal.value} onClose={closeQueueModal} />
