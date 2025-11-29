@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import ModalBox from '@/components/ModalBox'
 import { enemyConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
+import { useCombatStore } from '@/stores/combat'
 import { isInfiniteAmount } from '@/utils/amount'
 
 export default defineComponent({
@@ -13,6 +14,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n()
     const actionQueueStore = useActionQueueStore()
+    const combatStore = useCombatStore()
 
     const unifiedLength = computed(() => actionQueueStore.queueLength)
     const progress = computed(() => actionQueueStore.progress + '%')
@@ -28,7 +30,13 @@ export default defineComponent({
     const closeModal = () => emit('close')
 
     const stopCurrentAction = () => {
-      if (actionQueueStore.currentAction) actionQueueStore.removeAction(0)
+      if (actionQueueStore.currentAction) {
+        // 如果是战斗行动，需要清除战斗状态
+        if (actionQueueStore.currentAction.type === 'combat') {
+          combatStore.cancelBattle()
+        }
+        actionQueueStore.removeAction(0)
+      }
     }
 
     const moveActionUp = (index: number) => actionQueueStore.moveUp(index)

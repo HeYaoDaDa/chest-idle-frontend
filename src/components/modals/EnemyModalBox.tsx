@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import ItemTag from '@/components/ItemTag'
 import ModalBox from '@/components/ModalBox'
 import { enemyConfigMap } from '@/gameConfig'
+import { useActionQueueStore } from '@/stores/actionQueue'
 import { useCombatStore } from '@/stores/combat'
 import { INFINITE_AMOUNT } from '@/utils/constants'
 import { formatNumber } from '@/utils/format'
@@ -20,8 +21,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t, locale } = useI18n()
     const combatStore = useCombatStore()
+    const actionQueueStore = useActionQueueStore()
 
-    const amountString = ref('1')
+    const amountString = ref('∞')
 
     const enemy = computed<EnemyConfig | null>(() => {
       if (!props.enemyId) return null
@@ -58,9 +60,26 @@ export default defineComponent({
       return enemy.value.fixedLootItems.length > 0 || enemy.value.fixedChestPoints.length > 0
     })
 
+    const hasCurrentAction = computed(() => !!actionQueueStore.currentAction)
+    const queuePosition = computed(() => actionQueueStore.queueLength + 1)
+
     const closeModal = () => {
       emit('close')
       amountString.value = '1'
+    }
+
+    const addToQueue = () => {
+      if (enemy.value && allowAmount.value) {
+        const result = combatStore.startBattle(enemy.value.id, stringToNumber(amountString.value))
+        if (result && result.canWin && combatStore.currentBattle) {
+          actionQueueStore.addCombatAction(
+            enemy.value.id,
+            stringToNumber(amountString.value),
+            combatStore.currentBattle.singleBattleDuration,
+          )
+        }
+        closeModal()
+      }
     }
 
     const startBattle = () => {
@@ -82,7 +101,7 @@ export default defineComponent({
       () => props.show,
       (newValue) => {
         if (!newValue) {
-          amountString.value = '1'
+          amountString.value = '∞'
         }
       },
     )
@@ -201,15 +220,14 @@ export default defineComponent({
 
             <div class="flex flex-col gap-3">
               <label class="flex flex-col gap-2">
-                <span class="text-sm font-semibold text-gray-900">{t('ui.combat.battleCount')}</span>
+                <span class="text-sm font-semibold text-gray-900">{t('ui.amount')}</span>
                 <div class="flex gap-2">
                   <input
                     type="text"
                     value={amountString.value}
                     onInput={(e) => (amountString.value = (e.target as HTMLInputElement).value)}
                     onFocus={handleAmountFocus}
-                    class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
-                    placeholder="1"
+                    class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <button
                     type="button"
@@ -221,15 +239,26 @@ export default defineComponent({
                   </button>
                 </div>
               </label>
-
-              <button
-                type="button"
-                class="w-full py-3 px-4 rounded-lg font-semibold transition bg-red-500 hover:bg-red-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={!allowAmount.value}
-                onClick={startBattle}
-              >
-                {t('ui.combat.startBattle')}
-              </button>
+              <div class="flex gap-3">
+                {hasCurrentAction.value && (
+                  <button
+                    type="button"
+                    class="btn-secondary flex-1 py-3 px-4 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!allowAmount.value}
+                    onClick={addToQueue}
+                  >
+                    {t('ui.addToQueue', { position: queuePosition.value })}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  class="btn-primary flex-1 py-3 px-4 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!allowAmount.value}
+                  onClick={hasCurrentAction.value ? startBattle : startBattle}
+                >
+                  {hasCurrentAction.value ? t('ui.startImmediately') : t('start')}
+                </button>
+              </div>
             </div>
           </div>
         </ModalBox>
