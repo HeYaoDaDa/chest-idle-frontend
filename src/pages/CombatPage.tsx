@@ -8,6 +8,7 @@ import { useActionQueueStore } from '@/stores/actionQueue'
 import { useCombatStore } from '@/stores/combat'
 import { useNotificationStore } from '@/stores/notification'
 import { useSkillStore } from '@/stores/skill'
+import { fromFixed } from '@/utils/fixedPoint'
 import { formatNumber } from '@/utils/format'
 
 export default defineComponent({
@@ -236,16 +237,16 @@ export default defineComponent({
     return () => (
       <div class="flex flex-col h-full">
         {/* 标签页导航 */}
-        <div class="flex border-b border-gray-200 bg-white">
+        <div class="flex gap-1 px-4 pt-4 border-b border-gray-200">
           {visibleTabs.value.map((tab) => (
             <button
               key={tab}
-              class={[
-                'px-6 py-3 font-medium transition-colors',
+              class={`btn font-semibold transition border-b-2 cursor-pointer ${
                 currentTab.value === tab
-                  ? 'border-b-2 border-blue-500 text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-              ]}
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+              aria-pressed={currentTab.value === tab}
               onClick={() => (currentTab.value = tab)}
             >
               {tab === 'overview' ? t('ui.combat.overview') : t('ui.combat.currentBattle')}
@@ -257,32 +258,46 @@ export default defineComponent({
         <div class="flex-1 min-h-0 overflow-hidden">
           {/* 概览标签页 */}
           {currentTab.value === 'overview' && (
-            <div class="flex flex-col h-full">
-              {/* 页面标题 */}
-              <div class="m-4 p-4 bg-gradient-to-br from-red-50 to-orange-100/50 rounded-lg border border-red-200">
-                <div class="flex justify-between items-baseline mb-2">
-                  <h2 class="text-2xl font-bold text-gray-900">{t('ui.combat.title')}</h2>
-                </div>
-                <div class="text-gray-700 mb-3">{t('ui.combat.description')}</div>
-
-                {/* 战斗技能等级概览 */}
+            <div class="h-full overflow-auto">
+              {/* 战斗技能 Header */}
+              <div class="m-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-3">{t('ui.combat.title')}</h2>
                 <div class="flex flex-wrap gap-4">
                   {combatSkills.value.map((skill) => (
-                    <div
-                      key={skill.id}
-                      class="flex flex-col items-center p-2 bg-white rounded shadow-sm"
-                    >
-                      <span class="text-sm font-medium text-gray-700">{t(skill.name)}</span>
-                      <span class="text-xs text-gray-500">
-                        {t('ui.level', { level: skill.level })}
-                      </span>
+                    <div key={skill.id} class="flex-1 min-w-[200px] p-3 bg-white rounded-lg shadow-sm">
+                      <div class="flex justify-between items-center mb-1">
+                        <span class="text-sm font-semibold text-gray-900">{t(skill.name)}</span>
+                        <span class="text-xs font-semibold text-blue-700 px-1.5 py-0.5 bg-blue-50 rounded">
+                          {t('ui.level', { level: skill.level })}
+                        </span>
+                      </div>
+                      <div class="text-xs text-gray-600 mb-1">{t(skill.description)}</div>
+                      <div class="flex gap-4 text-xs text-gray-500 mb-1">
+                        <span>
+                          {t('ui.xp')}: {formatNumber(fromFixed(skill.xp), locale.value)}
+                        </span>
+                        <span>
+                          {t('ui.nextLevel')}: {formatNumber(fromFixed(skill.remainingXpForUpgrade), locale.value)}
+                        </span>
+                      </div>
+                      <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          class="h-full progress-bar"
+                          style={{ width: skill.upgradeProgress * 100 + '%' }}
+                          role="progressbar"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          aria-valuenow={Math.round(skill.upgradeProgress * 100)}
+                          aria-label={t('ui.progressPercentage')}
+                        ></div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* 敌人列表 */}
-              <div class="flex-1 min-h-0 overflow-auto p-4">
+              <div class="p-4 pt-0">
                 <EnemyList onSelect={handleSelectEnemy} />
               </div>
             </div>

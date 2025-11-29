@@ -45,9 +45,13 @@ export default defineComponent({
           activeClass="!bg-gradient-to-br !from-primary !to-blue-500 !text-white !shadow-lg"
           class="nav-link"
         >
-          <div class="text-xs lg:text-base text-center lg:text-left">
+          <div class="lg:hidden text-xs text-center">
             {t('ui.chests').substring(0, 2)}
           </div>
+          <div class="hidden lg:block text-base">
+            {t('ui.chests')}
+          </div>
+          <div class="hidden lg:block h-1"></div>
         </RouterLink>
 
         {/* Production 技能 - 保持原有逻辑 */}
@@ -97,14 +101,27 @@ export default defineComponent({
 
             {/* 桌面端: 显示标题和所有 combat 技能 */}
             <div class="hidden lg:block">
-              <div class="text-base font-medium mb-1">{t('ui.combat.title')}</div>
-              <div class="flex flex-col gap-0.5 pl-2 border-l-2 border-current/20">
+              <div class="text-base mb-1">{t('ui.combat.title')}</div>
+              <div class="flex flex-col gap-1 pl-2 border-l-2 border-current/20">
                 {combatSkills.value.map((skill) => (
-                  <div key={skill.id} class="flex justify-between items-baseline gap-2 text-sm">
-                    <span class="flex-shrink-0 opacity-90">{t(skill.name)}</span>
-                    <span class="text-[10px] opacity-70">
-                      {t('ui.level', { level: skill.level })}
-                    </span>
+                  <div key={skill.id} class="flex flex-col gap-0.5">
+                    <div class="flex justify-between items-baseline gap-2 text-base">
+                      <span class="flex-shrink-0">{t(skill.name)}</span>
+                      <span class="text-[10px] opacity-80">
+                        {t('ui.level', { level: skill.level })}
+                      </span>
+                    </div>
+                    <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        class="progress-bar duration-75"
+                        style={{ width: skill.upgradeProgress * 100 + '%' }}
+                        role="progressbar"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-valuenow={Math.round(skill.upgradeProgress * 100)}
+                        aria-label={t('ui.progressPercentage')}
+                      ></div>
+                    </div>
                   </div>
                 ))}
               </div>

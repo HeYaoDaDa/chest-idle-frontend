@@ -97,7 +97,7 @@ export default defineComponent({
       if (!skill.value) return null
 
       return (
-        <div class="flex flex-col gap-2 p-8 pb-32">
+        <div class="flex flex-col gap-2 p-4 pb-32">
           <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
             <div class="flex justify-between items-baseline mb-2">
               <h2 class="text-2xl font-bold text-gray-900">{t(skill.value.name)}</h2>
@@ -138,7 +138,7 @@ export default defineComponent({
               {tabEntries.value.map((tab) => (
                 <button
                   key={tab.id}
-                  class={`btn font-semibold transition border-b-2 ${
+                  class={`btn font-semibold transition border-b-2 cursor-pointer ${
                     currentTab.value === tab.id
                       ? 'border-primary text-primary'
                       : 'border-transparent text-gray-600 hover:text-gray-900'

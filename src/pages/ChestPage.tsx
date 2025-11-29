@@ -35,10 +35,12 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="flex flex-col gap-2 p-8">
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-gray-900 mb-2">{t('ui.chests')}</h2>
-          <p class="text-gray-600">{t('ui.chestsDescription')}</p>
+      <div class="flex flex-col gap-2 p-4">
+        <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
+          <div class="flex justify-between items-baseline mb-2">
+            <h2 class="text-2xl font-bold text-gray-900">{t('ui.chests')}</h2>
+          </div>
+          <div class="text-gray-700">{t('ui.chestsDescription')}</div>
         </div>
 
         <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
