@@ -1,7 +1,2 @@
- - [ ] 修复 GitHub Actions workflow（迁移到 pnpm）
- - [ ] 消除构建 chunk-size 警告（配置 manualChunks）
- - [ ] 提升测试覆盖率（优先 `src/stores/inventory.ts`、模态子组件）
- - [ ] 添加 E2E 测试（Playwright / Puppeteer）
- - [ ] 自动化可访问性检查（集成 `vitest-axe`）
- - [ ] 优化代码分割与路由懒加载
- - [ ] 定期依赖审计与安全修复（`pnpm audit`）
+ - [x] 修复 GitHub Actions workflow（迁移到 pnpm）
+ - [ ] 补全整理文档
