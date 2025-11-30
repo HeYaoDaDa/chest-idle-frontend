@@ -182,7 +182,7 @@ export const useStatStore = defineStore('stat', () => {
 
   function calculateDerivedValue(
     config: DerivedValueConfigInternal,
-    durationSeconds: Seconds | 'self' = 0,
+    durationSeconds: SecondsFixed | 'self' = toSecondsFixed(0),
     resolveModifierValue?: (modifier: ModifierConfigInternal) => FixedPoint | undefined,
   ): FixedPoint {
     // 处理 'self' 模式：迭代计算直到收敛
@@ -202,11 +202,7 @@ export const useStatStore = defineStore('stat', () => {
       return prevValue
     }
 
-    return calculateWithDuration(
-      config,
-      toSecondsFixed(durationSeconds as Seconds),
-      resolveModifierValue,
-    )
+    return calculateWithDuration(config, durationSeconds, resolveModifierValue)
   }
 
   function calculateWithDuration(

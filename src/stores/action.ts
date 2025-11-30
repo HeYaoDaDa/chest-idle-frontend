@@ -43,7 +43,7 @@ export const useActionStore = defineStore('action', () => {
       return undefined // Let stat.ts handle stat modifiers
     }
 
-    const speedMultiplier = import.meta.env.DEV ? 0.01 : 1
+    const speedMultiplier = import.meta.env.DEV ? 1 : 1
 
     // 先计算 durationSeconds（使用 'self' 模式）
     const durationSeconds = fpMul(
