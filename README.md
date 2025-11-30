@@ -25,57 +25,54 @@ A Vue 3 idle game built with **TypeScript + TSX** and **UnoCSS**.
 ## Project Setup
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+pnpm dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+pnpm build
 ```
 
 ### Lint with ESLint
 
 ```sh
-npm run lint
+pnpm lint
 ```
 
 ### Format with Prettier
 
 ```sh
-npm run format
+pnpm format
 ```
 
 ## Testing
 
-This project has comprehensive test coverage (73.34%):
+This project has comprehensive test coverage:
 
 ```sh
 # Run tests once
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm test:watch
 
 # Generate coverage report
-npm run test:coverage
+pnpm test:coverage
 
 # Open Vitest UI
-npm run test:ui
+pnpm test:ui
 ```
-
-See [docs/TESTING.md](docs/TESTING.md) for detailed testing guide.
 
 ## Documentation
 
-- [Testing Guide](docs/TESTING.md) - Complete testing documentation
-- [Test Summary](docs/TEST_SUMMARY.md) - Test coverage and statistics
+See [docs/README.md](docs/README.md) for project documentation.
 
 ## UnoCSS Inspector
 
