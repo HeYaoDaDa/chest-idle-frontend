@@ -102,16 +102,16 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="flex flex-col gap-2.5 w-full max-w-2xl">
-        <div class="flex flex-wrap items-center gap-2.5">
-          <span class="text-base font-semibold text-gray-900 flex-1 min-w-0 truncate">
+      <div class="flex flex-col gap-3 w-full max-w-2xl">
+        <div class="flex flex-col gap-2.5 lg:flex-row lg:items-center">
+          <span class="text-base font-semibold text-neutral-600 flex-1 min-w-0 truncate">
             {runningActionDisplay.value}
           </span>
           {hasRunningAction.value && (
-            <div class="flex gap-1.5 flex-shrink-0">
+            <div class="flex flex-col gap-1.5 lg:flex-row lg:flex-shrink-0">
               <button
                 type="button"
-                class="btn border-none rounded-full px-3 py-2 font-semibold text-sm whitespace-nowrap transition disabled:opacity-50 disabled:cursor-not-allowed bg-blue-100 text-primary hover:bg-blue-200"
+                class="btn btn-secondary rounded-full px-3 py-2 text-sm whitespace-nowrap w-full lg:w-auto"
                 onClick={openQueueModal}
                 disabled={!canOpenQueue.value}
               >
@@ -119,7 +119,7 @@ export default defineComponent({
               </button>
               <button
                 type="button"
-                class="btn border-none rounded-full px-3 py-2 font-semibold text-sm whitespace-nowrap transition bg-red-100 text-red-700 hover:bg-red-200"
+                class="btn btn-destructive rounded-full px-3 py-2 text-sm whitespace-nowrap w-full lg:w-auto"
                 onClick={stopCurrentAction}
               >
                 {t('stop')}
@@ -132,7 +132,7 @@ export default defineComponent({
         {hasRunningAction.value && isCombatAction.value && combatStore.currentBattle ? (
           <div class="flex flex-col gap-1.5">
             <div
-              class="relative h-3 w-full bg-gray-200 rounded-full overflow-hidden"
+              class="relative h-3 w-full bg-neutral-50 rounded-full overflow-hidden"
               aria-label="HP"
             >
               <div
@@ -144,7 +144,7 @@ export default defineComponent({
               </span>
             </div>
             <div
-              class="relative h-3 w-full bg-gray-200 rounded-full overflow-hidden"
+              class="relative h-3 w-full bg-neutral-50 rounded-full overflow-hidden"
               aria-label="MP"
             >
               <div
@@ -160,7 +160,7 @@ export default defineComponent({
           hasRunningAction.value && (
             <div class="relative flex items-center min-w-64">
               <div
-                class="w-full h-3 bg-gray-200 rounded-full overflow-hidden"
+                class="w-full h-3 bg-neutral-50 rounded-full overflow-hidden"
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"
@@ -173,7 +173,7 @@ export default defineComponent({
                 ></div>
               </div>
               {runningActionDurationDisplay.value && (
-                <span class="absolute left-1/2 -translate-x-1/2 text-xs text-gray-700 pointer-events-none">
+                <span class="absolute left-1/2 -translate-x-1/2 text-xs text-neutral-500 pointer-events-none">
                   {runningActionDurationDisplay.value}
                 </span>
               )}

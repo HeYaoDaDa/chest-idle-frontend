@@ -1,4 +1,5 @@
 import 'virtual:uno.css'
+import './styles/global.css'
 import { createPinia } from 'pinia'
 import { createApp, watch } from 'vue'
 

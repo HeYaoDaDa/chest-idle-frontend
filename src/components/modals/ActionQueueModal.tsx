@@ -42,9 +42,9 @@ export default defineComponent({
       return (
         <ModalBox onClose={closeModal}>
           <div class="flex flex-col gap-4 min-w-[min(420px,90vw)]">
-            <div class="flex justify-between items-center pb-3 border-b-2 border-blue-100">
-              <h3 class="text-lg font-bold text-gray-900">{t('ui.queue')}</h3>
-              <span class="text-sm font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+            <div class="flex justify-between items-center pb-3 border-b border-neutral-100">
+              <h3 class="text-lg font-bold text-neutral-600">{t('ui.queue')}</h3>
+              <span class="badge bg-primary/10 text-primary">
                 {unifiedLength.value} {t('ui.queuedItems')}
               </span>
             </div>
@@ -52,13 +52,13 @@ export default defineComponent({
             <div class="max-h-96 overflow-y-auto">
               <ul class="flex flex-col gap-3 list-none p-0 m-0">
                 {actionQueueStore.currentAction && (
-                  <li class="flex flex-wrap justify-between items-center gap-4 bg-blue-50 border border-blue-300 rounded-lg p-3 transition-all hover:bg-blue-100">
+                  <li class="flex flex-wrap justify-between items-center gap-4 bg-surface-subtle border border-primary/30 rounded-lg p-3 transition-all">
                     <div class="flex items-center gap-4 flex-1 min-w-0">
-                      <span class="flex items-center justify-center w-7 h-7 bg-blue-100 text-blue-600 rounded-full text-sm font-bold flex-shrink-0">
+                      <span class="flex items-center justify-center w-7 h-7 bg-primary/10 text-primary rounded-full text-sm font-bold flex-shrink-0">
                         0
                       </span>
                       <div class="flex flex-col gap-1 flex-1 min-w-0">
-                        <span class="text-sm font-semibold text-gray-900 truncate">
+                        <span class="text-sm font-semibold text-neutral-600 truncate">
                           {actionQueueStore.isCombatAction
                             ? t(
                                 enemyConfigMap[actionQueueStore.currentAction.actionId]?.name ||
@@ -66,16 +66,16 @@ export default defineComponent({
                               )
                             : t(actionQueueStore.currentActionDetail?.name || 'nothing')}
                         </span>
-                        <span class="text-sm text-gray-500">
+                        <span class="text-sm text-neutral-400">
                           ×{runningActionAmountDisplay.value}
                         </span>
                       </div>
                     </div>
                     {!actionQueueStore.isCombatAction && (
                       <div class="w-full order-10">
-                        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="w-full h-2 bg-neutral-50 rounded-full overflow-hidden">
                           <div
-                            class="h-full bg-blue-500 transition-all"
+                            class="h-full bg-primary transition-all"
                             style={{ width: progress.value }}
                           ></div>
                         </div>
@@ -100,7 +100,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
+                        class="btn btn-secondary px-2 py-1 text-xs"
                         title="Down"
                         disabled={unifiedLength.value <= 1}
                         onClick={() => moveActionDown(0)}
@@ -109,7 +109,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
+                        class="btn btn-secondary px-2 py-1 text-xs"
                         title="Bottom"
                         disabled={unifiedLength.value <= 1}
                         onClick={() => moveActionToBottom(0)}
@@ -119,7 +119,7 @@ export default defineComponent({
                     </div>
                     <button
                       type="button"
-                      class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm bg-red-100 text-red-700 hover:bg-red-200 hover:shadow-lg flex-shrink-0"
+                      class="btn btn-destructive rounded-full px-2.5 py-2 text-sm flex-shrink-0"
                       onClick={stopCurrentAction}
                     >
                       {t('stop')}
@@ -138,17 +138,17 @@ export default defineComponent({
                   return (
                     <li
                       key={index}
-                      class="flex justify-between items-center gap-4 bg-gray-50 border border-gray-200 rounded-lg p-3 transition-all hover:bg-gray-100 hover:border-blue-300"
+                      class="flex justify-between items-center gap-4 bg-surface border border-neutral-50 rounded-lg p-3 transition-all hover:border-primary/40"
                     >
                       <div class="flex items-center gap-4 flex-1 min-w-0">
-                        <span class="flex items-center justify-center w-7 h-7 bg-blue-100 text-blue-600 rounded-full text-sm font-bold flex-shrink-0">
+                        <span class="flex items-center justify-center w-7 h-7 bg-primary/10 text-primary rounded-full text-sm font-bold flex-shrink-0">
                           {unifiedIndex}
                         </span>
                         <div class="flex flex-col gap-1 flex-1 min-w-0">
-                          <span class="text-sm font-semibold text-gray-900 truncate">
+                          <span class="text-sm font-semibold text-neutral-600 truncate">
                             {t(displayName)}
                           </span>
-                          <span class="text-sm text-gray-500">
+                          <span class="text-sm text-neutral-400">
                             ×{isInfiniteAmount(action.amount) ? '∞' : action.amount}
                           </span>
                         </div>
@@ -156,7 +156,7 @@ export default defineComponent({
                       <div class="flex gap-2">
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs"
                           title="Top"
                           disabled={unifiedIndex === 0}
                           onClick={() => moveActionToTop(unifiedIndex)}
@@ -165,7 +165,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs"
                           title="Up"
                           disabled={unifiedIndex === 0}
                           onClick={() => moveActionUp(unifiedIndex)}
@@ -174,7 +174,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs"
                           title="Down"
                           disabled={unifiedIndex >= unifiedLength.value - 1}
                           onClick={() => moveActionDown(unifiedIndex)}
@@ -183,7 +183,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs hover:bg-gray-200"
+                          class="btn btn-secondary px-2 py-1 text-xs"
                           title="Bottom"
                           disabled={unifiedIndex >= unifiedLength.value - 1}
                           onClick={() => moveActionToBottom(unifiedIndex)}
@@ -193,7 +193,7 @@ export default defineComponent({
                       </div>
                       <button
                         type="button"
-                        class="btn border-none rounded-full px-2.5 py-2 font-semibold text-sm bg-red-100 text-red-700 hover:bg-red-200 hover:shadow-lg flex-shrink-0"
+                        class="btn btn-destructive rounded-full px-2.5 py-2 text-sm flex-shrink-0"
                         onClick={() => removeQueuedAction(index)}
                       >
                         {t('remove')}

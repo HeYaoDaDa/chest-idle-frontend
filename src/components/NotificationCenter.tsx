@@ -9,12 +9,26 @@ export default defineComponent({
     const { t } = useI18n()
     const notificationStore = useNotificationStore()
 
+    const iconByType: Record<string, string> = {
+      error: '⚠️',
+      warning: '⚠️',
+      success: '✅',
+      info: 'ℹ️',
+    }
+
+    const labelByType: Record<string, string> = {
+      error: 'Error',
+      warning: 'Warning',
+      success: 'Success',
+      info: 'Info',
+    }
+
     const dismiss = (id: number) => {
       notificationStore.remove(id)
     }
 
     return () => (
-      <div class="fixed top-4 right-4 flex flex-col gap-1.5 z-2000 pointer-events-none">
+      <div class="fixed top-4 right-4 flex flex-col gap-1.5 z-2000 pointer-events-none" aria-live="polite">
         <TransitionGroup
           tag="div"
           name="notification"
@@ -27,22 +41,29 @@ export default defineComponent({
             <div
               key={entry.id}
               role={entry.type === 'error' ? 'alert' : 'status'}
+              aria-live={entry.type === 'error' ? 'assertive' : 'polite'}
               class={`
                 pointer-events-auto min-w-60 max-w-90
-                p-2.5 px-3 rounded bg-white shadow-lg
-                flex justify-between items-center gap-2
+                p-3 rounded-lg bg-surface shadow-panel
+                flex items-start gap-3
                 border-l-4
                 ${
                   entry.type === 'error'
                     ? 'border-error'
                     : entry.type === 'warning'
-                      ? 'border-yellow-500'
+                      ? 'border-warning'
                       : 'border-primary'
                 }
               `}
             >
-              <span class="flex-1 text-sm text-gray-800">{t(entry.key, entry.params ?? {})}</span>
-              <button class="btn-ghost" onClick={() => dismiss(entry.id)} aria-label="close">
+              <span class="text-lg" aria-hidden="true">
+                {iconByType[entry.type ?? 'info'] ?? iconByType.info}
+              </span>
+              <div class="flex-1 text-sm text-neutral-600">
+                <span class="sr-only">{labelByType[entry.type ?? 'info'] ?? labelByType.info}: </span>
+                {t(entry.key, entry.params ?? {})}
+              </div>
+              <button class="btn-ghost rounded-full" onClick={() => dismiss(entry.id)} aria-label="close notification">
                 ×
               </button>
             </div>

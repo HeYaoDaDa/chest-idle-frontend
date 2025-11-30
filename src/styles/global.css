@@ -1,0 +1,8 @@
+body.dragging {
+  cursor: ew-resize !important;
+  user-select: none !important;
+}
+
+body.dragging * {
+  cursor: ew-resize !important;
+}

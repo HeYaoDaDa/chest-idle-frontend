@@ -102,12 +102,12 @@ export default defineComponent({
 
     return () => (
       <div class="flex-1 flex flex-col h-full overflow-hidden">
-        <div class="flex gap-1 border-b border-gray-200 px-4 pt-4">
+        <div class="flex gap-1 px-4 pt-4 border-b border-gray-200">
           <button
-            class={`btn font-semibold transition border-b-2 ${
+            class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
               activeTab.value === 'inventory'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
+                : 'border-transparent text-neutral-500 hover:text-neutral-700'
             }`}
             aria-pressed={activeTab.value === 'inventory'}
             onClick={() => (activeTab.value = 'inventory')}
@@ -115,10 +115,10 @@ export default defineComponent({
             {t('ui.inventory')}
           </button>
           <button
-            class={`btn font-semibold transition border-b-2 ${
+            class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
               activeTab.value === 'equipment'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
+                : 'border-transparent text-neutral-500 hover:text-neutral-700'
             }`}
             aria-pressed={activeTab.value === 'equipment'}
             onClick={() => (activeTab.value = 'equipment')}
@@ -126,10 +126,10 @@ export default defineComponent({
             {t('ui.equipment')}
           </button>
           <button
-            class={`btn font-semibold transition border-b-2 ${
+            class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
               activeTab.value === 'abilities'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
+                : 'border-transparent text-neutral-500 hover:text-neutral-700'
             }`}
             aria-pressed={activeTab.value === 'abilities'}
             onClick={() => (activeTab.value = 'abilities')}
@@ -153,7 +153,7 @@ export default defineComponent({
                     selectedItemId.value === inventoryItem.item.id
                   }
                 >
-                  <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
+                  <div class="text-xs font-semibold text-neutral-600 text-center leading-tight">
                     {t(inventoryItem.item.name)}
                   </div>
                   {inventoryItem.count > 1 && (
@@ -172,7 +172,7 @@ export default defineComponent({
                 <div key={slot.id} class="w-16 h-16">
                   {equippedBySlot.value[slot.id] ? (
                     <button
-                      class="card-item w-full h-full bg-blue-50 border-2 border-primary shadow-sm hover:shadow-md hover:-translate-y-0.5 transition flex items-center justify-center p-1 select-none"
+                      class="card-item w-full h-full border-2 border-primary bg-surface-subtle flex items-center justify-center p-1 select-none"
                       type="button"
                       onClick={() => openSlotEquipment(slot.id)}
                       aria-label={t(equippedItemNameBySlot.value[slot.id])}
@@ -185,8 +185,8 @@ export default defineComponent({
                       </div>
                     </button>
                   ) : (
-                    <div class="w-full h-full rounded bg-gray-100 border border-dashed border-gray-400 flex items-center justify-center p-1 select-none">
-                      <span class="text-[10px] text-gray-500 text-center leading-tight">
+                    <div class="w-full h-full rounded bg-neutral-50 border border-dashed border-neutral-100 flex items-center justify-center p-1 select-none">
+                      <span class="text-[10px] text-neutral-400 text-center leading-tight">
                         {t(slot.name)}
                       </span>
                     </div>
@@ -197,7 +197,7 @@ export default defineComponent({
           )}
 
           {activeTab.value === 'abilities' && (
-            <div class="text-gray-500 text-center mt-8">Abilities coming soon</div>
+            <div class="text-neutral-400 text-center mt-8">Abilities coming soon</div>
           )}
         </div>
 

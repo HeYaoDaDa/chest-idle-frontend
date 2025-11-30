@@ -105,61 +105,56 @@ export default defineComponent({
 
       const battle = combatStore.currentBattle
 
+      const statBadge = (label: string, value: string) => (
+        <div class="flex justify-between text-xs text-neutral-500 mb-0.5">
+          <span>{label}</span>
+          <span>{value}</span>
+        </div>
+      )
+
+      const progressTrack = (value: number, colorClass: string) => (
+        <div class="h-3 bg-neutral-50 rounded-full overflow-hidden">
+          <div class={`h-full ${colorClass} transition-all duration-300`} style={{ width: `${value}%` }} />
+        </div>
+      )
+
       return (
-        <div class="flex flex-col h-full">
-          {/* 战斗区域 */}
-          <div class="flex-1 relative overflow-hidden bg-white">
-            {/* 玩家区域（左侧） */}
-            <div class="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col items-center">
-              {/* 玩家卡片 */}
-              <div class="flex flex-col items-center p-4 bg-white rounded-xl border-2 border-blue-200 shadow-lg min-w-[180px]">
-                <span class="text-gray-900 font-semibold mb-2">{t('ui.combat.playerStats')}</span>
-                {/* 玩家头像 */}
-                <div class="w-20 h-20 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
-                  <span class="text-4xl">🧙</span>
-                </div>
-                {/* HP 条 */}
-                <div class="w-full mb-1">
-                  <div class="flex justify-between text-xs text-red-600 mb-0.5">
-                    <span>HP</span>
-                    <span>
-                      {formatNumber(battle.playerCurrentHp, locale.value)}/
-                      {formatNumber(combatStore.maxHp, locale.value)}
-                    </span>
-                  </div>
-                  <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      class="h-full bg-red-500 transition-all duration-300"
-                      style={{ width: `${(battle.playerCurrentHp / combatStore.maxHp) * 100}%` }}
-                    />
+        <div class="flex flex-col gap-3 h-full">
+          <div class="panel p-4 flex-1 flex flex-col gap-6">
+            <div class="flex flex-col gap-6 lg:flex-row">
+              <div class="flex-1 flex flex-col items-stretch gap-3 border border-primary/20 rounded-xl p-4 bg-surface">
+                <span class="text-base font-semibold text-neutral-600 text-center">
+                  {t('ui.combat.playerStats')}
+                </span>
+                <div class="flex justify-center">
+                  <div class="w-20 h-20 bg-primary/10 rounded-lg flex items-center justify-center text-4xl">
+                    🧙
                   </div>
                 </div>
-                {/* MP 条 */}
-                <div class="w-full mb-2">
-                  <div class="flex justify-between text-xs text-blue-600 mb-0.5">
-                    <span>MP</span>
-                    <span>
-                      {formatNumber(combatStore.maxMp, locale.value)}/
-                      {formatNumber(combatStore.maxMp, locale.value)}
-                    </span>
-                  </div>
-                  <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                    <div class="h-full bg-blue-500 w-full transition-all duration-300" />
-                  </div>
+                <div>
+                  {statBadge(
+                    'HP',
+                    `${formatNumber(battle.playerCurrentHp, locale.value)}/${formatNumber(combatStore.maxHp, locale.value)}`,
+                  )}
+                  {progressTrack((battle.playerCurrentHp / combatStore.maxHp) * 100, 'bg-red-500')}
                 </div>
-                {/* 状态标签 */}
+                <div>
+                  {statBadge(
+                    'MP',
+                    `${formatNumber(combatStore.maxMp, locale.value)}/${formatNumber(combatStore.maxMp, locale.value)}`,
+                  )}
+                  {progressTrack(100, 'bg-blue-500')}
+                </div>
                 <div class="flex gap-1 flex-wrap justify-center">
-                  <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">
+                  <span class="badge bg-primary/10 text-primary">
                     ⚔️ {formatNumber(combatStore.currentDamage, locale.value)}
                   </span>
                 </div>
-                {/* 攻击进度条 */}
-                <div class="w-full mt-3">
-                  <div class="text-xs text-gray-600 mb-0.5 text-center">
-                    {t('ui.combat.attackInterval')}:{' '}
-                    {combatStore.currentAttackIntervalSeconds.toFixed(1)}s
+                <div>
+                  <div class="text-xs text-neutral-500 mb-0.5 text-center">
+                    {t('ui.combat.attackInterval')}: {combatStore.currentAttackIntervalSeconds.toFixed(1)}s
                   </div>
-                  <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div class="h-2 bg-neutral-50 rounded-full overflow-hidden">
                     <div
                       class="h-full bg-gradient-to-r from-amber-500 to-amber-400 transition-all duration-100"
                       style={{ width: `${(battle.playerAttackProgress || 0) * 100}%` }}
@@ -167,46 +162,33 @@ export default defineComponent({
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* 敌人区域（右侧） */}
-            <div class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
-              {/* 敌人卡片 */}
-              <div class="flex flex-col items-center p-4 bg-white rounded-xl border-2 border-red-200 shadow-lg min-w-[180px]">
-                <span class="text-gray-900 font-semibold mb-2">{t(currentEnemy.value.name)}</span>
-                {/* 敌人头像 */}
-                <div class="w-20 h-20 bg-red-100 rounded-lg flex items-center justify-center mb-3">
-                  <span class="text-4xl">👾</span>
-                </div>
-                {/* HP 条 */}
-                <div class="w-full mb-2">
-                  <div class="flex justify-between text-xs text-red-600 mb-0.5">
-                    <span>HP</span>
-                    <span>
-                      {formatNumber(battle.enemyCurrentHp, locale.value)}/
-                      {formatNumber(currentEnemy.value.hp, locale.value)}
-                    </span>
-                  </div>
-                  <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      class="h-full bg-red-500 transition-all duration-300"
-                      style={{ width: `${(battle.enemyCurrentHp / currentEnemy.value.hp) * 100}%` }}
-                    />
+              <div class="flex-1 flex flex-col items-stretch gap-3 border border-error/20 rounded-xl p-4 bg-surface">
+                <span class="text-base font-semibold text-neutral-600 text-center">
+                  {t(currentEnemy.value.name)}
+                </span>
+                <div class="flex justify-center">
+                  <div class="w-20 h-20 bg-error/10 rounded-lg flex items-center justify-center text-4xl">
+                    👾
                   </div>
                 </div>
-                {/* 攻击力显示 */}
+                <div>
+                  {statBadge(
+                    'HP',
+                    `${formatNumber(battle.enemyCurrentHp, locale.value)}/${formatNumber(currentEnemy.value.hp, locale.value)}`,
+                  )}
+                  {progressTrack((battle.enemyCurrentHp / currentEnemy.value.hp) * 100, 'bg-red-500')}
+                </div>
                 <div class="flex gap-1 flex-wrap justify-center">
-                  <span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded-full">
+                  <span class="badge bg-error/10 text-error">
                     ⚔️ {formatNumber(currentEnemy.value.attack, locale.value)}
                   </span>
                 </div>
-                {/* 攻击间隔 */}
-                <div class="w-full mt-3">
-                  <div class="text-xs text-gray-600 mb-0.5 text-center">
-                    {t('ui.combat.attackInterval')}:{' '}
-                    {currentEnemy.value.attackIntervalSeconds.toFixed(1)}s
+                <div>
+                  <div class="text-xs text-neutral-500 mb-0.5 text-center">
+                    {t('ui.combat.attackInterval')}: {currentEnemy.value.attackIntervalSeconds.toFixed(1)}s
                   </div>
-                  <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div class="h-2 bg-neutral-50 rounded-full overflow-hidden">
                     <div
                       class="h-full bg-red-500 transition-all duration-100"
                       style={{ width: `${(battle.enemyAttackProgress || 0) * 100}%` }}
@@ -217,17 +199,11 @@ export default defineComponent({
             </div>
           </div>
 
-          {/* 底部信息栏 */}
-          <div class="p-4 bg-gray-50 border-t border-gray-200">
-            <div class="flex justify-center items-center">
-              {/* 战斗进度信息 */}
-              <div class="flex flex-col gap-2 items-center">
-                <span class="text-sm text-gray-600">{t('ui.combat.remainingBattles')}</span>
-                <span class="text-xl font-bold text-gray-900">
-                  {battle.totalAmount === -1 ? '∞' : battle.totalAmount - battle.completedAmount}
-                </span>
-              </div>
-            </div>
+          <div class="panel p-4 text-center">
+            <span class="text-sm text-neutral-500 block">{t('ui.combat.remainingBattles')}</span>
+            <span class="text-2xl font-bold text-neutral-600">
+              {battle.totalAmount === -1 ? '∞' : battle.totalAmount - battle.completedAmount}
+            </span>
           </div>
         </div>
       )

@@ -31,11 +31,12 @@ export default defineComponent({
 
     // 根据侧栏可见性动态调整 grid 布局
     const gridClass = computed(() => {
-      if (shouldShowSidebar.value) {
-        return 'h-full grid grid-cols-[56px_minmax(0,1fr)] lg:grid-cols-[260px_minmax(0,1fr)_var(--tabs-width)] grid-rows-[auto_minmax(0,1fr)] gap-0.5'
-      }
-      // 不显示侧栏时，使用两列布局
-      return 'h-full grid grid-cols-[56px_minmax(0,1fr)] lg:grid-cols-[260px_minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)] gap-0.5'
+      const baseCols = 'grid-cols-[56px_minmax(0,1fr)]'
+      const baseRows = 'grid-rows-[auto_minmax(0,1fr)]'
+      const desktopCols = shouldShowSidebar.value
+        ? 'lg:grid-cols-[260px_minmax(0,1fr)_var(--tabs-width)]'
+        : 'lg:grid-cols-[260px_minmax(0,1fr)]'
+      return `h-full grid ${baseCols} ${baseRows} gap-0.5 ${desktopCols}`
     })
 
     onMounted(() => {
@@ -94,20 +95,20 @@ export default defineComponent({
     return () => (
       <div class="h-full p-0.5 box-border relative">
         <div id="game-page-layout-container" class={gridClass.value} style={containerStyle.value}>
-          <header class="col-span-full row-start-1 panel flex justify-between items-center px-8 py-4 lg:px-12">
+          <header class="col-span-full row-start-1 panel flex justify-between items-center px-4 py-4 lg:px-12">
             <div class="flex items-center gap-10">
-              <h1 class="m-0 text-4xl font-bold tracking-wide text-gray-900 hidden lg:block">
+              <h1 class="m-0 text-4xl font-bold tracking-wide text-neutral-600 hidden lg:block">
                 {t('gameName')}
               </h1>
               <ActionQueue />
             </div>
           </header>
 
-          <div class="col-start-1 row-start-2 panel p-0.5">
+          <div class="panel p-0.5 col-start-1 row-start-2">
             <LeftSidebar />
           </div>
 
-          <div class="col-start-2 row-start-2 panel p-0 flex flex-col">
+          <div class="panel p-0 flex flex-col col-start-2 row-start-2 lg:col-start-2 lg:row-start-2">
             <div class="flex-1 min-h-0 overflow-auto">
               <RouterView />
             </div>
@@ -119,10 +120,10 @@ export default defineComponent({
               style={{ width: `${tabsWidth.value}px` }}
             >
               <div
-                class="w-2 cursor-ew-resize bg-gray-200 hover:bg-blue-200 flex items-center justify-center flex-shrink-0 transition"
+                class="w-2 cursor-ew-resize bg-neutral-50 hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition"
                 onMousedown={startDragTabs}
               >
-                <div class="w-0.5 h-10 bg-gray-400 rounded transition" />
+                <div class="w-0.5 h-10 bg-neutral-300 rounded transition" />
               </div>
               <div class="flex-1 flex flex-col overflow-hidden">
                 <InventoryPage />
@@ -131,17 +132,6 @@ export default defineComponent({
           )}
         </div>
 
-        <style>
-          {`
-            body.dragging {
-              cursor: ew-resize !important;
-              user-select: none !important;
-            }
-            body.dragging * {
-              cursor: ew-resize !important;
-            }
-          `}
-        </style>
       </div>
     )
   },

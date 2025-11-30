@@ -1,29 +1,66 @@
 import { defineConfig, presetUno } from 'unocss'
 
+const surface = {
+  DEFAULT: '#ffffff',
+  muted: '#f8fafc',
+  subtle: '#edf2ff',
+}
+
+const neutral = {
+  25: '#f6f8fb',
+  50: '#f1f5f9',
+  100: '#e2e8f0',
+  200: '#cbd5f5',
+  300: '#94a3b8',
+  400: '#64748b',
+  500: '#475569',
+  600: '#334155',
+}
+
 export default defineConfig({
   presets: [presetUno()],
   theme: {
     colors: {
       primary: '#2563eb',
+      primaryMuted: '#3b82f6',
       success: '#22c55e',
+      warning: '#f97316',
       error: '#ef4444',
+      surface,
+      neutral,
+    },
+    boxShadow: {
+      panel: '0 10px 25px -15px rgba(15, 23, 42, 0.35)',
+      card: '0 6px 18px -12px rgba(15, 23, 42, 0.35)',
+    },
+    borderRadius: {
+      panel: '18px',
     },
   },
   shortcuts: {
-    // 通用
-    panel: 'bg-white/78 backdrop-blur-md border border-gray-300 rounded shadow-lg overflow-hidden',
+    // layout containers
+    panel:
+      'bg-surface/90 backdrop-blur-md border border-neutral-100 rounded-panel shadow-panel overflow-hidden',
+    'panel-muted':
+      'bg-surface-muted/95 backdrop-blur border border-neutral-100 rounded-panel shadow-card',
+    // Navigation and cards
     'nav-link':
-      'flex flex-col justify-center items-stretch gap-0.5 p-2 px-2.5 rounded-md bg-slate-100/70 font-semibold text-gray-700 transition cursor-pointer select-none hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary no-underline',
+      'flex flex-col justify-center items-stretch gap-0.5 p-2 px-2.5 rounded-md bg-neutral-50 font-semibold text-neutral-500 transition cursor-pointer select-none hover:bg-neutral-100 hover:text-neutral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-sm lg:text-base no-underline',
     'card-item':
-      'rounded bg-white border border-gray-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
-    'progress-bar': 'h-full bg-gradient-to-r from-cyan-400 to-primary transition-all',
+      'rounded-lg bg-surface border border-neutral-50 shadow-card hover:shadow-panel hover:-translate-y-0.5 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+    'progress-bar':
+      'h-full bg-gradient-to-r from-cyan-400 to-primary transition-all shadow-inner shadow-primary/20',
     // Buttons & interactive shortcuts
-    btn: 'px-4 py-2 rounded-md font-semibold transition inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-40',
-    'btn-primary': 'btn bg-primary text-white hover:bg-primary/90 border-none shadow-sm',
-    // Make `btn-secondary` a full button variant so consumers can use it standalone
-    'btn-secondary': 'btn bg-gray-100 text-gray-900 border border-gray-300 hover:bg-gray-200',
-    // Ghost / transparent minimal button (icon-only close buttons etc.)
-    'btn-ghost': 'btn bg-transparent border-none p-0 hover:opacity-70 leading-none',
-    // `interactive` removed — prefer `btn` or `card-item` for interactive elements
+    btn: 'px-4 py-2 rounded-lg font-semibold transition inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-40 disabled:cursor-not-allowed',
+    'btn-primary': 'btn bg-primary text-white hover:bg-primary/90 border border-transparent shadow-sm',
+    'btn-secondary':
+      'btn bg-surface text-neutral-600 border border-neutral-100 hover:bg-neutral-50 shadow-card',
+    'btn-ghost':
+      'btn bg-transparent text-neutral-500 border border-transparent hover:bg-neutral-50 hover:text-neutral-700 px-2 py-1',
+    'btn-destructive':
+      'btn bg-error/10 text-error border border-error/30 hover:bg-error/20 hover:text-error',
+    // Utility
+    badge:
+      'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-neutral-50 text-neutral-500',
   },
 })
