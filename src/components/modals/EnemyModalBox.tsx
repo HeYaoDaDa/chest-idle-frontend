@@ -70,12 +70,14 @@ export default defineComponent({
 
     const addToQueue = () => {
       if (enemy.value && allowAmount.value) {
-        const result = combatStore.startBattle(enemy.value.id, stringToNumber(amountString.value))
-        if (result && result.canWin && combatStore.currentBattle) {
+        // 使用 previewBattle 仅模拟，不修改战斗状态
+        const result = combatStore.previewBattle(enemy.value.id, stringToNumber(amountString.value))
+        if (result && result.canWin) {
+          const singleBattleDuration = result.perBattleSummary[0]?.duration ?? 0
           actionQueueStore.addCombatAction(
             enemy.value.id,
             stringToNumber(amountString.value),
-            combatStore.currentBattle.singleBattleDuration,
+            singleBattleDuration,
           )
         }
         closeModal()

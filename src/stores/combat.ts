@@ -222,6 +222,27 @@ export const useCombatStore = defineStore('combat', () => {
   }
 
   /**
+   * 预览战斗（仅模拟，不修改战斗状态）
+   *
+   * 用于在添加到队列前预估战斗结果，不会创建 currentBattle
+   *
+   * @param enemyId 敌人 ID
+   * @param amount 战斗次数
+   * @returns 战斗模拟结果，如果敌人不存在返回 null
+   */
+  function previewBattle(enemyId: string, amount: number): BatchBattleResult | null {
+    const enemyConfig = enemyConfigMap[enemyId]
+    if (!enemyConfig) {
+      console.error(`Enemy not found: ${enemyId}`)
+      return null
+    }
+
+    // 获取玩家属性并进行模拟
+    const playerStats = getPlayerStats()
+    return simulateBattles(playerStats, enemyConfig, amount)
+  }
+
+  /**
    * 开始战斗
    *
    * @param enemyId 敌人 ID
@@ -421,6 +442,7 @@ export const useCombatStore = defineStore('combat', () => {
     calculateDamage,
     calculateDamageTaken,
     getPlayerStats,
+    previewBattle,
     startBattle,
     completeBattle,
     resetBattleStartTime,
