@@ -10,6 +10,10 @@ export const useAppStore = defineStore('app', () => {
   const state = ref(undefined as 'loading' | 'ready' | 'error' | undefined)
 
   async function loadApplication(): Promise<void> {
+    // 幂等保护：已加载或正在加载则直接返回
+    if (state.value === 'ready' || state.value === 'loading') {
+      return
+    }
     state.value = 'loading'
     try {
       loadGameConfig()

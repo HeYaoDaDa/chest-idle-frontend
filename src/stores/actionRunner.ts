@@ -25,7 +25,14 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
   const consumableStore = useConsumableStore()
   const combatStore = useCombatStore()
 
+  let isRunning = false
+
   function start(): void {
+    // 幂等保护：已启动则直接返回
+    if (isRunning) {
+      return
+    }
+    isRunning = true
     requestAnimationFrame(update)
   }
 

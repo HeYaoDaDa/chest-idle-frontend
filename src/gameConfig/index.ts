@@ -79,6 +79,23 @@ function convertDerivedValue(config: DerivedValueConfig): DerivedValueConfigInte
 }
 
 export function loadGameConfig() {
+  // 清空所有 map 和数组，支持重复调用
+  for (const key of Object.keys(skillConfigMap)) delete skillConfigMap[key]
+  for (const key of Object.keys(slotConfigMap)) delete slotConfigMap[key]
+  for (const key of Object.keys(statConfigMap)) delete statConfigMap[key]
+  for (const key of Object.keys(itemConfigMap)) delete itemConfigMap[key]
+  for (const key of Object.keys(actionConfigMap)) delete actionConfigMap[key]
+  for (const key of Object.keys(enemyConfigMap)) delete enemyConfigMap[key]
+  for (const key of Object.keys(actionConfigListBySkill)) delete actionConfigListBySkill[key]
+  skillConfigs.length = 0
+  slotConfigs.length = 0
+  statConfigs.length = 0
+  resourceConfigs.length = 0
+  chestConfigs.length = 0
+  equipmentConfigs.length = 0
+  consumableConfigs.length = 0
+  enemyConfigs.length = 0
+
   const modules = import.meta.glob('/src/data/**/*.json', {
     eager: true,
     import: 'default',
