@@ -104,9 +104,10 @@ describe('ActionQueue Component', () => {
         },
       })
 
-      const stopButton = wrapper.find('button')
-      expect(stopButton.exists()).toBe(true)
-      expect(stopButton.text()).toContain('Stop')
+      const buttons = wrapper.findAll('button')
+      const stopButton = buttons.find((btn) => btn.text().includes('Stop'))
+      expect(stopButton).toBeDefined()
+      expect(stopButton!.text()).toContain('Stop')
     })
 
     it('should not show stop button when no action is running', () => {
@@ -164,8 +165,10 @@ describe('ActionQueue Component', () => {
         },
       })
 
-      const stopButton = wrapper.find('button')
-      await stopButton.trigger('click')
+      const buttons = wrapper.findAll('button')
+      const stopButton = buttons.find((btn) => btn.text().includes('Stop'))
+      expect(stopButton).toBeDefined()
+      await stopButton!.trigger('click')
 
       expect(actionQueueStore.actionQueue).toHaveLength(0)
     })

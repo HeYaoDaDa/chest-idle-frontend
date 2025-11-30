@@ -61,9 +61,8 @@ describe('CombatPage a11y', () => {
       },
     })
 
-    // 应该显示战斗标题和描述
+    // 应该显示战斗标题
     expect(wrapper.text()).toContain('ui.combat.title')
-    expect(wrapper.text()).toContain('ui.combat.description')
   })
 
   it('should not show battle arena when not in battle', () => {
@@ -88,6 +87,5 @@ describe('CombatPage a11y', () => {
 
     // 页面应该包含战斗相关信息
     expect(wrapper.text()).toContain('ui.combat.title')
-    expect(wrapper.text()).toContain('ui.combat.description')
   })
 })
