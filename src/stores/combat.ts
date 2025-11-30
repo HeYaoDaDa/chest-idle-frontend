@@ -192,7 +192,9 @@ export const useCombatStore = defineStore('combat', () => {
   /**
    * 当前攻击间隔（秒，基于当前装备的武器类型）
    */
-  const currentAttackIntervalSeconds = computed(() => getAttackIntervalSeconds(currentAttackType.value))
+  const currentAttackIntervalSeconds = computed(() =>
+    getAttackIntervalSeconds(currentAttackType.value),
+  )
 
   /**
    * 当前伤害输出（基于当前装备的武器类型）

@@ -93,11 +93,7 @@ export default defineComponent({
 
     return () => (
       <div class="h-full p-0.5 box-border relative">
-        <div
-          id="game-page-layout-container"
-          class={gridClass.value}
-          style={containerStyle.value}
-        >
+        <div id="game-page-layout-container" class={gridClass.value} style={containerStyle.value}>
           <header class="col-span-full row-start-1 panel flex justify-between items-center px-8 py-4 lg:px-12">
             <div class="flex items-center gap-10">
               <h1 class="m-0 text-4xl font-bold tracking-wide text-gray-900 hidden lg:block">

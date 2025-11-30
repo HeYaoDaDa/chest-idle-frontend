@@ -60,26 +60,6 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       }
     }
 
-    // 更新进度条
-    if (actionQueueStore.actionStartDate && actionQueueStore.currentAction) {
-      const elapsedSeconds = (performance.now() - actionQueueStore.actionStartDate) / 1000
-
-      if (actionQueueStore.isCombatAction) {
-        const durationSeconds = actionQueueStore.currentAction.combatDurationSeconds ?? 0
-        const ratio = durationSeconds > 0 ? elapsedSeconds / durationSeconds : 0
-        actionQueueStore.progress = Math.min(ratio, 1) * 100
-      } else if (actionQueueStore.currentActionDetail) {
-        const actionDurationSeconds = fromSecondsFixed(
-          actionQueueStore.currentActionDetail.durationSeconds,
-        )
-        const ratio = actionDurationSeconds > 0 ? elapsedSeconds / actionDurationSeconds : 0
-        actionQueueStore.progress = Math.min(ratio, 1) * 100
-      } else {
-        actionQueueStore.progress = 0
-      }
-    } else {
-      actionQueueStore.progress = 0
-    }
     requestAnimationFrame(update)
   }
 
@@ -190,9 +170,8 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
         // 更新队列中的战斗时长（秒）
         actionQueueStore.currentAction.combatDurationSeconds = newDurationSeconds
       } else {
-        // 无法继续战斗，清除战斗状态并移除队列
-        combatStore.clearBattle()
-        actionQueueStore.removeAction(0)
+        // 无法继续战斗，统一停止当前行动
+        actionQueueStore.stopCurrentAction()
       }
     } else {
       // 所有战斗完成，清除战斗状态
@@ -231,7 +210,10 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       }
 
       // 用消耗品限制行动次数
-      const buffBasedAmount = consumableStore.estimateBuffedCounts(action.skillId, action.durationSeconds)
+      const buffBasedAmount = consumableStore.estimateBuffedCounts(
+        action.skillId,
+        action.durationSeconds,
+      )
       computedAmount = Math.min(computedAmount, buffBasedAmount)
 
       // 确保是正整数
@@ -307,11 +289,14 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
 
     const currentLevel = skillStore.getSkillLevel(action.skillId)
     if (currentLevel < action.minLevel) {
-      log.warn(`Required level ${action.minLevel} for action ${action.id}, but current level is ${currentLevel}`, {
-        actionId: action.id,
-        requiredLevel: action.minLevel,
-        currentLevel,
-      })
+      log.warn(
+        `Required level ${action.minLevel} for action ${action.id}, but current level is ${currentLevel}`,
+        {
+          actionId: action.id,
+          requiredLevel: action.minLevel,
+          currentLevel,
+        },
+      )
       const skillConfig = skillStore.getSkill(action.skillId)
       notificationStore.warning('notification.levelTooLow', {
         skill: skillConfig ? i18n.global.t(skillConfig.name) : action.skillId,

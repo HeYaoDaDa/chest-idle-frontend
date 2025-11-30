@@ -5,7 +5,7 @@ import { useCombatStore } from '@/stores/combat'
 
 // Mock gameConfig
 vi.mock('@/gameConfig', async (importOriginal) => {
-  const original = await importOriginal() as Record<string, unknown>
+  const original = (await importOriginal()) as Record<string, unknown>
   return {
     ...original,
     skillConfigs: [

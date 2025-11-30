@@ -90,9 +90,7 @@ describe('simulateSingleBattle', () => {
     const result = simulateSingleBattle(player, enemy)
 
     for (let i = 1; i < result.log.length; i++) {
-      expect(result.log[i].timeSeconds).toBeGreaterThanOrEqual(
-        result.log[i - 1].timeSeconds,
-      )
+      expect(result.log[i].timeSeconds).toBeGreaterThanOrEqual(result.log[i - 1].timeSeconds)
     }
   })
 
@@ -216,9 +214,7 @@ describe('simulateBattles', () => {
 
     expect(batchResult.canWin).toBe(true)
     expect(batchResult.perBattleSummary.length).toBe(amount)
-    expect(batchResult.aggregatedResult.durationSeconds).toBe(
-      singleResult.durationSeconds * amount,
-    )
+    expect(batchResult.aggregatedResult.durationSeconds).toBe(singleResult.durationSeconds * amount)
   })
 
   it('打不过时应该返回 canWin=false 且不生成后续场次', () => {
@@ -288,9 +284,7 @@ describe('simulateBattles', () => {
     const result2 = simulateBattles(player, enemy, amount)
 
     expect(result1.canWin).toBe(result2.canWin)
-    expect(result1.aggregatedResult.durationSeconds).toBe(
-      result2.aggregatedResult.durationSeconds,
-    )
+    expect(result1.aggregatedResult.durationSeconds).toBe(result2.aggregatedResult.durationSeconds)
     expect(result1.aggregatedResult.xpGains).toEqual(result2.aggregatedResult.xpGains)
     expect(result1.perBattleSummary.length).toBe(result2.perBattleSummary.length)
   })

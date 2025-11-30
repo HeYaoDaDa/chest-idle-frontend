@@ -98,13 +98,7 @@ export default defineComponent({
     }
 
     const stopCurrentAction = () => {
-      if (actionQueueStore.currentAction) {
-        // 如果是战斗行动，需要清除战斗状态
-        if (actionQueueStore.currentAction.type === 'combat') {
-          combatStore.cancelBattle()
-        }
-        actionQueueStore.removeAction(0)
-      }
+      actionQueueStore.stopCurrentAction()
     }
 
     return () => (

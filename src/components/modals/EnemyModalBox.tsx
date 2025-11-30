@@ -53,9 +53,7 @@ export default defineComponent({
     // 玩家战斗属性
     const playerMaxHp = computed(() => combatStore.maxHp)
     const playerDamage = computed(() => combatStore.currentDamage)
-    const playerAttackIntervalSeconds = computed(
-      () => combatStore.currentAttackIntervalSeconds,
-    )
+    const playerAttackIntervalSeconds = computed(() => combatStore.currentAttackIntervalSeconds)
 
     const hasLoot = computed(() => {
       if (!enemy.value) return false
@@ -151,7 +149,9 @@ export default defineComponent({
                 </span>
               </div>
               <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.combat.attackInterval')}</span>
+                <span class="text-sm font-medium text-gray-700">
+                  {t('ui.combat.attackInterval')}
+                </span>
                 <span class="text-sm text-gray-900">
                   ⏱️ {enemy.value.attackIntervalSeconds.toFixed(1)}s
                 </span>
@@ -166,9 +166,7 @@ export default defineComponent({
 
             {/* 玩家战斗属性 */}
             <div class="flex flex-col gap-1 p-3 bg-blue-50 rounded-lg">
-              <h3 class="text-sm font-semibold text-blue-700 mb-1">
-                {t('ui.combat.playerStats')}
-              </h3>
+              <h3 class="text-sm font-semibold text-blue-700 mb-1">{t('ui.combat.playerStats')}</h3>
               <div class="flex justify-between items-center py-1">
                 <span class="text-sm font-medium text-blue-700">{t('ui.combat.hp')}</span>
                 <span class="text-sm text-blue-900">
@@ -182,7 +180,9 @@ export default defineComponent({
                 </span>
               </div>
               <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-blue-700">{t('ui.combat.attackInterval')}</span>
+                <span class="text-sm font-medium text-blue-700">
+                  {t('ui.combat.attackInterval')}
+                </span>
                 <span class="text-sm text-blue-900">
                   ⏱️ {playerAttackIntervalSeconds.value.toFixed(1)}s
                 </span>

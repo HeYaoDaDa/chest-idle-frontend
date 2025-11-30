@@ -1,12 +1,41 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { nextTick } from 'vue'
 
 import { INFINITE_AMOUNT } from '../../utils/constants'
 import { useActionQueueStore } from '../actionQueue'
 
+const cancelBattleMock = vi.fn()
+const startBattleMock = vi.fn()
+const combatStoreMock = {
+  currentBattle: null as null | { singleBattleDurationSeconds: number; enemyId: string },
+  cancelBattle: () => {
+    cancelBattleMock()
+    combatStoreMock.currentBattle = null
+  },
+  startBattle: (enemyId: string, amount: number) => startBattleMock(enemyId, amount),
+}
+
+vi.mock('../combat', () => ({
+  useCombatStore: () => combatStoreMock,
+}))
+
 describe('actionQueue store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+    cancelBattleMock.mockReset()
+    startBattleMock.mockReset()
+    combatStoreMock.currentBattle = null
+
+    startBattleMock.mockImplementation((enemyId: string) => {
+      combatStoreMock.currentBattle = {
+        enemyId,
+        singleBattleDurationSeconds: 5,
+      }
+      return {
+        canWin: true,
+      }
+    })
   })
 
   describe('addAction', () => {
@@ -119,6 +148,60 @@ describe('actionQueue store', () => {
 
       expect(store.queueLength).toBe(1)
     })
+
+    it('should cancel battle when removing running combat action', async () => {
+      const store = useActionQueueStore()
+
+      store.addCombatAction('enemy-1', 1, 5)
+      await nextTick()
+      store.removeAction(0)
+
+      expect(cancelBattleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('combat auto-start', () => {
+    it('should start battle when combat action becomes active after production', async () => {
+      const store = useActionQueueStore()
+
+      store.addAction('production')
+      store.addCombatAction('enemy-1', 2, 5)
+      await nextTick()
+      startBattleMock.mockClear()
+
+      // remove production action to make combat current
+      store.removeAction(0)
+      await nextTick()
+
+      expect(startBattleMock).toHaveBeenCalledWith('enemy-1', 2)
+      expect(store.currentAction?.combatDurationSeconds).toBe(5)
+    })
+
+    it('should not auto-start when battle already active', async () => {
+      const store = useActionQueueStore()
+
+      combatStoreMock.currentBattle = {
+        enemyId: 'enemy-1',
+        singleBattleDurationSeconds: 7,
+      }
+
+      store.addCombatAction('enemy-1', 1, 5)
+      await nextTick()
+
+      expect(startBattleMock).not.toHaveBeenCalled()
+      expect(store.currentAction?.combatDurationSeconds).toBe(5)
+    })
+
+    it('should remove combat action if auto-start fails', async () => {
+      const store = useActionQueueStore()
+      startBattleMock.mockImplementation(() => ({ canWin: false }))
+      combatStoreMock.currentBattle = null
+
+      store.addCombatAction('enemy-1', 1, 5)
+      await nextTick()
+
+      expect(store.queueLength).toBe(0)
+    })
   })
 
   describe('move operations', () => {
@@ -228,6 +311,28 @@ describe('actionQueue store', () => {
 
       expect(store.queueLength).toBe(0)
       expect(store.actionStartDate).toBeNull()
+    })
+  })
+
+  describe('stopCurrentAction', () => {
+    it('should cancel battle and remove current combat action', async () => {
+      const store = useActionQueueStore()
+
+      store.addCombatAction('enemy-1', 3, 5)
+      await nextTick()
+      store.stopCurrentAction()
+
+      expect(store.queueLength).toBe(0)
+      expect(cancelBattleMock).toHaveBeenCalledTimes(1)
+    })
+
+    it('should do nothing when no action is running', () => {
+      const store = useActionQueueStore()
+
+      store.stopCurrentAction()
+
+      expect(store.queueLength).toBe(0)
+      expect(cancelBattleMock).not.toHaveBeenCalled()
     })
   })
 

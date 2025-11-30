@@ -4,7 +4,6 @@ import { useI18n } from 'vue-i18n'
 import ModalBox from '@/components/ModalBox'
 import { enemyConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
-import { useCombatStore } from '@/stores/combat'
 import { isInfiniteAmount } from '@/utils/amount'
 
 export default defineComponent({
@@ -14,7 +13,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n()
     const actionQueueStore = useActionQueueStore()
-    const combatStore = useCombatStore()
 
     const unifiedLength = computed(() => actionQueueStore.queueLength)
     const progress = computed(() => actionQueueStore.progress + '%')
@@ -30,13 +28,7 @@ export default defineComponent({
     const closeModal = () => emit('close')
 
     const stopCurrentAction = () => {
-      if (actionQueueStore.currentAction) {
-        // 如果是战斗行动，需要清除战斗状态
-        if (actionQueueStore.currentAction.type === 'combat') {
-          combatStore.cancelBattle()
-        }
-        actionQueueStore.removeAction(0)
-      }
+      actionQueueStore.stopCurrentAction()
     }
 
     const moveActionUp = (index: number) => actionQueueStore.moveUp(index)
@@ -68,7 +60,10 @@ export default defineComponent({
                       <div class="flex flex-col gap-1 flex-1 min-w-0">
                         <span class="text-sm font-semibold text-gray-900 truncate">
                           {actionQueueStore.isCombatAction
-                            ? t(enemyConfigMap[actionQueueStore.currentAction.actionId]?.name || 'ui.combat.title')
+                            ? t(
+                                enemyConfigMap[actionQueueStore.currentAction.actionId]?.name ||
+                                  'ui.combat.title',
+                              )
                             : t(actionQueueStore.currentActionDetail?.name || 'nothing')}
                         </span>
                         <span class="text-sm text-gray-500">

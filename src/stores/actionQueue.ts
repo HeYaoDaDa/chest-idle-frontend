@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 import { isInfiniteAmount, decrementAmount } from '@/utils/amount'
 import { INFINITE_AMOUNT } from '@/utils/constants'
 import { type Seconds } from '@/utils/fixedPoint'
+import log from '@/utils/log'
 
 import { useActionStore } from './action'
+import { useCombatStore } from './combat'
 
 /**
  * 队列中的行动项类型
@@ -28,6 +30,7 @@ export interface ActionQueueItem {
 
 export const useActionQueueStore = defineStore('actionQueue', () => {
   const actionStore = useActionStore()
+  const combatStore = useCombatStore()
 
   const actionQueue = ref<ActionQueueItem[]>([])
   const actionStartDate = ref<number | null>(null)
@@ -107,7 +110,13 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
   function removeAction(index: number): void {
     if (index < 0 || index >= actionQueue.value.length) return
 
+    const removedAction = actionQueue.value[index]
     actionQueue.value.splice(index, 1)
+
+    if (index === 0 && removedAction?.type === 'combat') {
+      combatStore.cancelBattle()
+    }
+
     if (index === 0) {
       if (actionQueue.value.length > 0) {
         actionStartDate.value = performance.now()
@@ -115,6 +124,11 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
         actionStartDate.value = null
       }
     }
+  }
+
+  function stopCurrentAction(): void {
+    if (!currentAction.value) return
+    removeAction(0)
   }
 
   function moveUp(index: number): void {
@@ -183,6 +197,26 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
     }
   }
 
+  watch(
+    () => currentAction.value,
+    (action) => {
+      if (!action || action.type !== 'combat') return
+      if (combatStore.currentBattle) return
+
+      const result = combatStore.startBattle(action.actionId, action.amount)
+      if (!result || !result.canWin || !combatStore.currentBattle) {
+        log.warn('无法启动排队中的战斗行动，自动移除', {
+          enemyId: action.actionId,
+        })
+        removeAction(0)
+        return
+      }
+
+      action.combatDurationSeconds = combatStore.currentBattle.singleBattleDurationSeconds
+      actionStartDate.value = performance.now()
+    },
+  )
+
   return {
     actionQueue,
     actionStartDate,
@@ -199,6 +233,7 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
     addAction,
     addCombatAction,
     removeAction,
+    stopCurrentAction,
     startImmediately,
     startCombatImmediately,
     completeCurrentAction,

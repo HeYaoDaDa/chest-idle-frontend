@@ -16,9 +16,7 @@ export default defineComponent({
     return () => (
       <div class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-2">
         {enemyConfigs.length === 0 ? (
-          <div class="col-span-full text-gray-500 text-center py-8">
-            {t('ui.combat.noEnemies')}
-          </div>
+          <div class="col-span-full text-gray-500 text-center py-8">{t('ui.combat.noEnemies')}</div>
         ) : (
           enemyConfigs.map((enemy) => (
             <button
@@ -33,9 +31,7 @@ export default defineComponent({
                 <span class="text-2xl">👾</span>
               </div>
               {/* 敌人名称 */}
-              <div class="text-sm font-semibold text-gray-900 text-center">
-                {t(enemy.name)}
-              </div>
+              <div class="text-sm font-semibold text-gray-900 text-center">{t(enemy.name)}</div>
               {/* 敌人属性简要 */}
               <div class="flex gap-2 text-xs text-gray-500">
                 <span title={t('ui.combat.hp')}>❤️ {enemy.hp}</span>

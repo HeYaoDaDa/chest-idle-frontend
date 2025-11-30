@@ -109,7 +109,6 @@ export default defineComponent({
         <div class="flex flex-col h-full">
           {/* 战斗区域 */}
           <div class="flex-1 relative overflow-hidden bg-white">
-
             {/* 玩家区域（左侧） */}
             <div class="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col items-center">
               {/* 玩家卡片 */}
@@ -264,7 +263,10 @@ export default defineComponent({
                 <h2 class="text-xl font-bold text-gray-900 mb-3">{t('ui.combat.title')}</h2>
                 <div class="flex flex-wrap gap-4">
                   {combatSkills.value.map((skill) => (
-                    <div key={skill.id} class="flex-1 min-w-[200px] p-3 bg-white rounded-lg shadow-sm">
+                    <div
+                      key={skill.id}
+                      class="flex-1 min-w-[200px] p-3 bg-white rounded-lg shadow-sm"
+                    >
                       <div class="flex justify-between items-center mb-1">
                         <span class="text-sm font-semibold text-gray-900">{t(skill.name)}</span>
                         <span class="text-xs font-semibold text-blue-700 px-1.5 py-0.5 bg-blue-50 rounded">
@@ -277,7 +279,8 @@ export default defineComponent({
                           {t('ui.xp')}: {formatNumber(fromFixed(skill.xp), locale.value)}
                         </span>
                         <span>
-                          {t('ui.nextLevel')}: {formatNumber(fromFixed(skill.remainingXpForUpgrade), locale.value)}
+                          {t('ui.nextLevel')}:{' '}
+                          {formatNumber(fromFixed(skill.remainingXpForUpgrade), locale.value)}
                         </span>
                       </div>
                       <div class="h-1 bg-gray-200 rounded-full overflow-hidden">

@@ -16,15 +16,21 @@ export default defineComponent({
     // is only opened via ItemTag with mode='view' which hides all action buttons.
     // They are defined here to satisfy TypeScript and catch logic errors.
     const onEquip = () => {
-      log.error('ItemModal equip event triggered in App context - this should not happen', { event: 'equip' })
+      log.error('ItemModal equip event triggered in App context - this should not happen', {
+        event: 'equip',
+      })
       throw new Error('Equip action not supported in global item modal (view mode only)')
     }
     const onUnequip = () => {
-      log.error('ItemModal unequip event triggered in App context - this should not happen', { event: 'unequip' })
+      log.error('ItemModal unequip event triggered in App context - this should not happen', {
+        event: 'unequip',
+      })
       throw new Error('Unequip action not supported in global item modal (view mode only)')
     }
     const onOpenChest = () => {
-      log.error('ItemModal openChest event triggered in App context - this should not happen', { event: 'openChest' })
+      log.error('ItemModal openChest event triggered in App context - this should not happen', {
+        event: 'openChest',
+      })
       throw new Error('OpenChest action not supported in global item modal (view mode only)')
     }
 

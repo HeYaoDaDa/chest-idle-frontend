@@ -4,6 +4,19 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useActionQueueStore } from '@/stores/actionQueue'
 
+const cancelBattleMock = vi.fn()
+
+vi.mock('@/stores/combat', () => ({
+  useCombatStore: () => ({
+    currentBattle: null,
+    maxHp: 100,
+    maxMp: 100,
+    currentDamage: 10,
+    currentAttackIntervalSeconds: 2,
+    cancelBattle: cancelBattleMock,
+  }),
+}))
+
 import ActionQueue from '../ActionQueue'
 
 import { createTestI18n } from '@/../test/setup'
@@ -44,6 +57,7 @@ vi.mock('../modals', () => ({
 describe('ActionQueue Component', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+    cancelBattleMock.mockReset()
   })
 
   describe('rendering', () => {

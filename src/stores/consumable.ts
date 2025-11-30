@@ -3,7 +3,6 @@ import { ref } from 'vue'
 
 import { itemConfigMap } from '@/gameConfig'
 import {
-  type FixedPoint,
   type SecondsFixed,
   toFixed,
   fpAdd,
@@ -95,7 +94,10 @@ export const useConsumableStore = defineStore('consumable', () => {
   /**
    * 消耗 buffs，返回需要从库存扣除的物品列表
    */
-  function consumeBuffs(skillId: string, consumedDurationSeconds: SecondsFixed): [string, number][] {
+  function consumeBuffs(
+    skillId: string,
+    consumedDurationSeconds: SecondsFixed,
+  ): [string, number][] {
     const itemsToRemove: [string, number][] = []
     const slots = getSlots(skillId)
 

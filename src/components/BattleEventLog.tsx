@@ -1,4 +1,4 @@
-import { computed, defineComponent, type PropType, ref, watch } from 'vue'
+import { computed, defineComponent, onUnmounted, type PropType, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import type { CombatEvent } from '@/utils/combatSimulator'
@@ -41,25 +41,52 @@ export default defineComponent({
     // 更新当前时间
     let animationFrame: number | null = null
 
-    const updateTime = () => {
+    const tick = () => {
       if (props.isActive && props.startTime > 0) {
         currentTimeSeconds.value = (performance.now() - props.startTime) / 1000
+        animationFrame = requestAnimationFrame(tick)
+      } else {
+        stopTicker()
       }
-      animationFrame = requestAnimationFrame(updateTime)
+    }
+
+    const startTicker = () => {
+      stopTicker()
+      animationFrame = requestAnimationFrame(tick)
+    }
+
+    const stopTicker = () => {
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = null
+      }
     }
 
     watch(
       () => props.isActive,
       (isActive) => {
         if (isActive) {
-          updateTime()
-        } else if (animationFrame !== null) {
-          cancelAnimationFrame(animationFrame)
-          animationFrame = null
+          startTicker()
+        } else {
+          stopTicker()
         }
       },
       { immediate: true },
     )
+
+    watch(
+      () => props.startTime,
+      () => {
+        currentTimeSeconds.value = 0
+        if (props.isActive) {
+          startTicker()
+        }
+      },
+    )
+
+    onUnmounted(() => {
+      stopTicker()
+    })
 
     // 当前正在发生的事件索引
     const currentEventIndex = computed(() => {
@@ -114,9 +141,7 @@ export default defineComponent({
           : t('ui.combat.eventLog.enemy')
       const targetSide = getTargetSide(event)
       const targetName =
-        targetSide === 'player'
-          ? t('ui.combat.eventLog.player')
-          : t('ui.combat.eventLog.enemy')
+        targetSide === 'player' ? t('ui.combat.eventLog.player') : t('ui.combat.eventLog.enemy')
 
       return t('ui.combat.eventLog.attackEvent', {
         actor: actorName,
@@ -129,22 +154,17 @@ export default defineComponent({
       <div class="flex flex-col gap-2">
         {/* 标题和时间进度 */}
         <div class="flex justify-between items-center mb-2">
-          <h4 class="text-md font-semibold text-gray-700">
-            {t('ui.combat.eventLog.title')}
-          </h4>
+          <h4 class="text-md font-semibold text-gray-700">{t('ui.combat.eventLog.title')}</h4>
           <span class="text-sm text-gray-500">
-            {formatTime(
-              Math.min(currentTimeSeconds.value, props.totalDurationSeconds),
-            )}{' '}/ {formatTime(props.totalDurationSeconds)}
+            {formatTime(Math.min(currentTimeSeconds.value, props.totalDurationSeconds))} /{' '}
+            {formatTime(props.totalDurationSeconds)}
           </span>
         </div>
 
         {/* 事件列表 */}
         <div class="max-h-64 overflow-y-auto space-y-1 pr-1">
           {props.events.length === 0 ? (
-            <div class="text-center text-gray-400 py-4">
-              {t('ui.combat.eventLog.noEvents')}
-            </div>
+            <div class="text-center text-gray-400 py-4">{t('ui.combat.eventLog.noEvents')}</div>
           ) : (
             props.events.map((event, index) => {
               const targetSide = getTargetSide(event)
@@ -163,9 +183,7 @@ export default defineComponent({
                     <div class="text-sm text-gray-800">{getEventDescription(event)}</div>
                     <div class="flex gap-4 text-xs text-gray-500 mt-1">
                       {/* HP 变化 */}
-                      <span
-                        class={targetSide === 'player' ? 'text-red-500' : 'text-green-500'}
-                      >
+                      <span class={targetSide === 'player' ? 'text-red-500' : 'text-green-500'}>
                         {targetSide === 'player' ? '❤️ ' : '💀 '}
                         {event.targetHpAfter} HP
                       </span>

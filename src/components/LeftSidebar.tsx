@@ -45,12 +45,8 @@ export default defineComponent({
           activeClass="!bg-gradient-to-br !from-primary !to-blue-500 !text-white !shadow-lg"
           class="nav-link"
         >
-          <div class="lg:hidden text-xs text-center">
-            {t('ui.chests').substring(0, 2)}
-          </div>
-          <div class="hidden lg:block text-base">
-            {t('ui.chests')}
-          </div>
+          <div class="lg:hidden text-xs text-center">{t('ui.chests').substring(0, 2)}</div>
+          <div class="hidden lg:block text-base">{t('ui.chests')}</div>
           <div class="hidden lg:block h-1"></div>
         </RouterLink>
 
