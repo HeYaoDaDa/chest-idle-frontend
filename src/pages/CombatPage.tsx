@@ -209,8 +209,8 @@ export default defineComponent({
                   </div>
                   <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div
-                      class="h-full bg-blue-500 transition-all duration-100"
-                      style={{ width: `${(battle.playerAttackProgress || 0) * 100}%` }}
+                      class="h-full bg-red-500 transition-all duration-100"
+                      style={{ width: `${(battle.enemyAttackProgress || 0) * 100}%` }}
                     />
                   </div>
                 </div>
