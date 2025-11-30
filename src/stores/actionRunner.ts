@@ -3,7 +3,18 @@ import { defineStore } from 'pinia'
 import { enemyConfigMap } from '@/gameConfig'
 import i18n from '@/i18n'
 import { isInfiniteAmount, toFiniteForCompute, fromComputeResult } from '@/utils/amount'
-import { toFixed, fromFixed, fpMul, fpDiv, fpLt, fpFloor } from '@/utils/fixedPoint'
+import {
+  toFixed,
+  fromFixed,
+  fpMul,
+  fpDiv,
+  fpLt,
+  fpFloor,
+  fromSecondsFixed,
+  toSecondsFixed,
+  type Seconds,
+  type SecondsFixed,
+} from '@/utils/fixedPoint'
 import log from '@/utils/log'
 
 import { useActionQueueStore } from './actionQueue'
@@ -51,18 +62,18 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
 
     // 更新进度条
     if (actionQueueStore.actionStartDate && actionQueueStore.currentAction) {
-      const elapsed = toFixed(performance.now() - actionQueueStore.actionStartDate)
+      const elapsedSeconds = (performance.now() - actionQueueStore.actionStartDate) / 1000
 
       if (actionQueueStore.isCombatAction) {
-        // 战斗行动使用 combatDuration
-        const duration = actionQueueStore.currentAction.combatDuration || 0
-        actionQueueStore.progress =
-          Math.min(duration > 0 ? fromFixed(fpDiv(elapsed, toFixed(duration))) : 0, 1) * 100
+        const durationSeconds = actionQueueStore.currentAction.combatDurationSeconds ?? 0
+        const ratio = durationSeconds > 0 ? elapsedSeconds / durationSeconds : 0
+        actionQueueStore.progress = Math.min(ratio, 1) * 100
       } else if (actionQueueStore.currentActionDetail) {
-        // 生产行动使用 action.duration
-        const duration = actionQueueStore.currentActionDetail.duration
-        actionQueueStore.progress =
-          Math.min(duration > 0 ? fromFixed(fpDiv(elapsed, duration)) : 0, 1) * 100
+        const actionDurationSeconds = fromSecondsFixed(
+          actionQueueStore.currentActionDetail.durationSeconds,
+        )
+        const ratio = actionDurationSeconds > 0 ? elapsedSeconds / actionDurationSeconds : 0
+        actionQueueStore.progress = Math.min(ratio, 1) * 100
       } else {
         actionQueueStore.progress = 0
       }
@@ -79,34 +90,40 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     if (!actionQueueStore.actionStartDate || !actionQueueStore.currentAction) return 0
 
     const actionItem = actionQueueStore.currentAction
-    const duration = actionItem.combatDuration || 0
+    const durationSeconds: Seconds = actionItem.combatDurationSeconds ?? 0
 
     // 更新攻击冷却进度和HP
     if (combatStore.currentBattle) {
       const battle = combatStore.currentBattle
       const currentTime = performance.now()
-      const battleElapsed = currentTime - battle.startTime
+      const battleElapsedSeconds = (currentTime - battle.startTime) / 1000
 
-      // 玩家攻击进度
-      const playerInterval = combatStore.currentAttackInterval
-      const playerProgress = (battleElapsed % playerInterval) / playerInterval
+      // 玩家攻击进度（以秒计算）
+      const playerIntervalSeconds = combatStore.currentAttackIntervalSeconds
+      const playerProgress =
+        playerIntervalSeconds > 0
+          ? (battleElapsedSeconds % playerIntervalSeconds) / playerIntervalSeconds
+          : 0
       battle.playerAttackProgress = Math.min(playerProgress, 1)
 
       // 敌人攻击进度
       const enemy = enemyConfigMap[battle.enemyId]
       if (enemy) {
-        const enemyInterval = enemy.attackInterval
-        const enemyProgress = (battleElapsed % enemyInterval) / enemyInterval
+        const enemyIntervalSeconds = enemy.attackIntervalSeconds
+        const enemyProgress =
+          enemyIntervalSeconds > 0
+            ? (battleElapsedSeconds % enemyIntervalSeconds) / enemyIntervalSeconds
+            : 0
         battle.enemyAttackProgress = Math.min(enemyProgress, 1)
       }
 
-      // 根据战斗事件流更新HP
+      // 根据战斗事件流更新HP（事件时间以秒为单位，转换为毫秒比较）
       const events = battle.representativeLog
       let lastPlayerHp = combatStore.maxHp
       let lastEnemyHp = enemy?.hp || 0
 
       for (const event of events) {
-        if (event.time > battleElapsed) break
+        if (event.timeSeconds > battleElapsedSeconds) break
 
         if (event.actorSide === 'player') {
           // 玩家攻击敌人
@@ -121,7 +138,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       battle.enemyCurrentHp = lastEnemyHp
     }
 
-    if (elapsed < duration) {
+    if (elapsed / 1000 < durationSeconds) {
       // 战斗未完成
       return 0
     }
@@ -158,8 +175,8 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       }
     }
 
-    // 计算实际消耗的时间
-    const computedElapsedTime = duration
+    // 计算实际消耗的时间（毫秒）
+    const computedElapsedTime = durationSeconds * 1000
     const remainedElapsed = elapsed - computedElapsedTime
 
     // 完成当前行动（减少计数）
@@ -168,10 +185,10 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     // 如果还有剩余战斗次数，刷新战斗属性并继续下一场
     if (actionQueueStore.currentAction && actionQueueStore.isCombatAction) {
       // 重新模拟以获取最新的玩家属性
-      const newDuration = combatStore.refreshBattleStats()
-      if (newDuration !== null) {
-        // 更新队列中的战斗时长
-        actionQueueStore.currentAction.combatDuration = newDuration
+      const newDurationSeconds = combatStore.refreshBattleStats()
+      if (newDurationSeconds !== null) {
+        // 更新队列中的战斗时长（秒）
+        actionQueueStore.currentAction.combatDurationSeconds = newDurationSeconds
       } else {
         // 无法继续战斗，清除战斗状态并移除队列
         combatStore.clearBattle()
@@ -193,15 +210,18 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     const action = actionQueueStore.currentActionDetail
     const skill = skillStore.getSkill(action.skillId)
 
-    const elapsedFixed = toFixed(elapsed)
+    const elapsedSeconds = elapsed / 1000
+    const elapsedSecondsFixed: SecondsFixed = toSecondsFixed(elapsedSeconds)
 
-    if (fpLt(elapsedFixed, action.duration)) {
+    if (fpLt(elapsedSecondsFixed, action.durationSeconds)) {
       return 0
     } else {
       let computedAmount = toFiniteForCompute(amount)
 
       // 计算基于时间可以执行的次数
-      const timeBasedAmount = Math.floor(fromFixed(fpFloor(fpDiv(elapsedFixed, action.duration))))
+      const timeBasedAmount = Math.floor(
+        fromFixed(fpFloor(fpDiv(elapsedSecondsFixed, action.durationSeconds))),
+      )
       computedAmount = Math.min(computedAmount, timeBasedAmount)
 
       let xpBasedAmount = Infinity
@@ -211,7 +231,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       }
 
       // 用消耗品限制行动次数
-      const buffBasedAmount = consumableStore.estimateBuffedCounts(action.skillId, action.duration)
+      const buffBasedAmount = consumableStore.estimateBuffedCounts(action.skillId, action.durationSeconds)
       computedAmount = Math.min(computedAmount, buffBasedAmount)
 
       // 确保是正整数
@@ -225,7 +245,8 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
 
       computeAction(action, computedAmount)
 
-      const computedElapsedTime = fromFixed(fpMul(action.duration, toFixed(computedAmount)))
+      const computedElapsedSecondsFixed = fpMul(action.durationSeconds, toFixed(computedAmount))
+      const computedElapsedTime = fromSecondsFixed(computedElapsedSecondsFixed) * 1000
 
       const remainedElapsed = elapsed - computedElapsedTime
 
@@ -245,10 +266,10 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       }
     }
 
-    // 收集消耗品消耗
+    // 收集消耗品消耗（使用秒为单位）
     const consumableItems = consumableStore.consumeBuffs(
       action.skillId,
-      fpMul(action.duration, toFixed(computedAmount)),
+      fpMul(action.durationSeconds, toFixed(computedAmount)),
     )
     itemsToRemove.push(...consumableItems)
 

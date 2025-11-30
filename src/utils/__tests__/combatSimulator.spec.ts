@@ -14,7 +14,7 @@ const createPlayerStats = (overrides: Partial<PlayerCombatStats> = {}): PlayerCo
   maxHp: 100,
   maxMp: 100,
   attack: 10,
-  attackInterval: 3000,
+  attackIntervalSeconds: 3,
   attackType: 'melee',
   physicalDamageTakenPercent: 1, // 100% 伤害承受（无防御）
   ...overrides,
@@ -26,7 +26,7 @@ const createEnemyConfig = (overrides: Partial<EnemyConfig> = {}): EnemyConfig =>
   sort: 0,
   hp: 50,
   attack: 5,
-  attackInterval: 3000,
+  attackIntervalSeconds: 3,
   xpReward: 10,
   fixedLootItems: [],
   fixedChestPoints: [],
@@ -69,14 +69,14 @@ describe('simulateSingleBattle', () => {
     const result2 = simulateSingleBattle(player, enemy)
 
     expect(result1.canWin).toBe(result2.canWin)
-    expect(result1.duration).toBe(result2.duration)
+    expect(result1.durationSeconds).toBe(result2.durationSeconds)
     expect(result1.playerHpRemaining).toBe(result2.playerHpRemaining)
     expect(result1.enemyHpRemaining).toBe(result2.enemyHpRemaining)
     expect(result1.log.length).toBe(result2.log.length)
 
     // 验证每个事件都相同
     for (let i = 0; i < result1.log.length; i++) {
-      expect(result1.log[i].time).toBe(result2.log[i].time)
+      expect(result1.log[i].timeSeconds).toBe(result2.log[i].timeSeconds)
       expect(result1.log[i].actorSide).toBe(result2.log[i].actorSide)
       expect(result1.log[i].damage).toBe(result2.log[i].damage)
       expect(result1.log[i].targetHpAfter).toBe(result2.log[i].targetHpAfter)
@@ -90,7 +90,9 @@ describe('simulateSingleBattle', () => {
     const result = simulateSingleBattle(player, enemy)
 
     for (let i = 1; i < result.log.length; i++) {
-      expect(result.log[i].time).toBeGreaterThanOrEqual(result.log[i - 1].time)
+      expect(result.log[i].timeSeconds).toBeGreaterThanOrEqual(
+        result.log[i - 1].timeSeconds,
+      )
     }
   })
 
@@ -100,8 +102,8 @@ describe('simulateSingleBattle', () => {
 
     const result = simulateSingleBattle(player, enemy)
 
-    const lastEventTime = result.log[result.log.length - 1].time
-    expect(result.duration).toBe(lastEventTime)
+    const lastEventTime = result.log[result.log.length - 1].timeSeconds
+    expect(result.durationSeconds).toBe(lastEventTime)
   })
 
   it('近战攻击应该累计近战经验', () => {
@@ -167,19 +169,19 @@ describe('simulateSingleBattle', () => {
   })
 
   it('攻击间隔更短的一方应该先攻击', () => {
-    const player = createPlayerStats({ attackInterval: 2000 })
-    const enemy = createEnemyConfig({ attackInterval: 3000 })
+    const player = createPlayerStats({ attackIntervalSeconds: 2 })
+    const enemy = createEnemyConfig({ attackIntervalSeconds: 3 })
 
     const result = simulateSingleBattle(player, enemy)
 
     // 第一个事件应该是玩家攻击
     expect(result.log[0].actorSide).toBe('player')
-    expect(result.log[0].time).toBe(2000)
+    expect(result.log[0].timeSeconds).toBeCloseTo(2)
   })
 
   it('攻击间隔相同时玩家应该先攻击', () => {
-    const player = createPlayerStats({ attackInterval: 3000 })
-    const enemy = createEnemyConfig({ attackInterval: 3000 })
+    const player = createPlayerStats({ attackIntervalSeconds: 3 })
+    const enemy = createEnemyConfig({ attackIntervalSeconds: 3 })
 
     const result = simulateSingleBattle(player, enemy)
 
@@ -199,7 +201,7 @@ describe('simulateBattles', () => {
     const batchResult = simulateBattles(player, enemy, 1)
 
     expect(batchResult.canWin).toBe(singleResult.canWin)
-    expect(batchResult.aggregatedResult.duration).toBe(singleResult.duration)
+    expect(batchResult.aggregatedResult.durationSeconds).toBe(singleResult.durationSeconds)
     expect(batchResult.perBattleSummary.length).toBe(1)
     expect(batchResult.representativeBattleLog).toEqual(singleResult.log)
   })
@@ -214,7 +216,9 @@ describe('simulateBattles', () => {
 
     expect(batchResult.canWin).toBe(true)
     expect(batchResult.perBattleSummary.length).toBe(amount)
-    expect(batchResult.aggregatedResult.duration).toBe(singleResult.duration * amount)
+    expect(batchResult.aggregatedResult.durationSeconds).toBe(
+      singleResult.durationSeconds * amount,
+    )
   })
 
   it('打不过时应该返回 canWin=false 且不生成后续场次', () => {
@@ -225,7 +229,7 @@ describe('simulateBattles', () => {
 
     expect(result.canWin).toBe(false)
     expect(result.perBattleSummary.length).toBe(0)
-    expect(result.aggregatedResult.duration).toBe(0)
+    expect(result.aggregatedResult.durationSeconds).toBe(0)
     // 仍然有代表性战斗日志（失败的那场）
     expect(result.representativeBattleLog.length).toBeGreaterThan(0)
   })
@@ -284,7 +288,9 @@ describe('simulateBattles', () => {
     const result2 = simulateBattles(player, enemy, amount)
 
     expect(result1.canWin).toBe(result2.canWin)
-    expect(result1.aggregatedResult.duration).toBe(result2.aggregatedResult.duration)
+    expect(result1.aggregatedResult.durationSeconds).toBe(
+      result2.aggregatedResult.durationSeconds,
+    )
     expect(result1.aggregatedResult.xpGains).toEqual(result2.aggregatedResult.xpGains)
     expect(result1.perBattleSummary.length).toBe(result2.perBattleSummary.length)
   })

@@ -23,7 +23,7 @@ vi.mock('@/gameConfig', async (importOriginal) => {
         sort: 0,
         hp: 50,
         attack: 5,
-        attackInterval: 3000,
+        attackIntervalSeconds: 3,
         xpReward: 10,
         fixedLootItems: [{ itemId: 'slime-gel', count: 1 }],
         fixedChestPoints: [{ chestId: 'combat-chest', points: 5 }],
@@ -36,7 +36,7 @@ vi.mock('@/gameConfig', async (importOriginal) => {
         sort: 1,
         hp: 10000,
         attack: 500,
-        attackInterval: 1000,
+        attackIntervalSeconds: 1,
         xpReward: 1000,
         fixedLootItems: [],
         fixedChestPoints: [],
@@ -192,7 +192,7 @@ describe('Combat Store', () => {
       expect(stats.maxHp).toBe(100)
       expect(stats.maxMp).toBe(100)
       expect(stats.attack).toBe(10) // 10 + 0 (melee level)
-      expect(stats.attackInterval).toBe(3000)
+      expect(stats.attackIntervalSeconds).toBe(3)
       expect(stats.attackType).toBe('melee')
       expect(stats.physicalDamageTakenPercent).toBe(1)
     })

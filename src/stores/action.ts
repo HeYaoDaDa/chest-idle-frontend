@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 import { actionConfigMap, type ModifierConfigInternal } from '@/gameConfig'
-import { type FixedPoint, toFixed, fpMul } from '@/utils/fixedPoint'
+import { type FixedPoint, type SecondsFixed, toFixed, fpMul } from '@/utils/fixedPoint'
 
 import { useSkillStore } from './skill'
 import { useStatStore } from './stat'
@@ -18,7 +18,8 @@ export interface Action {
   ingredients: { itemId: string; count: number }[]
   products: { itemId: string; count: number }[]
 
-  duration: FixedPoint
+  /** 行动持续时间（秒），使用 FixedPoint 表示 */
+  durationSeconds: SecondsFixed
   xp: FixedPoint
   chestPoints: FixedPoint
 }
@@ -44,9 +45,9 @@ export const useActionStore = defineStore('action', () => {
 
     const speedMultiplier = import.meta.env.DEV ? 0.01 : 1
 
-    // 先计算 duration（使用 'self' 模式）
-    const duration = fpMul(
-      statStore.calculateDerivedValue(actionConfig.duration, 'self', resolveModifier),
+    // 先计算 durationSeconds（使用 'self' 模式）
+    const durationSeconds = fpMul(
+      statStore.calculateDerivedValue(actionConfig.durationSeconds, 'self', resolveModifier),
       toFixed(speedMultiplier),
     )
 
@@ -54,12 +55,12 @@ export const useActionStore = defineStore('action', () => {
       ...actionConfig,
       ingredients: actionConfig.ingredients ?? [],
       products: actionConfig.products ?? [],
-      duration,
-      // xp 和 chestPoints 使用计算出的 duration
-      xp: statStore.calculateDerivedValue(actionConfig.xp, duration, resolveModifier),
+      durationSeconds,
+      // xp 和 chestPoints 使用计算出的 durationSeconds
+      xp: statStore.calculateDerivedValue(actionConfig.xp, durationSeconds, resolveModifier),
       chestPoints: statStore.calculateDerivedValue(
         actionConfig.chestPoints,
-        duration,
+        durationSeconds,
         resolveModifier,
       ),
     }

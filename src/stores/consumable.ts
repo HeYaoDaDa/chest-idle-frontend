@@ -2,7 +2,17 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { itemConfigMap } from '@/gameConfig'
-import { type FixedPoint, toFixed, fromFixed, fpAdd, fpSub, fpMul, fpDiv } from '@/utils/fixedPoint'
+import {
+  type FixedPoint,
+  type SecondsFixed,
+  toFixed,
+  fpAdd,
+  fpSub,
+  fpMul,
+  fpDiv,
+  toSecondsFixed,
+  fromSecondsFixed,
+} from '@/utils/fixedPoint'
 import log from '@/utils/log'
 
 import { useInventoryStore } from './inventory'
@@ -10,7 +20,7 @@ import { useStatStore } from './stat'
 
 interface ConsumableSlot {
   itemId: string | null
-  remaining: FixedPoint // 剩余时间（毫秒）
+  remaining: SecondsFixed // 剩余时间（秒）
 }
 
 const SLOT_COUNT = 3 // 每个技能固定3个槽位
@@ -29,16 +39,16 @@ export const useConsumableStore = defineStore('consumable', () => {
     if (!slotMap.value[skillId]) {
       slotMap.value[skillId] = Array.from({ length: SLOT_COUNT }, () => ({
         itemId: null,
-        remaining: toFixed(0),
+        remaining: toSecondsFixed(0),
       }))
     }
     return slotMap.value[skillId]
   }
 
   /**
-   * 获取某个 source 的总可用时间
+   * 获取某个 source 的总可用时间（秒）
    */
-  function getTotalAvailableMsForSource(sourceId: string): FixedPoint {
+  function getTotalAvailableSecondsForSource(sourceId: string): SecondsFixed {
     // sourceId 格式: "consumable:skillId:slotIndex"
     const parts = sourceId.split(':')
     if (parts.length !== 3 || parts[0] !== 'consumable') return toFixed(0)
@@ -49,19 +59,19 @@ export const useConsumableStore = defineStore('consumable', () => {
     const slots = getSlots(skillId)
     const slot = slots[slotIndex]
 
-    if (!slot || !slot.itemId) return toFixed(0)
+    if (!slot || !slot.itemId) return toSecondsFixed(0)
 
     const item = itemConfigMap[slot.itemId]
-    if (!item.consumable) return toFixed(0)
+    if (!item.consumable) return toSecondsFixed(0)
 
     const inventoryCount = inventoryStore.inventoryMap[slot.itemId] ?? 0
-    return fpAdd(slot.remaining, fpMul(toFixed(inventoryCount), item.consumable.duration))
+    return fpAdd(slot.remaining, fpMul(toFixed(inventoryCount), item.consumable.durationSeconds))
   }
 
   /**
    * 估算在消耗品限制下能执行的最大行动次数
    */
-  function estimateBuffedCounts(skillId: string, actionDuration: FixedPoint): number {
+  function estimateBuffedCounts(skillId: string, actionDurationSeconds: SecondsFixed): number {
     const slots = getSlots(skillId)
     let minCount = Infinity
 
@@ -70,11 +80,11 @@ export const useConsumableStore = defineStore('consumable', () => {
       // 槽位为空，跳过（不限制）
       if (!slot.itemId) continue
 
-      const totalAvailable = getTotalAvailableMsForSource(`consumable:${skillId}:${i}`)
+      const totalAvailable = getTotalAvailableSecondsForSource(`consumable:${skillId}:${i}`)
       // 时间不足，跳过（buff不生效，不限制）
-      if (totalAvailable < actionDuration) continue
+      if (totalAvailable < actionDurationSeconds) continue
 
-      const count = Math.floor(fromFixed(fpDiv(totalAvailable, actionDuration)))
+      const count = Math.floor(fromSecondsFixed(fpDiv(totalAvailable, actionDurationSeconds)))
       minCount = Math.min(minCount, count)
     }
 
@@ -85,7 +95,7 @@ export const useConsumableStore = defineStore('consumable', () => {
   /**
    * 消耗 buffs，返回需要从库存扣除的物品列表
    */
-  function consumeBuffs(skillId: string, consumedDuration: FixedPoint): [string, number][] {
+  function consumeBuffs(skillId: string, consumedDurationSeconds: SecondsFixed): [string, number][] {
     const itemsToRemove: [string, number][] = []
     const slots = getSlots(skillId)
 
@@ -96,19 +106,19 @@ export const useConsumableStore = defineStore('consumable', () => {
       const item = itemConfigMap[slot.itemId]
       if (!item.consumable) continue
 
-      const totalAvailable = getTotalAvailableMsForSource(`consumable:${skillId}:${i}`)
-      if (totalAvailable < consumedDuration) continue
+      const totalAvailable = getTotalAvailableSecondsForSource(`consumable:${skillId}:${i}`)
+      if (totalAvailable < consumedDurationSeconds) continue
 
       // 计算需要消耗多少瓶
       const usedBottles = Math.ceil(
-        Math.max(0, fromFixed(fpSub(consumedDuration, slot.remaining))) /
-          fromFixed(item.consumable.duration),
+        Math.max(0, fromSecondsFixed(fpSub(consumedDurationSeconds, slot.remaining))) /
+          fromSecondsFixed(item.consumable.durationSeconds),
       )
 
       // 更新剩余时间
       slot.remaining = fpSub(
-        fpAdd(slot.remaining, fpMul(toFixed(usedBottles), item.consumable.duration)),
-        consumedDuration,
+        fpAdd(slot.remaining, fpMul(toFixed(usedBottles), item.consumable.durationSeconds)),
+        consumedDurationSeconds,
       )
 
       // 记录需要扣除的库存
@@ -174,7 +184,7 @@ export const useConsumableStore = defineStore('consumable', () => {
     if (slot.itemId && slot.itemId !== itemId) {
       statStore.removeEffectsFromSource(`consumable:${skillId}:${slotIndex}`)
       slot.itemId = null
-      slot.remaining = toFixed(0)
+      slot.remaining = toSecondsFixed(0)
     }
 
     // 解析模板 statId 并添加效果
@@ -204,14 +214,14 @@ export const useConsumableStore = defineStore('consumable', () => {
     if (slot.itemId) {
       statStore.removeEffectsFromSource(`consumable:${skillId}:${slotIndex}`)
       slot.itemId = null
-      slot.remaining = toFixed(0)
+      slot.remaining = toSecondsFixed(0)
     }
   }
 
   return {
     slotMap,
     getSlots,
-    getTotalAvailableMsForSource,
+    getTotalAvailableSecondsForSource,
     estimateBuffedCounts,
     consumeBuffs,
     applyConsumable,

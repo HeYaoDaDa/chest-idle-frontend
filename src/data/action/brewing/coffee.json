@@ -5,9 +5,6 @@
     "skillId": "brewing",
     "minLevel": 0,
     "sort": 0,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 10
     },
@@ -22,7 +19,10 @@
       }
     ],
     "name": "item.speedCoffeeLow.name",
-    "description": "item.speedCoffeeLow.description"
+    "description": "item.speedCoffeeLow.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -30,9 +30,6 @@
     "skillId": "brewing",
     "minLevel": 5,
     "sort": 1,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 20
     },
@@ -47,7 +44,10 @@
       }
     ],
     "name": "item.speedCoffeeMid.name",
-    "description": "item.speedCoffeeMid.description"
+    "description": "item.speedCoffeeMid.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -55,9 +55,6 @@
     "skillId": "brewing",
     "minLevel": 10,
     "sort": 2,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 30
     },
@@ -72,7 +69,10 @@
       }
     ],
     "name": "item.speedCoffeeHigh.name",
-    "description": "item.speedCoffeeHigh.description"
+    "description": "item.speedCoffeeHigh.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -80,9 +80,6 @@
     "skillId": "brewing",
     "minLevel": 0,
     "sort": 10,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 10
     },
@@ -97,7 +94,10 @@
       }
     ],
     "name": "item.xpCoffeeLow.name",
-    "description": "item.xpCoffeeLow.description"
+    "description": "item.xpCoffeeLow.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -105,9 +105,6 @@
     "skillId": "brewing",
     "minLevel": 5,
     "sort": 11,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 20
     },
@@ -122,7 +119,10 @@
       }
     ],
     "name": "item.xpCoffeeMid.name",
-    "description": "item.xpCoffeeMid.description"
+    "description": "item.xpCoffeeMid.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -130,9 +130,6 @@
     "skillId": "brewing",
     "minLevel": 10,
     "sort": 12,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 30
     },
@@ -147,7 +144,10 @@
       }
     ],
     "name": "item.xpCoffeeHigh.name",
-    "description": "item.xpCoffeeHigh.description"
+    "description": "item.xpCoffeeHigh.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -155,9 +155,6 @@
     "skillId": "brewing",
     "minLevel": 0,
     "sort": 20,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 10
     },
@@ -172,7 +169,10 @@
       }
     ],
     "name": "item.pointsCoffeeLow.name",
-    "description": "item.pointsCoffeeLow.description"
+    "description": "item.pointsCoffeeLow.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -180,9 +180,6 @@
     "skillId": "brewing",
     "minLevel": 5,
     "sort": 21,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 20
     },
@@ -197,7 +194,10 @@
       }
     ],
     "name": "item.pointsCoffeeMid.name",
-    "description": "item.pointsCoffeeMid.description"
+    "description": "item.pointsCoffeeMid.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   },
   {
     "type": "action",
@@ -205,9 +205,6 @@
     "skillId": "brewing",
     "minLevel": 10,
     "sort": 22,
-    "duration": {
-      "baseValue": 1000
-    },
     "xp": {
       "baseValue": 30
     },
@@ -222,6 +219,9 @@
       }
     ],
     "name": "item.pointsCoffeeHigh.name",
-    "description": "item.pointsCoffeeHigh.description"
+    "description": "item.pointsCoffeeHigh.description",
+    "durationSeconds": {
+      "baseValue": 1
+    }
   }
 ]

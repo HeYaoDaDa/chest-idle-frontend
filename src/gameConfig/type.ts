@@ -57,7 +57,7 @@ interface ItemConfig {
     effects: EffectConfig[]
   }
   consumable?: {
-    duration: number
+    durationSeconds: number
     consumableType: string
     effects: EffectConfig[]
   }
@@ -72,7 +72,7 @@ interface ActionConfig {
   tab?: string
   minLevel: number
   sort: number
-  duration: DerivedValueConfig
+  durationSeconds: DerivedValueConfig
   xp: DerivedValueConfig
   chestId: string
   chestPoints: DerivedValueConfig
@@ -122,7 +122,7 @@ interface EnemyConfig {
   sort: number
   hp: number
   attack: number
-  attackInterval: number
+  attackIntervalSeconds: number
   xpReward: number
   fixedLootItems: { itemId: string; count: number }[]
   fixedChestPoints: { chestId: string; points: number }[]
@@ -179,8 +179,8 @@ export interface StatConfigInternal extends Omit<StatConfig, 'base'> {
  * 行动配置（内部使用定点数）
  */
 export interface ActionConfigInternal
-  extends Omit<ActionConfig, 'duration' | 'xp' | 'chestPoints'> {
-  duration: DerivedValueConfigInternal
+  extends Omit<ActionConfig, 'durationSeconds' | 'xp' | 'chestPoints'> {
+  durationSeconds: DerivedValueConfigInternal
   xp: DerivedValueConfigInternal
   chestPoints: DerivedValueConfigInternal
 }
@@ -198,7 +198,7 @@ export interface ItemConfigInternal extends Omit<ItemConfig, 'chest' | 'equipmen
     effects: EffectConfigInternal[]
   }
   consumable?: {
-    duration: FixedPoint
+    durationSeconds: FixedPoint
     consumableType: string
     effects: EffectConfigInternal[]
   }

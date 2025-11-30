@@ -27,8 +27,8 @@ export interface CurrentBattle {
   totalAmount: number
   /** 已完成的战斗次数 */
   completedAmount: number
-  /** 单场战斗时长（毫秒） */
-  singleBattleDuration: number
+  /** 单场战斗时长（秒） */
+  singleBattleDurationSeconds: number
   /** 代表性战斗的事件流 */
   representativeLog: CombatEvent[]
   /** 战斗开始时间（performance.now()） */
@@ -52,7 +52,7 @@ export interface CurrentBattle {
 /**
  * 战斗常量
  */
-const BASE_INTERVAL = 3000 // 基础攻击间隔 (ms)
+const BASE_INTERVAL_SECONDS = 3 // 基础攻击间隔 (秒)
 const BASE_HP_MULTIPLIER = 10 // HP 乘数
 const BASE_HP_CONSTANT = 10 // HP 常数
 const BASE_MP_MULTIPLIER = 10 // MP 乘数
@@ -144,11 +144,11 @@ export const useCombatStore = defineStore('combat', () => {
    * v1 暂不考虑 AttackSpeedBonus
    *
    * @param attackType 攻击类型（决定使用哪个攻击属性）
-   * @returns 攻击间隔（毫秒）
+   * @returns 攻击间隔（秒）
    */
-  function getAttackInterval(attackType: AttackType): number {
+  function getAttackIntervalSeconds(attackType: AttackType): number {
     const attack = getAttackByType(attackType)
-    return Math.floor(BASE_INTERVAL / (1 + attack / 2000))
+    return BASE_INTERVAL_SECONDS / (1 + attack / 2000)
   }
 
   /**
@@ -190,9 +190,9 @@ export const useCombatStore = defineStore('combat', () => {
   const currentAttack = computed(() => getAttackByType(currentAttackType.value))
 
   /**
-   * 当前攻击间隔（基于当前装备的武器类型）
+   * 当前攻击间隔（秒，基于当前装备的武器类型）
    */
-  const currentAttackInterval = computed(() => getAttackInterval(currentAttackType.value))
+  const currentAttackIntervalSeconds = computed(() => getAttackIntervalSeconds(currentAttackType.value))
 
   /**
    * 当前伤害输出（基于当前装备的武器类型）
@@ -215,7 +215,7 @@ export const useCombatStore = defineStore('combat', () => {
       maxHp: maxHp.value,
       maxMp: maxMp.value,
       currentDamage: currentDamage.value,
-      currentAttackInterval: currentAttackInterval.value,
+      currentAttackIntervalSeconds: currentAttackIntervalSeconds.value,
       currentAttackType: currentAttackType.value,
       physicalDamageTakenPercent: physicalDamageTakenPercent.value,
     })
@@ -283,7 +283,7 @@ export const useCombatStore = defineStore('combat', () => {
       enemyId,
       totalAmount: amount,
       completedAmount: 0,
-      singleBattleDuration: result.perBattleSummary[0]?.duration ?? 0,
+      singleBattleDurationSeconds: result.perBattleSummary[0]?.durationSeconds ?? 0,
       representativeLog: result.representativeBattleLog,
       startTime: performance.now(),
       singleXpGains: result.perBattleSummary[0]?.xpGains ?? {
@@ -382,8 +382,8 @@ export const useCombatStore = defineStore('combat', () => {
     }
 
     // 更新战斗状态
-    const newDuration = result.perBattleSummary[0]?.duration ?? 0
-    currentBattle.value.singleBattleDuration = newDuration
+    const newDurationSeconds = result.perBattleSummary[0]?.durationSeconds ?? 0
+    currentBattle.value.singleBattleDurationSeconds = newDurationSeconds
     currentBattle.value.representativeLog = result.representativeBattleLog
     currentBattle.value.startTime = performance.now()
     currentBattle.value.singleXpGains = result.perBattleSummary[0]?.xpGains ?? {
@@ -398,7 +398,7 @@ export const useCombatStore = defineStore('combat', () => {
     currentBattle.value.playerCurrentHp = maxHp.value
     currentBattle.value.enemyCurrentHp = enemyConfig.hp
 
-    return newDuration
+    return newDurationSeconds
   }
 
   /**
@@ -429,7 +429,7 @@ export const useCombatStore = defineStore('combat', () => {
     // 当前状态
     currentAttackType,
     currentAttack,
-    currentAttackInterval,
+    currentAttackIntervalSeconds,
     currentDamage,
 
     // 战斗状态
@@ -438,7 +438,7 @@ export const useCombatStore = defineStore('combat', () => {
 
     // 方法
     getAttackByType,
-    getAttackInterval,
+    getAttackIntervalSeconds,
     calculateDamage,
     calculateDamageTaken,
     getPlayerStats,

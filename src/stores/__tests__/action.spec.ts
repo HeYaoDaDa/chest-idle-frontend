@@ -7,6 +7,7 @@ import { useSkillStore } from '../skill'
 import { useStatStore } from '../stat'
 
 // Mock gameConfig - values in fixed point format (multiplied by 1000)
+// Duration values are in seconds
 vi.mock('@/gameConfig', () => ({
   actionConfigMap: {
     testAction: {
@@ -19,8 +20,8 @@ vi.mock('@/gameConfig', () => ({
       chestId: 'testChest',
       ingredients: [{ itemId: 'wood', count: 1 }],
       products: [{ itemId: 'plank', count: 2 }],
-      duration: {
-        baseValue: 5000000, // 5000 in fixed point
+      durationSeconds: {
+        baseValue: 5000000, // 5000 seconds in fixed point (5000 * 1000)
         modifiers: [],
       },
       xp: {
@@ -40,8 +41,8 @@ vi.mock('@/gameConfig', () => ({
       skillId: 'testSkill',
       minLevel: 5,
       chestId: 'testChest',
-      duration: {
-        baseValue: 10000000, // 10000 in fixed point
+      durationSeconds: {
+        baseValue: 10000000, // 10000 seconds in fixed point
         modifiers: [
           {
             modifierType: 'skillLevel',
@@ -73,8 +74,8 @@ vi.mock('@/gameConfig', () => ({
       skillId: 'testSkill',
       minLevel: 1,
       chestId: 'testChest',
-      duration: {
-        baseValue: 1000000, // 1000 in fixed point
+      durationSeconds: {
+        baseValue: 1000000, // 1000 seconds in fixed point
         modifiers: [],
       },
       xp: {
@@ -145,9 +146,9 @@ describe('Action Store', () => {
       const actionStore = useActionStore()
       const action = actionStore.getActionById('testAction')
 
-      // In DEV mode, duration is multiplied by 0.01
+      // In DEV mode, durationSeconds is multiplied by 0.01
       const expectedDuration = import.meta.env.DEV ? toFixed(50) : toFixed(5000)
-      expect(action.duration).toBe(expectedDuration)
+      expect(action.durationSeconds).toBe(expectedDuration)
     })
 
     it('should calculate base xp correctly', () => {
@@ -180,7 +181,7 @@ describe('Action Store', () => {
       const expectedDuration = import.meta.env.DEV
         ? fpMul(toFixed(12500), toFixed(0.01))
         : toFixed(12500)
-      expect(action.duration).toBe(expectedDuration)
+      expect(action.durationSeconds).toBe(expectedDuration)
     })
 
     it('should apply skill level modifiers only for levels above minLevel', () => {
@@ -199,7 +200,7 @@ describe('Action Store', () => {
       const expectedDuration = import.meta.env.DEV
         ? fpMul(toFixed(8500), toFixed(0.01))
         : toFixed(8500)
-      expect(action.duration).toBe(expectedDuration)
+      expect(action.durationSeconds).toBe(expectedDuration)
     })
 
     it('should pass calculated duration to xp and chestPoints calculations', () => {
@@ -274,12 +275,12 @@ describe('Action Store', () => {
       // Initial skill level
       skillStore.skillXpMap = { testSkill: toFixed(76) } // Level 3
       const action1 = actionStore.getActionById('actionWithModifiers')
-      const duration1 = action1.duration
+      const duration1 = action1.durationSeconds
 
       // Change skill level
       skillStore.skillXpMap = { testSkill: toFixed(964) } // Level 10
       const action2 = actionStore.getActionById('actionWithModifiers')
-      const duration2 = action2.duration
+      const duration2 = action2.durationSeconds
 
       // Duration should be different
       expect(duration2).toBeGreaterThan(duration1)

@@ -5,7 +5,7 @@
     "id": "speedCoffeeLow",
     "sort": 1000,
     "consumable": {
-      "duration": 60000,
+      "durationSeconds": 60,
       "consumableType": "speed",
       "effects": [
         {
@@ -24,7 +24,7 @@
     "id": "speedCoffeeMid",
     "sort": 1001,
     "consumable": {
-      "duration": 120000,
+      "durationSeconds": 120,
       "consumableType": "speed",
       "effects": [
         {
@@ -43,7 +43,7 @@
     "id": "speedCoffeeHigh",
     "sort": 1002,
     "consumable": {
-      "duration": 180000,
+      "durationSeconds": 180,
       "consumableType": "speed",
       "effects": [
         {
@@ -62,7 +62,7 @@
     "id": "xpCoffeeLow",
     "sort": 1010,
     "consumable": {
-      "duration": 60000,
+      "durationSeconds": 60,
       "consumableType": "xp",
       "effects": [
         {
@@ -81,7 +81,7 @@
     "id": "xpCoffeeMid",
     "sort": 1011,
     "consumable": {
-      "duration": 120000,
+      "durationSeconds": 120,
       "consumableType": "xp",
       "effects": [
         {
@@ -100,7 +100,7 @@
     "id": "xpCoffeeHigh",
     "sort": 1012,
     "consumable": {
-      "duration": 180000,
+      "durationSeconds": 180,
       "consumableType": "xp",
       "effects": [
         {
@@ -119,7 +119,7 @@
     "id": "pointsCoffeeLow",
     "sort": 1020,
     "consumable": {
-      "duration": 60000,
+      "durationSeconds": 60,
       "consumableType": "points",
       "effects": [
         {
@@ -138,7 +138,7 @@
     "id": "pointsCoffeeMid",
     "sort": 1021,
     "consumable": {
-      "duration": 120000,
+      "durationSeconds": 120,
       "consumableType": "points",
       "effects": [
         {
@@ -157,7 +157,7 @@
     "id": "pointsCoffeeHigh",
     "sort": 1022,
     "consumable": {
-      "duration": 180000,
+      "durationSeconds": 180,
       "consumableType": "points",
       "effects": [
         {

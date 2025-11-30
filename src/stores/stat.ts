@@ -7,7 +7,17 @@ import {
   type EffectType,
   type ModifierConfigInternal,
 } from '@/gameConfig'
-import { type FixedPoint, toFixed, fpAdd, fpMul, fpDiv } from '@/utils/fixedPoint'
+import {
+  type FixedPoint,
+  type Seconds,
+  type SecondsFixed,
+  toFixed,
+  fpAdd,
+  fpMul,
+  fpDiv,
+  fromSecondsFixed,
+  toSecondsFixed,
+} from '@/utils/fixedPoint'
 
 import { useConsumableStore } from './consumable'
 
@@ -20,7 +30,7 @@ interface Effect {
 interface Modifier {
   type: EffectType
   value: FixedPoint
-  availableMs: number
+  availableSeconds: Seconds
 }
 
 interface Stat {
@@ -59,18 +69,20 @@ export const useStatStore = defineStore('stat', () => {
   function getModifiersByStatId(statId: string): Modifier[] {
     const modifiers: Modifier[] = []
     for (const [sourceId, effects] of Object.entries(sourceIdEffectsMap.value)) {
-      let availableMs = Infinity
+      let availableSeconds: Seconds = Infinity
       if (sourceId.startsWith('consumable:')) {
-        // 从 consumable store 获取可用时间
+        // 从 consumable store 获取可用时间（秒）
         const consumableStore = useConsumableStore()
-        availableMs = consumableStore.getTotalAvailableMsForSource(sourceId)
+        availableSeconds = fromSecondsFixed(
+          consumableStore.getTotalAvailableSecondsForSource(sourceId),
+        )
       }
       for (const effect of effects) {
         if (effect.statId === statId) {
           modifiers.push({
             type: effect.type,
             value: effect.value,
-            availableMs,
+            availableSeconds,
           })
         }
       }
@@ -91,11 +103,11 @@ export const useStatStore = defineStore('stat', () => {
     }
   }
 
-  function getStatValue(statId: string, duration: number = 0): FixedPoint {
+  function getStatValue(statId: string, durationSeconds: Seconds = 0): FixedPoint {
     const statConfig = statConfigMap[statId]
     if (!statConfig) return toFixed(0)
     const modifiers = getModifiersByStatId(statId).filter(
-      (modifier) => modifier.availableMs >= duration,
+      (modifier) => modifier.availableSeconds >= durationSeconds,
     )
     let sumAdd = toFixed(0)
     let sumPercent = toFixed(0)
@@ -170,11 +182,11 @@ export const useStatStore = defineStore('stat', () => {
 
   function calculateDerivedValue(
     config: DerivedValueConfigInternal,
-    duration: number | 'self' = 0,
+    durationSeconds: Seconds | 'self' = 0,
     resolveModifierValue?: (modifier: ModifierConfigInternal) => FixedPoint | undefined,
   ): FixedPoint {
     // 处理 'self' 模式：迭代计算直到收敛
-    if (duration === 'self') {
+    if (durationSeconds === 'self') {
       let prevValue = toFixed(0) // 从 0 开始，假设所有效果都可用
       let iterations = 0
       const maxIterations = 10 // 防止无限循环
@@ -190,12 +202,16 @@ export const useStatStore = defineStore('stat', () => {
       return prevValue
     }
 
-    return calculateWithDuration(config, toFixed(duration as number), resolveModifierValue)
+    return calculateWithDuration(
+      config,
+      toSecondsFixed(durationSeconds as Seconds),
+      resolveModifierValue,
+    )
   }
 
   function calculateWithDuration(
     config: DerivedValueConfigInternal,
-    duration: FixedPoint,
+    durationSeconds: SecondsFixed,
     resolveModifierValue?: (modifier: ModifierConfigInternal) => FixedPoint | undefined,
   ): FixedPoint {
     const modifiers = config.modifiers ?? []
@@ -230,8 +246,8 @@ export const useStatStore = defineStore('stat', () => {
         // Caller provided a value
         applyModifier(modifier.type, customValue)
       } else if (modifier.modifierType === 'stat') {
-        // Default handling for stat modifiers - 传递 duration 参数来过滤效果
-        const statValue = getStatValue(modifier.statId, duration)
+        // Default handling for stat modifiers - 传递 durationSeconds 参数来过滤效果
+        const statValue = getStatValue(modifier.statId, fromSecondsFixed(durationSeconds))
         applyModifier(modifier.type, statValue)
       }
     }

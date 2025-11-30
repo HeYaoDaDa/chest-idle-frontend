@@ -19,7 +19,7 @@ vi.mock('@/gameConfig', () => ({
       category: 'consumable',
       consumable: {
         consumableType: 'buff',
-        duration: 5000000, // 5000ms * 1000 (SCALE)
+        duration: 5000000, // legacy field unused in component tests
         effects: [],
       },
     },
@@ -36,7 +36,7 @@ vi.mock('@/gameConfig', () => ({
   },
 }))
 
-// Mock formatDurationMs - receives FixedPoint value already converted by fromFixed
+// Mock formatDurationMs - component now passes milliseconds derived from seconds
 vi.mock('@/utils/format', () => ({
   formatDurationMs: vi.fn((ms: number) => `${Math.floor(ms / 1000)}s`),
 }))
@@ -96,7 +96,7 @@ describe('ConsumableSlot Component', () => {
 
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -120,7 +120,7 @@ describe('ConsumableSlot Component', () => {
       // Directly set slotMap to bypass applyConsumable
       consumableStore.slotMap = {
         mining: [
-          { itemId: 'coffee', remaining: toFixed(5000) }, // 5000ms as FixedPoint
+          { itemId: 'coffee', remaining: toFixed(5) }, // 5 seconds as FixedPoint
           { itemId: null, remaining: toFixed(0) },
           { itemId: null, remaining: toFixed(0) },
         ],
@@ -190,7 +190,7 @@ describe('ConsumableSlot Component', () => {
 
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(-1000)
+      slots[0].remaining = toFixed(-1)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -269,7 +269,7 @@ describe('ConsumableSlot Component', () => {
 
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -293,7 +293,7 @@ describe('ConsumableSlot Component', () => {
 
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -391,8 +391,8 @@ describe('ConsumableSlot Component', () => {
       // Directly set slotMap
       consumableStore.slotMap = {
         mining: [
-          { itemId: 'coffee', remaining: toFixed(5000) }, // 5000ms as FixedPoint
-          { itemId: 'tea', remaining: toFixed(3000) }, // 3000ms as FixedPoint
+          { itemId: 'coffee', remaining: toFixed(5) }, // 5 seconds as FixedPoint
+          { itemId: 'tea', remaining: toFixed(3) }, // 3 seconds as FixedPoint
           { itemId: null, remaining: toFixed(0) },
         ],
       }
@@ -434,7 +434,7 @@ describe('ConsumableSlot Component', () => {
 
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -471,7 +471,7 @@ describe('ConsumableSlot Component', () => {
       inventoryStore.inventoryMap = { coffee: 5 }
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
       await wrapper.vm.$nextTick()
 
       expect(wrapper.text()).toContain('Coffee')
@@ -484,7 +484,7 @@ describe('ConsumableSlot Component', () => {
       // Directly set slotMap with initial time
       consumableStore.slotMap = {
         mining: [
-          { itemId: 'coffee', remaining: toFixed(10000) }, // 10000ms as FixedPoint
+          { itemId: 'coffee', remaining: toFixed(10) }, // 10 seconds as FixedPoint
           { itemId: null, remaining: toFixed(0) },
           { itemId: null, remaining: toFixed(0) },
         ],
@@ -506,7 +506,7 @@ describe('ConsumableSlot Component', () => {
       expect(wrapper.text()).toContain('10s')
 
       // Update remaining time
-      consumableStore.getSlots('mining')[0].remaining = toFixed(5000) // 5000ms as FixedPoint
+      consumableStore.getSlots('mining')[0].remaining = toFixed(5) // 5 seconds as FixedPoint
       await wrapper.vm.$nextTick()
 
       expect(wrapper.text()).toContain('5s')
@@ -536,7 +536,7 @@ describe('ConsumableSlot Component', () => {
 
       consumableStore.applyConsumable('mining', 0, 'coffee')
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -558,7 +558,7 @@ describe('ConsumableSlot Component', () => {
     it('should handle missing itemId gracefully', () => {
       const slots = consumableStore.getSlots('mining')
       slots[0].itemId = null
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {
@@ -577,7 +577,7 @@ describe('ConsumableSlot Component', () => {
     it('should handle item not in config map', () => {
       const slots = consumableStore.getSlots('mining')
       slots[0].itemId = 'nonexistent'
-      slots[0].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(5)
 
       const wrapper = mount(ConsumableSlot, {
         props: {

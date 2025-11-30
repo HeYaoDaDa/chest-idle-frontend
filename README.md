@@ -74,6 +74,17 @@ pnpm test:ui
 
 See [docs/README.md](docs/README.md) for project documentation.
 
+## Contributing Guidelines
+
+### Time Unit Convention
+
+**All time/duration values in this project must use seconds as the base unit.**
+
+- Variable and field names must include a unit suffix: `Seconds`, `Sec`, or `SecondsFixed` (for FixedPoint values)
+- Examples: `durationSeconds`, `attackIntervalSeconds`, `remainingSecondsFixed`
+- Only convert to milliseconds at the UI rendering layer when absolutely necessary (e.g., `seconds * 1000`)
+- JSON config files should also use `*Seconds` field names with values in seconds
+
 ## UnoCSS Inspector
 
 Open `http://localhost:5173/__unocss/` while dev server is running to inspect UnoCSS classes.

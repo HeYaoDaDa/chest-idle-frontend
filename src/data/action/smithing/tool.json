@@ -5,21 +5,6 @@
     "skillId": "smithing",
     "minLevel": 10,
     "sort": 1,
-    "duration": {
-      "baseValue": 20000,
-      "modifiers": [
-        {
-          "modifierType": "stat",
-          "statId": "smithingSpeed",
-          "type": "inversePercentage"
-        },
-        {
-          "modifierType": "skillLevel",
-          "type": "inversePercentage",
-          "perLevelValue": 0.01
-        }
-      ]
-    },
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -59,16 +44,9 @@
     ],
     "tab": "tools",
     "name": "action.copperPickaxe.name",
-    "description": "action.copperPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "copperAxe",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 2,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -81,7 +59,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperAxe",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 2,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -121,16 +106,9 @@
     ],
     "tab": "tools",
     "name": "action.copperAxe.name",
-    "description": "action.copperAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "copperForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 3,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperAxe.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -143,7 +121,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 3,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -183,16 +168,9 @@
     ],
     "tab": "tools",
     "name": "action.copperForagingKnife.name",
-    "description": "action.copperForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "copperSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 4,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -205,7 +183,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 4,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -245,16 +230,9 @@
     ],
     "tab": "tools",
     "name": "action.copperSmithingHammer.name",
-    "description": "action.copperSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "copperWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 5,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -267,7 +245,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 5,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -307,16 +292,9 @@
     ],
     "tab": "tools",
     "name": "action.copperWoodworkingTool.name",
-    "description": "action.copperWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "copperTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 6,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -329,7 +307,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 6,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -369,16 +354,9 @@
     ],
     "tab": "tools",
     "name": "action.copperTailoringNeedle.name",
-    "description": "action.copperTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "copperCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 7,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -391,7 +369,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 7,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -431,16 +416,9 @@
     ],
     "tab": "tools",
     "name": "action.copperCookingUtensil.name",
-    "description": "action.copperCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "copperBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 8,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.copperCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -453,7 +431,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "copperBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 8,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -493,16 +478,9 @@
     ],
     "tab": "tools",
     "name": "action.copperBrewingKit.name",
-    "description": "action.copperBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "ironPickaxe",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 101,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.copperBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -515,7 +493,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironPickaxe",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 101,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -555,16 +540,9 @@
     ],
     "tab": "tools",
     "name": "action.ironPickaxe.name",
-    "description": "action.ironPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "ironAxe",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 102,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -577,7 +555,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironAxe",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 102,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -617,16 +602,9 @@
     ],
     "tab": "tools",
     "name": "action.ironAxe.name",
-    "description": "action.ironAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "ironForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 103,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironAxe.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -639,7 +617,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 103,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -679,16 +664,9 @@
     ],
     "tab": "tools",
     "name": "action.ironForagingKnife.name",
-    "description": "action.ironForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "ironSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 104,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -701,7 +679,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 104,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -741,16 +726,9 @@
     ],
     "tab": "tools",
     "name": "action.ironSmithingHammer.name",
-    "description": "action.ironSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "ironWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 105,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -763,7 +741,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 105,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -803,16 +788,9 @@
     ],
     "tab": "tools",
     "name": "action.ironWoodworkingTool.name",
-    "description": "action.ironWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "ironTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 106,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -825,7 +803,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 106,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -865,16 +850,9 @@
     ],
     "tab": "tools",
     "name": "action.ironTailoringNeedle.name",
-    "description": "action.ironTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "ironCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 107,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -887,7 +865,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 107,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -927,16 +912,9 @@
     ],
     "tab": "tools",
     "name": "action.ironCookingUtensil.name",
-    "description": "action.ironCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "ironBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 108,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.ironCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -949,7 +927,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 108,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -989,16 +974,9 @@
     ],
     "tab": "tools",
     "name": "action.ironBrewingKit.name",
-    "description": "action.ironBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "silverPickaxe",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 201,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.ironBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1011,7 +989,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverPickaxe",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 201,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1051,16 +1036,9 @@
     ],
     "tab": "tools",
     "name": "action.silverPickaxe.name",
-    "description": "action.silverPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "silverAxe",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 202,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1073,7 +1051,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverAxe",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 202,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1113,16 +1098,9 @@
     ],
     "tab": "tools",
     "name": "action.silverAxe.name",
-    "description": "action.silverAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "silverForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 203,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverAxe.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1135,7 +1113,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 203,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1175,16 +1160,9 @@
     ],
     "tab": "tools",
     "name": "action.silverForagingKnife.name",
-    "description": "action.silverForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "silverSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 204,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1197,7 +1175,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 204,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1237,16 +1222,9 @@
     ],
     "tab": "tools",
     "name": "action.silverSmithingHammer.name",
-    "description": "action.silverSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "silverWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 205,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1259,7 +1237,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 205,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1299,16 +1284,9 @@
     ],
     "tab": "tools",
     "name": "action.silverWoodworkingTool.name",
-    "description": "action.silverWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "silverTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 206,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1321,7 +1299,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 206,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1361,16 +1346,9 @@
     ],
     "tab": "tools",
     "name": "action.silverTailoringNeedle.name",
-    "description": "action.silverTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "silverCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 207,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1383,7 +1361,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 207,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1423,16 +1408,9 @@
     ],
     "tab": "tools",
     "name": "action.silverCookingUtensil.name",
-    "description": "action.silverCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "silverBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 208,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.silverCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1445,7 +1423,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 208,
     "xp": {
       "baseValue": 600,
       "modifiers": [
@@ -1485,16 +1470,9 @@
     ],
     "tab": "tools",
     "name": "action.silverBrewingKit.name",
-    "description": "action.silverBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "goldPickaxe",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 301,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.silverBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1507,7 +1485,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldPickaxe",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 301,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1547,16 +1532,9 @@
     ],
     "tab": "tools",
     "name": "action.goldPickaxe.name",
-    "description": "action.goldPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "goldAxe",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 302,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1569,7 +1547,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldAxe",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 302,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1609,16 +1594,9 @@
     ],
     "tab": "tools",
     "name": "action.goldAxe.name",
-    "description": "action.goldAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "goldForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 303,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldAxe.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1631,7 +1609,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 303,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1671,16 +1656,9 @@
     ],
     "tab": "tools",
     "name": "action.goldForagingKnife.name",
-    "description": "action.goldForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "goldSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 304,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1693,7 +1671,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 304,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1733,16 +1718,9 @@
     ],
     "tab": "tools",
     "name": "action.goldSmithingHammer.name",
-    "description": "action.goldSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "goldWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 305,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1755,7 +1733,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 305,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1795,16 +1780,9 @@
     ],
     "tab": "tools",
     "name": "action.goldWoodworkingTool.name",
-    "description": "action.goldWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "goldTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 306,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1817,7 +1795,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 306,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1857,16 +1842,9 @@
     ],
     "tab": "tools",
     "name": "action.goldTailoringNeedle.name",
-    "description": "action.goldTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "goldCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 307,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1879,7 +1857,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 307,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1919,16 +1904,9 @@
     ],
     "tab": "tools",
     "name": "action.goldCookingUtensil.name",
-    "description": "action.goldCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "goldBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 308,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.goldCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1941,7 +1919,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 308,
     "xp": {
       "baseValue": 320,
       "modifiers": [
@@ -1981,16 +1966,9 @@
     ],
     "tab": "tools",
     "name": "action.goldBrewingKit.name",
-    "description": "action.goldBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumPickaxe",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 401,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.goldBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2003,7 +1981,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumPickaxe",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 401,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2043,16 +2028,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumPickaxe.name",
-    "description": "action.orichalcumPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumAxe",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 402,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2065,7 +2043,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumAxe",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 402,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2105,16 +2090,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumAxe.name",
-    "description": "action.orichalcumAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 403,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumAxe.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2127,7 +2105,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 403,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2167,16 +2152,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumForagingKnife.name",
-    "description": "action.orichalcumForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 404,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2189,7 +2167,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 404,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2229,16 +2214,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumSmithingHammer.name",
-    "description": "action.orichalcumSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 405,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2251,7 +2229,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 405,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2291,16 +2276,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumWoodworkingTool.name",
-    "description": "action.orichalcumWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 406,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2313,7 +2291,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 406,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2353,16 +2338,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumTailoringNeedle.name",
-    "description": "action.orichalcumTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 407,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2375,7 +2353,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 407,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2415,16 +2400,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumCookingUtensil.name",
-    "description": "action.orichalcumCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 408,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.orichalcumCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2437,7 +2415,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 408,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2477,16 +2462,9 @@
     ],
     "tab": "tools",
     "name": "action.orichalcumBrewingKit.name",
-    "description": "action.orichalcumBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronPickaxe",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 501,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.orichalcumBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2499,7 +2477,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronPickaxe",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 501,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2539,16 +2524,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronPickaxe.name",
-    "description": "action.darkIronPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronAxe",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 502,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2561,7 +2539,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronAxe",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 502,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2601,16 +2586,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronAxe.name",
-    "description": "action.darkIronAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 503,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronAxe.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2623,7 +2601,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 503,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2663,16 +2648,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronForagingKnife.name",
-    "description": "action.darkIronForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 504,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2685,7 +2663,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 504,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2725,16 +2710,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronSmithingHammer.name",
-    "description": "action.darkIronSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 505,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2747,7 +2725,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 505,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2787,16 +2772,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronWoodworkingTool.name",
-    "description": "action.darkIronWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 506,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2809,7 +2787,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 506,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2849,16 +2834,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronTailoringNeedle.name",
-    "description": "action.darkIronTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 507,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2871,7 +2849,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 507,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2911,16 +2896,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronCookingUtensil.name",
-    "description": "action.darkIronCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 508,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.darkIronCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2933,7 +2911,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 508,
     "xp": {
       "baseValue": 480,
       "modifiers": [
@@ -2973,16 +2958,9 @@
     ],
     "tab": "tools",
     "name": "action.darkIronBrewingKit.name",
-    "description": "action.darkIronBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilPickaxe",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 601,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.darkIronBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2995,7 +2973,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilPickaxe",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 601,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3035,16 +3020,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilPickaxe.name",
-    "description": "action.mithrilPickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilAxe",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 602,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilPickaxe.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3057,7 +3035,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilAxe",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 602,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3097,16 +3082,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilAxe.name",
-    "description": "action.mithrilAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 603,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilAxe.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3119,7 +3097,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 603,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3159,16 +3144,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilForagingKnife.name",
-    "description": "action.mithrilForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 604,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3181,7 +3159,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 604,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3221,16 +3206,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilSmithingHammer.name",
-    "description": "action.mithrilSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 605,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3243,7 +3221,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 605,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3283,16 +3268,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilWoodworkingTool.name",
-    "description": "action.mithrilWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 606,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3305,7 +3283,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 606,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3345,16 +3330,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilTailoringNeedle.name",
-    "description": "action.mithrilTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 607,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3367,7 +3345,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 607,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3407,16 +3392,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilCookingUtensil.name",
-    "description": "action.mithrilCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 608,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.mithrilCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3429,7 +3407,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 608,
     "xp": {
       "baseValue": 560,
       "modifiers": [
@@ -3469,16 +3454,9 @@
     ],
     "tab": "tools",
     "name": "action.mithrilBrewingKit.name",
-    "description": "action.mithrilBrewingKit.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantinePickaxe",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 701,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.mithrilBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3491,7 +3469,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantinePickaxe",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 701,
     "xp": {
       "baseValue": 640,
       "modifiers": [
@@ -3531,16 +3516,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantinePickaxe.name",
-    "description": "action.adamantinePickaxe.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineAxe",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 702,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantinePickaxe.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3553,7 +3531,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineAxe",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 702,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3593,16 +3578,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantineAxe.name",
-    "description": "action.adamantineAxe.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineForagingKnife",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 703,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantineAxe.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3615,7 +3593,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineForagingKnife",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 703,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3655,16 +3640,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantineForagingKnife.name",
-    "description": "action.adamantineForagingKnife.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineSmithingHammer",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 704,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantineForagingKnife.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3677,7 +3655,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineSmithingHammer",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 704,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3717,16 +3702,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantineSmithingHammer.name",
-    "description": "action.adamantineSmithingHammer.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineWoodworkingTool",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 705,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantineSmithingHammer.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3739,7 +3717,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineWoodworkingTool",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 705,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3779,16 +3764,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantineWoodworkingTool.name",
-    "description": "action.adamantineWoodworkingTool.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineTailoringNeedle",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 706,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantineWoodworkingTool.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3801,7 +3779,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineTailoringNeedle",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 706,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3841,16 +3826,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantineTailoringNeedle.name",
-    "description": "action.adamantineTailoringNeedle.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineCookingUtensil",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 707,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantineTailoringNeedle.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3863,7 +3841,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineCookingUtensil",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 707,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3903,16 +3888,9 @@
     ],
     "tab": "tools",
     "name": "action.adamantineCookingUtensil.name",
-    "description": "action.adamantineCookingUtensil.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineBrewingKit",
-    "skillId": "smithing",
-    "minLevel": 80,
-    "sort": 708,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.adamantineCookingUtensil.description",
+    "durationSeconds": {
+      "baseValue": 160,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -3925,7 +3903,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineBrewingKit",
+    "skillId": "smithing",
+    "minLevel": 80,
+    "sort": 708,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -3965,6 +3950,21 @@
     ],
     "tab": "tools",
     "name": "action.adamantineBrewingKit.name",
-    "description": "action.adamantineBrewingKit.description"
+    "description": "action.adamantineBrewingKit.description",
+    "durationSeconds": {
+      "baseValue": 160,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
   }
 ]

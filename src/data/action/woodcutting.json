@@ -5,21 +5,6 @@
     "skillId": "woodcutting",
     "minLevel": 0,
     "sort": 8,
-    "duration": {
-      "baseValue": 5000,
-      "modifiers": [
-        {
-          "modifierType": "stat",
-          "statId": "woodcuttingSpeed",
-          "type": "inversePercentage"
-        },
-        {
-          "modifierType": "skillLevel",
-          "type": "inversePercentage",
-          "perLevelValue": 0.01
-        }
-      ]
-    },
     "xp": {
       "baseValue": 10,
       "modifiers": [
@@ -48,16 +33,9 @@
       }
     ],
     "name": "action.willowTree.name",
-    "description": "action.willowTree.description"
-  },
-  {
-    "type": "action",
-    "id": "pineTree",
-    "skillId": "woodcutting",
-    "minLevel": 10,
-    "sort": 9,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.willowTree.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -70,7 +48,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "pineTree",
+    "skillId": "woodcutting",
+    "minLevel": 10,
+    "sort": 9,
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -99,16 +84,9 @@
       }
     ],
     "name": "action.pineTree.name",
-    "description": "action.pineTree.description"
-  },
-  {
-    "type": "action",
-    "id": "oakTree",
-    "skillId": "woodcutting",
-    "minLevel": 20,
-    "sort": 10,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.pineTree.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -121,7 +99,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "oakTree",
+    "skillId": "woodcutting",
+    "minLevel": 20,
+    "sort": 10,
     "xp": {
       "baseValue": 30,
       "modifiers": [
@@ -150,16 +135,9 @@
       }
     ],
     "name": "action.oakTree.name",
-    "description": "action.oakTree.description"
-  },
-  {
-    "type": "action",
-    "id": "mapleTree",
-    "skillId": "woodcutting",
-    "minLevel": 30,
-    "sort": 11,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.oakTree.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -172,7 +150,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mapleTree",
+    "skillId": "woodcutting",
+    "minLevel": 30,
+    "sort": 11,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -201,16 +186,9 @@
       }
     ],
     "name": "action.mapleTree.name",
-    "description": "action.mapleTree.description"
-  },
-  {
-    "type": "action",
-    "id": "elmTree",
-    "skillId": "woodcutting",
-    "minLevel": 40,
-    "sort": 12,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.mapleTree.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -223,7 +201,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "elmTree",
+    "skillId": "woodcutting",
+    "minLevel": 40,
+    "sort": 12,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -252,16 +237,9 @@
       }
     ],
     "name": "action.elmTree.name",
-    "description": "action.elmTree.description"
-  },
-  {
-    "type": "action",
-    "id": "beechTree",
-    "skillId": "woodcutting",
-    "minLevel": 50,
-    "sort": 13,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.elmTree.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -274,7 +252,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "beechTree",
+    "skillId": "woodcutting",
+    "minLevel": 50,
+    "sort": 13,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -303,16 +288,9 @@
       }
     ],
     "name": "action.beechTree.name",
-    "description": "action.beechTree.description"
-  },
-  {
-    "type": "action",
-    "id": "mahoganyTree",
-    "skillId": "woodcutting",
-    "minLevel": 60,
-    "sort": 14,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.beechTree.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -325,7 +303,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mahoganyTree",
+    "skillId": "woodcutting",
+    "minLevel": 60,
+    "sort": 14,
     "xp": {
       "baseValue": 70,
       "modifiers": [
@@ -354,16 +339,9 @@
       }
     ],
     "name": "action.mahoganyTree.name",
-    "description": "action.mahoganyTree.description"
-  },
-  {
-    "type": "action",
-    "id": "ebonyTree",
-    "skillId": "woodcutting",
-    "minLevel": 70,
-    "sort": 15,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.mahoganyTree.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -376,7 +354,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ebonyTree",
+    "skillId": "woodcutting",
+    "minLevel": 70,
+    "sort": 15,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -405,6 +390,21 @@
       }
     ],
     "name": "action.ebonyTree.name",
-    "description": "action.ebonyTree.description"
+    "description": "action.ebonyTree.description",
+    "durationSeconds": {
+      "baseValue": 40,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodcuttingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
   }
 ]

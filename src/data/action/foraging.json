@@ -5,21 +5,6 @@
     "skillId": "foraging",
     "minLevel": 0,
     "sort": 0,
-    "duration": {
-      "baseValue": 5000,
-      "modifiers": [
-        {
-          "modifierType": "stat",
-          "statId": "foragingSpeed",
-          "type": "inversePercentage"
-        },
-        {
-          "modifierType": "skillLevel",
-          "type": "inversePercentage",
-          "perLevelValue": 0.01
-        }
-      ]
-    },
     "xp": {
       "baseValue": 10,
       "modifiers": [
@@ -49,16 +34,9 @@
     ],
     "tab": "farm",
     "name": "action.chicken.name",
-    "description": "action.chicken.description"
-  },
-  {
-    "type": "action",
-    "id": "crucianCarp",
-    "skillId": "foraging",
-    "minLevel": 0,
-    "sort": 1,
-    "duration": {
-      "baseValue": 5000,
+    "description": "action.chicken.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -71,7 +49,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "crucianCarp",
+    "skillId": "foraging",
+    "minLevel": 0,
+    "sort": 1,
     "xp": {
       "baseValue": 10,
       "modifiers": [
@@ -101,16 +86,9 @@
     ],
     "tab": "farm",
     "name": "action.crucianCarp.name",
-    "description": "action.crucianCarp.description"
-  },
-  {
-    "type": "action",
-    "id": "cabbage",
-    "skillId": "foraging",
-    "minLevel": 0,
-    "sort": 2,
-    "duration": {
-      "baseValue": 5000,
+    "description": "action.crucianCarp.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -123,7 +101,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "cabbage",
+    "skillId": "foraging",
+    "minLevel": 0,
+    "sort": 2,
     "xp": {
       "baseValue": 10,
       "modifiers": [
@@ -153,16 +138,9 @@
     ],
     "tab": "farm",
     "name": "action.cabbage.name",
-    "description": "action.cabbage.description"
-  },
-  {
-    "type": "action",
-    "id": "apple",
-    "skillId": "foraging",
-    "minLevel": 0,
-    "sort": 3,
-    "duration": {
-      "baseValue": 5000,
+    "description": "action.cabbage.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -175,7 +153,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "apple",
+    "skillId": "foraging",
+    "minLevel": 0,
+    "sort": 3,
     "xp": {
       "baseValue": 10,
       "modifiers": [
@@ -205,16 +190,9 @@
     ],
     "tab": "farm",
     "name": "action.apple.name",
-    "description": "action.apple.description"
-  },
-  {
-    "type": "action",
-    "id": "licorice",
-    "skillId": "foraging",
-    "minLevel": 0,
-    "sort": 4,
-    "duration": {
-      "baseValue": 5000,
+    "description": "action.apple.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -227,7 +205,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "licorice",
+    "skillId": "foraging",
+    "minLevel": 0,
+    "sort": 4,
     "xp": {
       "baseValue": 10,
       "modifiers": [
@@ -257,17 +242,9 @@
     ],
     "tab": "farm",
     "name": "action.licorice.name",
-    "description": "action.licorice.description"
-  },
-  {
-    "type": "action",
-    "id": "farm",
-    "skillId": "foraging",
-    "tab": "farm",
-    "minLevel": 0,
-    "sort": 9,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.licorice.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -280,7 +257,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "farm",
+    "skillId": "foraging",
+    "tab": "farm",
+    "minLevel": 0,
+    "sort": 9,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -325,16 +310,9 @@
       }
     ],
     "name": "action.farm.name",
-    "description": "action.farm.description"
-  },
-  {
-    "type": "action",
-    "id": "pork",
-    "skillId": "foraging",
-    "minLevel": 10,
-    "sort": 10,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.farm.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -347,7 +325,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "pork",
+    "skillId": "foraging",
+    "minLevel": 10,
+    "sort": 10,
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -377,16 +362,9 @@
     ],
     "tab": "plain",
     "name": "action.pork.name",
-    "description": "action.pork.description"
-  },
-  {
-    "type": "action",
-    "id": "carp",
-    "skillId": "foraging",
-    "minLevel": 10,
-    "sort": 11,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.pork.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -399,7 +377,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "carp",
+    "skillId": "foraging",
+    "minLevel": 10,
+    "sort": 11,
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -429,16 +414,9 @@
     ],
     "tab": "plain",
     "name": "action.carp.name",
-    "description": "action.carp.description"
-  },
-  {
-    "type": "action",
-    "id": "carrot",
-    "skillId": "foraging",
-    "minLevel": 10,
-    "sort": 12,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.carp.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -451,7 +429,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "carrot",
+    "skillId": "foraging",
+    "minLevel": 10,
+    "sort": 12,
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -481,16 +466,9 @@
     ],
     "tab": "plain",
     "name": "action.carrot.name",
-    "description": "action.carrot.description"
-  },
-  {
-    "type": "action",
-    "id": "grape",
-    "skillId": "foraging",
-    "minLevel": 10,
-    "sort": 13,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.carrot.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -503,7 +481,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "grape",
+    "skillId": "foraging",
+    "minLevel": 10,
+    "sort": 13,
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -533,16 +518,9 @@
     ],
     "tab": "plain",
     "name": "action.grape.name",
-    "description": "action.grape.description"
-  },
-  {
-    "type": "action",
-    "id": "cotton",
-    "skillId": "foraging",
-    "minLevel": 10,
-    "sort": 14,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.grape.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -555,7 +533,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "cotton",
+    "skillId": "foraging",
+    "minLevel": 10,
+    "sort": 14,
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -585,17 +570,9 @@
     ],
     "tab": "plain",
     "name": "action.cotton.name",
-    "description": "action.cotton.description"
-  },
-  {
-    "type": "action",
-    "id": "plain",
-    "skillId": "foraging",
-    "tab": "plain",
-    "minLevel": 10,
-    "sort": 19,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.cotton.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -608,7 +585,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "plain",
+    "skillId": "foraging",
+    "tab": "plain",
+    "minLevel": 10,
+    "sort": 19,
     "xp": {
       "baseValue": 100,
       "modifiers": [
@@ -653,16 +638,9 @@
       }
     ],
     "name": "action.plain.name",
-    "description": "action.plain.description"
-  },
-  {
-    "type": "action",
-    "id": "bear",
-    "skillId": "foraging",
-    "minLevel": 20,
-    "sort": 20,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.plain.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -675,7 +653,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "bear",
+    "skillId": "foraging",
+    "minLevel": 20,
+    "sort": 20,
     "xp": {
       "baseValue": 30,
       "modifiers": [
@@ -705,16 +690,9 @@
     ],
     "tab": "forest",
     "name": "action.bear.name",
-    "description": "action.bear.description"
-  },
-  {
-    "type": "action",
-    "id": "salmon",
-    "skillId": "foraging",
-    "minLevel": 20,
-    "sort": 21,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.bear.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -727,7 +705,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "salmon",
+    "skillId": "foraging",
+    "minLevel": 20,
+    "sort": 21,
     "xp": {
       "baseValue": 30,
       "modifiers": [
@@ -757,16 +742,9 @@
     ],
     "tab": "forest",
     "name": "action.salmon.name",
-    "description": "action.salmon.description"
-  },
-  {
-    "type": "action",
-    "id": "potato",
-    "skillId": "foraging",
-    "minLevel": 20,
-    "sort": 22,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.salmon.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -779,7 +757,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "potato",
+    "skillId": "foraging",
+    "minLevel": 20,
+    "sort": 22,
     "xp": {
       "baseValue": 30,
       "modifiers": [
@@ -809,16 +794,9 @@
     ],
     "tab": "forest",
     "name": "action.potato.name",
-    "description": "action.potato.description"
-  },
-  {
-    "type": "action",
-    "id": "berry",
-    "skillId": "foraging",
-    "minLevel": 20,
-    "sort": 23,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.potato.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -831,7 +809,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "berry",
+    "skillId": "foraging",
+    "minLevel": 20,
+    "sort": 23,
     "xp": {
       "baseValue": 30,
       "modifiers": [
@@ -861,16 +846,9 @@
     ],
     "tab": "forest",
     "name": "action.berry.name",
-    "description": "action.berry.description"
-  },
-  {
-    "type": "action",
-    "id": "artemisia",
-    "skillId": "foraging",
-    "minLevel": 20,
-    "sort": 24,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.berry.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -883,7 +861,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "artemisia",
+    "skillId": "foraging",
+    "minLevel": 20,
+    "sort": 24,
     "xp": {
       "baseValue": 30,
       "modifiers": [
@@ -913,17 +898,9 @@
     ],
     "tab": "forest",
     "name": "action.artemisia.name",
-    "description": "action.artemisia.description"
-  },
-  {
-    "type": "action",
-    "id": "forest",
-    "skillId": "foraging",
-    "tab": "forest",
-    "minLevel": 20,
-    "sort": 29,
-    "duration": {
-      "baseValue": 60000,
+    "description": "action.artemisia.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -936,7 +913,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "forest",
+    "skillId": "foraging",
+    "tab": "forest",
+    "minLevel": 20,
+    "sort": 29,
     "xp": {
       "baseValue": 150,
       "modifiers": [
@@ -981,16 +966,9 @@
       }
     ],
     "name": "action.forest.name",
-    "description": "action.forest.description"
-  },
-  {
-    "type": "action",
-    "id": "bison",
-    "skillId": "foraging",
-    "minLevel": 30,
-    "sort": 30,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.forest.description",
+    "durationSeconds": {
+      "baseValue": 60,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1003,7 +981,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "bison",
+    "skillId": "foraging",
+    "minLevel": 30,
+    "sort": 30,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -1033,16 +1018,9 @@
     ],
     "tab": "mountain",
     "name": "action.bison.name",
-    "description": "action.bison.description"
-  },
-  {
-    "type": "action",
-    "id": "trout",
-    "skillId": "foraging",
-    "minLevel": 30,
-    "sort": 31,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.bison.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1055,7 +1033,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "trout",
+    "skillId": "foraging",
+    "minLevel": 30,
+    "sort": 31,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -1085,16 +1070,9 @@
     ],
     "tab": "mountain",
     "name": "action.trout.name",
-    "description": "action.trout.description"
-  },
-  {
-    "type": "action",
-    "id": "onion",
-    "skillId": "foraging",
-    "minLevel": 30,
-    "sort": 32,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.trout.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1107,7 +1085,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "onion",
+    "skillId": "foraging",
+    "minLevel": 30,
+    "sort": 32,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -1137,16 +1122,9 @@
     ],
     "tab": "mountain",
     "name": "action.onion.name",
-    "description": "action.onion.description"
-  },
-  {
-    "type": "action",
-    "id": "cherry",
-    "skillId": "foraging",
-    "minLevel": 30,
-    "sort": 33,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.onion.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1159,7 +1137,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "cherry",
+    "skillId": "foraging",
+    "minLevel": 30,
+    "sort": 33,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -1189,16 +1174,9 @@
     ],
     "tab": "mountain",
     "name": "action.cherry.name",
-    "description": "action.cherry.description"
-  },
-  {
-    "type": "action",
-    "id": "flax",
-    "skillId": "foraging",
-    "minLevel": 30,
-    "sort": 34,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.cherry.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1211,7 +1189,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "flax",
+    "skillId": "foraging",
+    "minLevel": 30,
+    "sort": 34,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -1241,17 +1226,9 @@
     ],
     "tab": "mountain",
     "name": "action.flax.name",
-    "description": "action.flax.description"
-  },
-  {
-    "type": "action",
-    "id": "mountain",
-    "skillId": "foraging",
-    "tab": "mountain",
-    "minLevel": 30,
-    "sort": 39,
-    "duration": {
-      "baseValue": 80000,
+    "description": "action.flax.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1264,7 +1241,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mountain",
+    "skillId": "foraging",
+    "tab": "mountain",
+    "minLevel": 30,
+    "sort": 39,
     "xp": {
       "baseValue": 200,
       "modifiers": [
@@ -1309,16 +1294,9 @@
       }
     ],
     "name": "action.mountain.name",
-    "description": "action.mountain.description"
-  },
-  {
-    "type": "action",
-    "id": "crocodile",
-    "skillId": "foraging",
-    "minLevel": 40,
-    "sort": 40,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.mountain.description",
+    "durationSeconds": {
+      "baseValue": 80,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1331,7 +1309,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "crocodile",
+    "skillId": "foraging",
+    "minLevel": 40,
+    "sort": 40,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -1361,16 +1346,9 @@
     ],
     "tab": "swamp",
     "name": "action.crocodile.name",
-    "description": "action.crocodile.description"
-  },
-  {
-    "type": "action",
-    "id": "catfish",
-    "skillId": "foraging",
-    "minLevel": 40,
-    "sort": 41,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.crocodile.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1383,7 +1361,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "catfish",
+    "skillId": "foraging",
+    "minLevel": 40,
+    "sort": 41,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -1413,16 +1398,9 @@
     ],
     "tab": "swamp",
     "name": "action.catfish.name",
-    "description": "action.catfish.description"
-  },
-  {
-    "type": "action",
-    "id": "sweetPotato",
-    "skillId": "foraging",
-    "minLevel": 40,
-    "sort": 42,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.catfish.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1435,7 +1413,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "sweetPotato",
+    "skillId": "foraging",
+    "minLevel": 40,
+    "sort": 42,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -1465,16 +1450,9 @@
     ],
     "tab": "swamp",
     "name": "action.sweetPotato.name",
-    "description": "action.sweetPotato.description"
-  },
-  {
-    "type": "action",
-    "id": "banana",
-    "skillId": "foraging",
-    "minLevel": 40,
-    "sort": 43,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.sweetPotato.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1487,7 +1465,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "banana",
+    "skillId": "foraging",
+    "minLevel": 40,
+    "sort": 43,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -1517,16 +1502,9 @@
     ],
     "tab": "swamp",
     "name": "action.banana.name",
-    "description": "action.banana.description"
-  },
-  {
-    "type": "action",
-    "id": "ginseng",
-    "skillId": "foraging",
-    "minLevel": 40,
-    "sort": 44,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.banana.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1539,7 +1517,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ginseng",
+    "skillId": "foraging",
+    "minLevel": 40,
+    "sort": 44,
     "xp": {
       "baseValue": 50,
       "modifiers": [
@@ -1569,17 +1554,9 @@
     ],
     "tab": "swamp",
     "name": "action.ginseng.name",
-    "description": "action.ginseng.description"
-  },
-  {
-    "type": "action",
-    "id": "swamp",
-    "skillId": "foraging",
-    "tab": "swamp",
-    "minLevel": 40,
-    "sort": 49,
-    "duration": {
-      "baseValue": 100000,
+    "description": "action.ginseng.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1592,7 +1569,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "swamp",
+    "skillId": "foraging",
+    "tab": "swamp",
+    "minLevel": 40,
+    "sort": 49,
     "xp": {
       "baseValue": 250,
       "modifiers": [
@@ -1637,16 +1622,9 @@
       }
     ],
     "name": "action.swamp.name",
-    "description": "action.swamp.description"
-  },
-  {
-    "type": "action",
-    "id": "camel",
-    "skillId": "foraging",
-    "minLevel": 50,
-    "sort": 50,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.swamp.description",
+    "durationSeconds": {
+      "baseValue": 100,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1659,7 +1637,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "camel",
+    "skillId": "foraging",
+    "minLevel": 50,
+    "sort": 50,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -1689,16 +1674,9 @@
     ],
     "tab": "desert",
     "name": "action.camel.name",
-    "description": "action.camel.description"
-  },
-  {
-    "type": "action",
-    "id": "tuna",
-    "skillId": "foraging",
-    "minLevel": 50,
-    "sort": 51,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.camel.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1711,7 +1689,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "tuna",
+    "skillId": "foraging",
+    "minLevel": 50,
+    "sort": 51,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -1741,16 +1726,9 @@
     ],
     "tab": "desert",
     "name": "action.tuna.name",
-    "description": "action.tuna.description"
-  },
-  {
-    "type": "action",
-    "id": "corn",
-    "skillId": "foraging",
-    "minLevel": 50,
-    "sort": 52,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.tuna.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1763,7 +1741,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "corn",
+    "skillId": "foraging",
+    "minLevel": 50,
+    "sort": 52,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -1793,16 +1778,9 @@
     ],
     "tab": "desert",
     "name": "action.corn.name",
-    "description": "action.corn.description"
-  },
-  {
-    "type": "action",
-    "id": "cactusFruit",
-    "skillId": "foraging",
-    "minLevel": 50,
-    "sort": 53,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.corn.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1815,7 +1793,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "cactusFruit",
+    "skillId": "foraging",
+    "minLevel": 50,
+    "sort": 53,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -1845,16 +1830,9 @@
     ],
     "tab": "desert",
     "name": "action.cactusFruit.name",
-    "description": "action.cactusFruit.description"
-  },
-  {
-    "type": "action",
-    "id": "bamboo",
-    "skillId": "foraging",
-    "minLevel": 50,
-    "sort": 54,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.cactusFruit.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1867,7 +1845,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "bamboo",
+    "skillId": "foraging",
+    "minLevel": 50,
+    "sort": 54,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -1897,17 +1882,9 @@
     ],
     "tab": "desert",
     "name": "action.bamboo.name",
-    "description": "action.bamboo.description"
-  },
-  {
-    "type": "action",
-    "id": "desert",
-    "skillId": "foraging",
-    "tab": "desert",
-    "minLevel": 50,
-    "sort": 59,
-    "duration": {
-      "baseValue": 120000,
+    "description": "action.bamboo.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1920,7 +1897,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "desert",
+    "skillId": "foraging",
+    "tab": "desert",
+    "minLevel": 50,
+    "sort": 59,
     "xp": {
       "baseValue": 300,
       "modifiers": [
@@ -1965,16 +1950,9 @@
       }
     ],
     "name": "action.desert.name",
-    "description": "action.desert.description"
-  },
-  {
-    "type": "action",
-    "id": "venison",
-    "skillId": "foraging",
-    "minLevel": 60,
-    "sort": 60,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.desert.description",
+    "durationSeconds": {
+      "baseValue": 120,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -1987,7 +1965,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "venison",
+    "skillId": "foraging",
+    "minLevel": 60,
+    "sort": 60,
     "xp": {
       "baseValue": 70,
       "modifiers": [
@@ -2017,16 +2002,9 @@
     ],
     "tab": "grassland",
     "name": "action.venison.name",
-    "description": "action.venison.description"
-  },
-  {
-    "type": "action",
-    "id": "grassCarp",
-    "skillId": "foraging",
-    "minLevel": 60,
-    "sort": 61,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.venison.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2039,7 +2017,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "grassCarp",
+    "skillId": "foraging",
+    "minLevel": 60,
+    "sort": 61,
     "xp": {
       "baseValue": 70,
       "modifiers": [
@@ -2069,16 +2054,9 @@
     ],
     "tab": "grassland",
     "name": "action.grassCarp.name",
-    "description": "action.grassCarp.description"
-  },
-  {
-    "type": "action",
-    "id": "pepper",
-    "skillId": "foraging",
-    "minLevel": 60,
-    "sort": 62,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.grassCarp.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2091,7 +2069,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "pepper",
+    "skillId": "foraging",
+    "minLevel": 60,
+    "sort": 62,
     "xp": {
       "baseValue": 70,
       "modifiers": [
@@ -2121,16 +2106,9 @@
     ],
     "tab": "grassland",
     "name": "action.pepper.name",
-    "description": "action.pepper.description"
-  },
-  {
-    "type": "action",
-    "id": "peach",
-    "skillId": "foraging",
-    "minLevel": 60,
-    "sort": 63,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.pepper.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2143,7 +2121,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "peach",
+    "skillId": "foraging",
+    "minLevel": 60,
+    "sort": 63,
     "xp": {
       "baseValue": 70,
       "modifiers": [
@@ -2173,16 +2158,9 @@
     ],
     "tab": "grassland",
     "name": "action.peach.name",
-    "description": "action.peach.description"
-  },
-  {
-    "type": "action",
-    "id": "reishi",
-    "skillId": "foraging",
-    "minLevel": 60,
-    "sort": 64,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.peach.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2195,7 +2173,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "reishi",
+    "skillId": "foraging",
+    "minLevel": 60,
+    "sort": 64,
     "xp": {
       "baseValue": 70,
       "modifiers": [
@@ -2225,17 +2210,9 @@
     ],
     "tab": "grassland",
     "name": "action.reishi.name",
-    "description": "action.reishi.description"
-  },
-  {
-    "type": "action",
-    "id": "grassland",
-    "skillId": "foraging",
-    "tab": "grassland",
-    "minLevel": 60,
-    "sort": 69,
-    "duration": {
-      "baseValue": 140000,
+    "description": "action.reishi.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2248,7 +2225,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "grassland",
+    "skillId": "foraging",
+    "tab": "grassland",
+    "minLevel": 60,
+    "sort": 69,
     "xp": {
       "baseValue": 350,
       "modifiers": [
@@ -2293,16 +2278,9 @@
       }
     ],
     "name": "action.grassland.name",
-    "description": "action.grassland.description"
-  },
-  {
-    "type": "action",
-    "id": "turkey",
-    "skillId": "foraging",
-    "minLevel": 70,
-    "sort": 70,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.grassland.description",
+    "durationSeconds": {
+      "baseValue": 140,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2315,7 +2293,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "turkey",
+    "skillId": "foraging",
+    "minLevel": 70,
+    "sort": 70,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -2345,16 +2330,9 @@
     ],
     "tab": "volcano",
     "name": "action.turkey.name",
-    "description": "action.turkey.description"
-  },
-  {
-    "type": "action",
-    "id": "grouper",
-    "skillId": "foraging",
-    "minLevel": 70,
-    "sort": 71,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.turkey.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2367,7 +2345,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "grouper",
+    "skillId": "foraging",
+    "minLevel": 70,
+    "sort": 71,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -2397,16 +2382,9 @@
     ],
     "tab": "volcano",
     "name": "action.grouper.name",
-    "description": "action.grouper.description"
-  },
-  {
-    "type": "action",
-    "id": "konjac",
-    "skillId": "foraging",
-    "minLevel": 70,
-    "sort": 72,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.grouper.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2419,7 +2397,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "konjac",
+    "skillId": "foraging",
+    "minLevel": 70,
+    "sort": 72,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -2449,16 +2434,9 @@
     ],
     "tab": "volcano",
     "name": "action.konjac.name",
-    "description": "action.konjac.description"
-  },
-  {
-    "type": "action",
-    "id": "longan",
-    "skillId": "foraging",
-    "minLevel": 70,
-    "sort": 73,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.konjac.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2471,7 +2449,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "longan",
+    "skillId": "foraging",
+    "minLevel": 70,
+    "sort": 73,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -2501,16 +2486,9 @@
     ],
     "tab": "volcano",
     "name": "action.longan.name",
-    "description": "action.longan.description"
-  },
-  {
-    "type": "action",
-    "id": "silkworm",
-    "skillId": "foraging",
-    "minLevel": 70,
-    "sort": 74,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.longan.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2523,7 +2501,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silkworm",
+    "skillId": "foraging",
+    "minLevel": 70,
+    "sort": 74,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -2553,17 +2538,9 @@
     ],
     "tab": "volcano",
     "name": "action.silkworm.name",
-    "description": "action.silkworm.description"
-  },
-  {
-    "type": "action",
-    "id": "volcano",
-    "skillId": "foraging",
-    "tab": "volcano",
-    "minLevel": 70,
-    "sort": 79,
-    "duration": {
-      "baseValue": 160000,
+    "description": "action.silkworm.description",
+    "durationSeconds": {
+      "baseValue": 40,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -2576,7 +2553,15 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "volcano",
+    "skillId": "foraging",
+    "tab": "volcano",
+    "minLevel": 70,
+    "sort": 79,
     "xp": {
       "baseValue": 400,
       "modifiers": [
@@ -2621,6 +2606,21 @@
       }
     ],
     "name": "action.volcano.name",
-    "description": "action.volcano.description"
+    "description": "action.volcano.description",
+    "durationSeconds": {
+      "baseValue": 160,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "foragingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
   }
 ]

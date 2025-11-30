@@ -5,21 +5,6 @@
     "skillId": "woodworking",
     "minLevel": 0,
     "sort": 800,
-    "duration": {
-      "baseValue": 5000,
-      "modifiers": [
-        {
-          "modifierType": "stat",
-          "statId": "woodworkingSpeed",
-          "type": "inversePercentage"
-        },
-        {
-          "modifierType": "skillLevel",
-          "type": "inversePercentage",
-          "perLevelValue": 0.01
-        }
-      ]
-    },
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -55,16 +40,9 @@
     ],
     "tab": "materials",
     "name": "action.willowPlank.name",
-    "description": "action.willowPlank.description"
-  },
-  {
-    "type": "action",
-    "id": "pinePlank",
-    "skillId": "woodworking",
-    "minLevel": 10,
-    "sort": 801,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.willowPlank.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -77,7 +55,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "pinePlank",
+    "skillId": "woodworking",
+    "minLevel": 10,
+    "sort": 801,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -113,16 +98,9 @@
     ],
     "tab": "materials",
     "name": "action.pinePlank.name",
-    "description": "action.pinePlank.description"
-  },
-  {
-    "type": "action",
-    "id": "oakPlank",
-    "skillId": "woodworking",
-    "minLevel": 20,
-    "sort": 802,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.pinePlank.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -135,7 +113,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "oakPlank",
+    "skillId": "woodworking",
+    "minLevel": 20,
+    "sort": 802,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -171,16 +156,9 @@
     ],
     "tab": "materials",
     "name": "action.oakPlank.name",
-    "description": "action.oakPlank.description"
-  },
-  {
-    "type": "action",
-    "id": "maplePlank",
-    "skillId": "woodworking",
-    "minLevel": 30,
-    "sort": 803,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.oakPlank.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -193,7 +171,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "maplePlank",
+    "skillId": "woodworking",
+    "minLevel": 30,
+    "sort": 803,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -229,16 +214,9 @@
     ],
     "tab": "materials",
     "name": "action.maplePlank.name",
-    "description": "action.maplePlank.description"
-  },
-  {
-    "type": "action",
-    "id": "elmPlank",
-    "skillId": "woodworking",
-    "minLevel": 40,
-    "sort": 804,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.maplePlank.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -251,7 +229,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "elmPlank",
+    "skillId": "woodworking",
+    "minLevel": 40,
+    "sort": 804,
     "xp": {
       "baseValue": 100,
       "modifiers": [
@@ -287,16 +272,9 @@
     ],
     "tab": "materials",
     "name": "action.elmPlank.name",
-    "description": "action.elmPlank.description"
-  },
-  {
-    "type": "action",
-    "id": "beechPlank",
-    "skillId": "woodworking",
-    "minLevel": 50,
-    "sort": 805,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.elmPlank.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -309,7 +287,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "beechPlank",
+    "skillId": "woodworking",
+    "minLevel": 50,
+    "sort": 805,
     "xp": {
       "baseValue": 120,
       "modifiers": [
@@ -345,16 +330,9 @@
     ],
     "tab": "materials",
     "name": "action.beechPlank.name",
-    "description": "action.beechPlank.description"
-  },
-  {
-    "type": "action",
-    "id": "mahoganyPlank",
-    "skillId": "woodworking",
-    "minLevel": 60,
-    "sort": 806,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.beechPlank.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -367,7 +345,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mahoganyPlank",
+    "skillId": "woodworking",
+    "minLevel": 60,
+    "sort": 806,
     "xp": {
       "baseValue": 140,
       "modifiers": [
@@ -403,16 +388,9 @@
     ],
     "tab": "materials",
     "name": "action.mahoganyPlank.name",
-    "description": "action.mahoganyPlank.description"
-  },
-  {
-    "type": "action",
-    "id": "ebonyPlank",
-    "skillId": "woodworking",
-    "minLevel": 70,
-    "sort": 807,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.mahoganyPlank.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -425,7 +403,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ebonyPlank",
+    "skillId": "woodworking",
+    "minLevel": 70,
+    "sort": 807,
     "xp": {
       "baseValue": 160,
       "modifiers": [
@@ -461,6 +446,21 @@
     ],
     "tab": "materials",
     "name": "action.ebonyPlank.name",
-    "description": "action.ebonyPlank.description"
+    "description": "action.ebonyPlank.description",
+    "durationSeconds": {
+      "baseValue": 40,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
   }
 ]

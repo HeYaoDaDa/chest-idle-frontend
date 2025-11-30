@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 
 import { isInfiniteAmount, decrementAmount } from '@/utils/amount'
 import { INFINITE_AMOUNT } from '@/utils/constants'
+import { type Seconds } from '@/utils/fixedPoint'
 
 import { useActionStore } from './action'
 
@@ -21,8 +22,8 @@ export interface ActionQueueItem {
   actionId: string
   /** 剩余次数 */
   amount: number
-  /** 战斗总时长（仅战斗行动，毫秒） */
-  combatDuration?: number
+  /** 战斗单场时长（仅战斗行动，秒） */
+  combatDurationSeconds?: Seconds
 }
 
 export const useActionQueueStore = defineStore('actionQueue', () => {
@@ -72,14 +73,14 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
    *
    * @param enemyId 敌人 ID
    * @param amount 战斗次数
-   * @param duration 战斗总时长（毫秒）
+   * @param durationSeconds 战斗单场时长（秒）
    */
-  function addCombatAction(enemyId: string, amount: number, duration: number): void {
+  function addCombatAction(enemyId: string, amount: number, durationSeconds: Seconds): void {
     actionQueue.value.push({
       type: 'combat',
       actionId: enemyId,
       amount,
-      combatDuration: duration,
+      combatDurationSeconds: durationSeconds,
     })
     if (actionQueue.value.length === 1) {
       actionStartDate.value = performance.now()
@@ -91,14 +92,14 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
    *
    * @param enemyId 敌人 ID
    * @param amount 战斗次数
-   * @param duration 战斗总时长（毫秒）
+   * @param durationSeconds 战斗单场时长（秒）
    */
-  function startCombatImmediately(enemyId: string, amount: number, duration: number): void {
+  function startCombatImmediately(enemyId: string, amount: number, durationSeconds: Seconds): void {
     actionQueue.value.unshift({
       type: 'combat',
       actionId: enemyId,
       amount,
-      combatDuration: duration,
+      combatDurationSeconds: durationSeconds,
     })
     actionStartDate.value = performance.now()
   }

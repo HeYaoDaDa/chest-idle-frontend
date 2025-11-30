@@ -53,11 +53,13 @@ export default defineComponent({
     })
 
     const allowAmount = computed(() => isIntegerOrInfinity(amountString.value))
-    const durationDisplay = computed(() =>
-      formatDurationMs(fromFixed(action.value?.duration ?? toFixed(0)), locale.value, {
+    const durationDisplay = computed(() => {
+      const durationSeconds = action.value?.durationSeconds ?? toFixed(0)
+      const durationMs = fromFixed(durationSeconds) * 1000
+      return formatDurationMs(durationMs, locale.value, {
         maxFractionDigits: 3,
-      }),
-    )
+      })
+    })
     const xpPerCycle = computed(() => fromFixed(action.value?.xp ?? toFixed(0)))
     const chestPointsPerCycle = computed(() => fromFixed(action.value?.chestPoints ?? toFixed(0)))
     const hasIngredients = computed(() => (action.value?.ingredients.length ?? 0) > 0)

@@ -7,6 +7,7 @@ import { useInventoryStore } from '../inventory'
 import { useStatStore } from '../stat'
 
 // Mock gameConfig
+// Duration values are in seconds
 vi.mock('@/gameConfig', () => ({
   itemConfigMap: {
     strengthPotion: {
@@ -15,7 +16,7 @@ vi.mock('@/gameConfig', () => ({
       category: 'consumable',
       consumable: {
         consumableType: 'strength',
-        duration: toFixed(60000), // 60 seconds
+        durationSeconds: toFixed(60), // 60 seconds
         effects: [
           {
             statId: '{skill}:strength',
@@ -31,7 +32,7 @@ vi.mock('@/gameConfig', () => ({
       category: 'consumable',
       consumable: {
         consumableType: 'speed',
-        duration: toFixed(30000), // 30 seconds
+        durationSeconds: toFixed(30), // 30 seconds
         effects: [
           {
             statId: '{skill}:speed',
@@ -47,7 +48,7 @@ vi.mock('@/gameConfig', () => ({
       category: 'consumable',
       consumable: {
         consumableType: undefined,
-        duration: toFixed(45000),
+        durationSeconds: toFixed(45), // 45 seconds
         effects: [
           {
             statId: '{skill}:generic',
@@ -100,11 +101,11 @@ describe('Consumable Store', () => {
     })
   })
 
-  describe('getTotalAvailableMsForSource', () => {
+  describe('getTotalAvailableSecondsForSource', () => {
     it('should return 0 for empty slot', () => {
       const consumableStore = useConsumableStore()
 
-      const available = consumableStore.getTotalAvailableMsForSource('consumable:mining:0')
+      const available = consumableStore.getTotalAvailableSecondsForSource('consumable:mining:0')
 
       expect(available).toBe(toFixed(0))
     })
@@ -112,7 +113,7 @@ describe('Consumable Store', () => {
     it('should return 0 for invalid source format', () => {
       const consumableStore = useConsumableStore()
 
-      const available = consumableStore.getTotalAvailableMsForSource('invalid')
+      const available = consumableStore.getTotalAvailableSecondsForSource('invalid')
 
       expect(available).toBe(toFixed(0))
     })
@@ -120,7 +121,7 @@ describe('Consumable Store', () => {
     it('should return 0 for non-consumable source', () => {
       const consumableStore = useConsumableStore()
 
-      const available = consumableStore.getTotalAvailableMsForSource('equipment:mining:0')
+      const available = consumableStore.getTotalAvailableSecondsForSource('equipment:mining:0')
 
       expect(available).toBe(toFixed(0))
     })
@@ -135,14 +136,14 @@ describe('Consumable Store', () => {
       // Apply consumable to slot
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
-      // Set remaining time to 10000ms
+      // 设置剩余 10 秒
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(10000)
+      slots[0].remaining = toFixed(10)
 
-      const available = consumableStore.getTotalAvailableMsForSource('consumable:mining:0')
+      const available = consumableStore.getTotalAvailableSecondsForSource('consumable:mining:0')
 
-      // 10000 (remaining) + 5 * 60000 (inventory) = 310000
-      expect(available).toBe(toFixed(310000))
+      // 10 (remaining) + 5 * 60 (inventory) = 310 seconds
+      expect(available).toBe(toFixed(310))
     })
   })
 
@@ -150,7 +151,7 @@ describe('Consumable Store', () => {
     it('should return Infinity when no consumables in slots', () => {
       const consumableStore = useConsumableStore()
 
-      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5000))
+      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5))
 
       expect(count).toBe(Infinity)
     })
@@ -163,7 +164,7 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
       // Slot has 0 inventory and 0 remaining
-      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5000))
+      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5))
 
       expect(count).toBe(Infinity)
     })
@@ -178,7 +179,7 @@ describe('Consumable Store', () => {
 
       // Action duration: 5000ms
       // Max count: 180000 / 5000 = 36
-      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5000))
+      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5))
 
       expect(count).toBe(36)
     })
@@ -195,7 +196,7 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 1, 'speedPotion')
 
       // Should be limited by strength potion (36)
-      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5000))
+      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5))
 
       expect(count).toBe(36)
     })
@@ -209,7 +210,7 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
       // Slots 1 and 2 are empty
 
-      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5000))
+      const count = consumableStore.estimateBuffedCounts('mining', toFixed(5))
 
       expect(count).toBe(36)
     })
@@ -219,7 +220,7 @@ describe('Consumable Store', () => {
     it('should return empty array when no consumables', () => {
       const consumableStore = useConsumableStore()
 
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(5000))
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(5))
 
       expect(itemsToRemove).toEqual([])
     })
@@ -232,12 +233,12 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(10000)
+      slots[0].remaining = toFixed(10)
 
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(5000))
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(5))
 
       expect(itemsToRemove).toEqual([])
-      expect(slots[0].remaining).toBe(toFixed(5000))
+      expect(slots[0].remaining).toBe(toFixed(5))
     })
 
     it('should consume items when remaining time is insufficient', () => {
@@ -248,13 +249,13 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(10000)
+      slots[0].remaining = toFixed(10)
 
-      // Consume 50000ms (need 1 bottle from inventory)
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(50000))
+      // Consume 50 秒（需要 1 瓶库存）
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(50))
 
       expect(itemsToRemove).toEqual([['strengthPotion', 1]])
-      expect(slots[0].remaining).toBe(toFixed(20000)) // 10000 + 60000 - 50000
+      expect(slots[0].remaining).toBe(toFixed(20)) // 10 + 60 - 50
     })
 
     it('should consume multiple items when needed', () => {
@@ -265,13 +266,13 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(10000)
+      slots[0].remaining = toFixed(10)
 
-      // Consume 150000ms (need 3 bottles)
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(150000))
+      // Consume 150 秒（需要 3 瓶）
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(150))
 
       expect(itemsToRemove).toEqual([['strengthPotion', 3]])
-      expect(slots[0].remaining).toBe(toFixed(40000)) // 10000 + 180000 - 150000
+      expect(slots[0].remaining).toBe(toFixed(40)) // 10 + 180 - 150
     })
 
     it('should clear slot when remaining time reaches 0', () => {
@@ -283,12 +284,12 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(10000)
+      slots[0].remaining = toFixed(10)
 
       const removeEffectsSpy = vi.spyOn(statStore, 'removeEffectsFromSource')
 
-      // Consume exactly 10000ms
-      consumableStore.consumeBuffs('mining', toFixed(10000))
+      // Consume exactly 10 秒
+      consumableStore.consumeBuffs('mining', toFixed(10))
 
       expect(removeEffectsSpy).toHaveBeenCalledWith('consumable:mining:0')
       expect(slots[0].itemId).toBeNull()
@@ -303,7 +304,7 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
       // Slot has 0 inventory, trying to consume 5000ms
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(5000))
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(5))
 
       expect(itemsToRemove).toEqual([])
     })
@@ -318,11 +319,11 @@ describe('Consumable Store', () => {
       consumableStore.applyConsumable('mining', 1, 'speedPotion')
 
       const slots = consumableStore.getSlots('mining')
-      slots[0].remaining = toFixed(10000)
-      slots[1].remaining = toFixed(5000)
+      slots[0].remaining = toFixed(10)
+      slots[1].remaining = toFixed(5)
 
-      // Consume 40000ms
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(40000))
+      // Consume 40 秒
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(40))
 
       // Strength: needs 1 bottle (10000 + 60000 - 40000 = 30000 remaining)
       // Speed: needs 2 bottles (5000 + 60000 - 40000 = 25000 remaining)
@@ -555,12 +556,12 @@ describe('Consumable Store', () => {
       // Apply consumable
       consumableStore.applyConsumable('mining', 0, 'strengthPotion')
 
-      // Estimate buffed counts (3 * 60000 / 5000 = 36)
-      const estimate = consumableStore.estimateBuffedCounts('mining', toFixed(5000))
+      // Estimate buffed counts (3 * 60 / 5 = 36)
+      const estimate = consumableStore.estimateBuffedCounts('mining', toFixed(5))
       expect(estimate).toBe(36)
 
       // Consume some buffs
-      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(100000))
+      const itemsToRemove = consumableStore.consumeBuffs('mining', toFixed(100))
       expect(itemsToRemove).toEqual([['strengthPotion', 2]])
 
       // Remove consumable

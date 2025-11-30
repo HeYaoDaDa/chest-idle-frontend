@@ -59,13 +59,10 @@ export default defineComponent({
 
     const runningActionDurationDisplay = computed(() => {
       if (!actionQueueStore.currentActionDetail) return ''
-      return formatDurationMs(
-        fromFixed(actionQueueStore.currentActionDetail.duration),
-        locale.value,
-        {
-          maxFractionDigits: 3,
-        },
-      )
+      const durationMs = fromFixed(actionQueueStore.currentActionDetail.durationSeconds) * 1000
+      return formatDurationMs(durationMs, locale.value, {
+        maxFractionDigits: 3,
+      })
     })
 
     const isCombatAction = computed(() => actionQueueStore.isCombatAction)

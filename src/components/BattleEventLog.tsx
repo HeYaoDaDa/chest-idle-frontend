@@ -16,8 +16,8 @@ export default defineComponent({
       type: Array as PropType<CombatEvent[]>,
       required: true,
     },
-    /** 战斗总时长（毫秒） */
-    totalDuration: {
+    /** 战斗总时长（秒） */
+    totalDurationSeconds: {
       type: Number,
       required: true,
     },
@@ -35,15 +35,15 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n()
 
-    // 当前时间进度（毫秒）
-    const currentTime = ref(0)
+    // 当前时间进度（秒）
+    const currentTimeSeconds = ref(0)
 
     // 更新当前时间
     let animationFrame: number | null = null
 
     const updateTime = () => {
       if (props.isActive && props.startTime > 0) {
-        currentTime.value = performance.now() - props.startTime
+        currentTimeSeconds.value = (performance.now() - props.startTime) / 1000
       }
       animationFrame = requestAnimationFrame(updateTime)
     }
@@ -64,18 +64,18 @@ export default defineComponent({
     // 当前正在发生的事件索引
     const currentEventIndex = computed(() => {
       if (!props.isActive) return -1
-      // 找到第一个时间 > currentTime 的事件的前一个
+      // 找到第一个时间 > currentTimeSeconds 的事件的前一个
       for (let i = props.events.length - 1; i >= 0; i--) {
-        if (props.events[i].time <= currentTime.value) {
+        if (props.events[i].timeSeconds <= currentTimeSeconds.value) {
           return i
         }
       }
       return -1
     })
 
-    // 格式化时间（毫秒 -> 秒）
-    const formatTime = (ms: number) => {
-      return (ms / 1000).toFixed(1) + 's'
+    // 格式化时间（秒，保留1位小数）
+    const formatTime = (seconds: number) => {
+      return seconds.toFixed(1) + 's'
     }
 
     // 获取事件图标
@@ -95,7 +95,7 @@ export default defineComponent({
     // 获取事件样式类
     const getEventClass = (event: CombatEvent, index: number) => {
       const isCurrentEvent = index === currentEventIndex.value
-      const isPastEvent = event.time <= currentTime.value
+      const isPastEvent = event.timeSeconds <= currentTimeSeconds.value
       const isPlayerAction = event.actorSide === 'player'
 
       return [
@@ -133,8 +133,9 @@ export default defineComponent({
             {t('ui.combat.eventLog.title')}
           </h4>
           <span class="text-sm text-gray-500">
-            {formatTime(Math.min(currentTime.value, props.totalDuration))} /{' '}
-            {formatTime(props.totalDuration)}
+            {formatTime(
+              Math.min(currentTimeSeconds.value, props.totalDurationSeconds),
+            )}{' '}/ {formatTime(props.totalDurationSeconds)}
           </span>
         </div>
 
@@ -148,10 +149,10 @@ export default defineComponent({
             props.events.map((event, index) => {
               const targetSide = getTargetSide(event)
               return (
-                <div key={`${event.time}-${index}`} class={getEventClass(event, index)}>
+                <div key={`${event.timeSeconds}-${index}`} class={getEventClass(event, index)}>
                   {/* 时间戳 */}
                   <div class="flex-shrink-0 w-12 text-xs text-gray-500 font-mono">
-                    {formatTime(event.time)}
+                    {formatTime(event.timeSeconds)}
                   </div>
 
                   {/* 事件图标 */}

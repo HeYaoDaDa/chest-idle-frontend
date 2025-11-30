@@ -5,21 +5,6 @@
     "skillId": "smithing",
     "minLevel": 0,
     "sort": 0,
-    "duration": {
-      "baseValue": 5000,
-      "modifiers": [
-        {
-          "modifierType": "stat",
-          "statId": "smithingSpeed",
-          "type": "inversePercentage"
-        },
-        {
-          "modifierType": "skillLevel",
-          "type": "inversePercentage",
-          "perLevelValue": 0.01
-        }
-      ]
-    },
     "xp": {
       "baseValue": 20,
       "modifiers": [
@@ -55,16 +40,9 @@
     ],
     "tab": "materials",
     "name": "action.copperIngot.name",
-    "description": "action.copperIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "ironIngot",
-    "skillId": "smithing",
-    "minLevel": 10,
-    "sort": 100,
-    "duration": {
-      "baseValue": 10000,
+    "description": "action.copperIngot.description",
+    "durationSeconds": {
+      "baseValue": 5,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -77,7 +55,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "ironIngot",
+    "skillId": "smithing",
+    "minLevel": 10,
+    "sort": 100,
     "xp": {
       "baseValue": 40,
       "modifiers": [
@@ -113,16 +98,9 @@
     ],
     "tab": "materials",
     "name": "action.ironIngot.name",
-    "description": "action.ironIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "silverIngot",
-    "skillId": "smithing",
-    "minLevel": 20,
-    "sort": 200,
-    "duration": {
-      "baseValue": 15000,
+    "description": "action.ironIngot.description",
+    "durationSeconds": {
+      "baseValue": 10,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -135,7 +113,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "silverIngot",
+    "skillId": "smithing",
+    "minLevel": 20,
+    "sort": 200,
     "xp": {
       "baseValue": 60,
       "modifiers": [
@@ -171,16 +156,9 @@
     ],
     "tab": "materials",
     "name": "action.silverIngot.name",
-    "description": "action.silverIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "goldIngot",
-    "skillId": "smithing",
-    "minLevel": 30,
-    "sort": 300,
-    "duration": {
-      "baseValue": 20000,
+    "description": "action.silverIngot.description",
+    "durationSeconds": {
+      "baseValue": 15,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -193,7 +171,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "goldIngot",
+    "skillId": "smithing",
+    "minLevel": 30,
+    "sort": 300,
     "xp": {
       "baseValue": 80,
       "modifiers": [
@@ -229,16 +214,9 @@
     ],
     "tab": "materials",
     "name": "action.goldIngot.name",
-    "description": "action.goldIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "orichalcumIngot",
-    "skillId": "smithing",
-    "minLevel": 40,
-    "sort": 400,
-    "duration": {
-      "baseValue": 25000,
+    "description": "action.goldIngot.description",
+    "durationSeconds": {
+      "baseValue": 20,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -251,7 +229,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "orichalcumIngot",
+    "skillId": "smithing",
+    "minLevel": 40,
+    "sort": 400,
     "xp": {
       "baseValue": 100,
       "modifiers": [
@@ -287,16 +272,9 @@
     ],
     "tab": "materials",
     "name": "action.orichalcumIngot.name",
-    "description": "action.orichalcumIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "darkIronIngot",
-    "skillId": "smithing",
-    "minLevel": 50,
-    "sort": 500,
-    "duration": {
-      "baseValue": 30000,
+    "description": "action.orichalcumIngot.description",
+    "durationSeconds": {
+      "baseValue": 25,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -309,7 +287,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "darkIronIngot",
+    "skillId": "smithing",
+    "minLevel": 50,
+    "sort": 500,
     "xp": {
       "baseValue": 120,
       "modifiers": [
@@ -345,16 +330,9 @@
     ],
     "tab": "materials",
     "name": "action.darkIronIngot.name",
-    "description": "action.darkIronIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "mithrilIngot",
-    "skillId": "smithing",
-    "minLevel": 60,
-    "sort": 600,
-    "duration": {
-      "baseValue": 35000,
+    "description": "action.darkIronIngot.description",
+    "durationSeconds": {
+      "baseValue": 30,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -367,7 +345,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "mithrilIngot",
+    "skillId": "smithing",
+    "minLevel": 60,
+    "sort": 600,
     "xp": {
       "baseValue": 140,
       "modifiers": [
@@ -403,16 +388,9 @@
     ],
     "tab": "materials",
     "name": "action.mithrilIngot.name",
-    "description": "action.mithrilIngot.description"
-  },
-  {
-    "type": "action",
-    "id": "adamantineIngot",
-    "skillId": "smithing",
-    "minLevel": 70,
-    "sort": 700,
-    "duration": {
-      "baseValue": 40000,
+    "description": "action.mithrilIngot.description",
+    "durationSeconds": {
+      "baseValue": 35,
       "modifiers": [
         {
           "modifierType": "stat",
@@ -425,7 +403,14 @@
           "perLevelValue": 0.01
         }
       ]
-    },
+    }
+  },
+  {
+    "type": "action",
+    "id": "adamantineIngot",
+    "skillId": "smithing",
+    "minLevel": 70,
+    "sort": 700,
     "xp": {
       "baseValue": 160,
       "modifiers": [
@@ -461,6 +446,21 @@
     ],
     "tab": "materials",
     "name": "action.adamantineIngot.name",
-    "description": "action.adamantineIngot.description"
+    "description": "action.adamantineIngot.description",
+    "durationSeconds": {
+      "baseValue": 40,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
   }
 ]

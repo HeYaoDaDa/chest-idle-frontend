@@ -151,7 +151,7 @@ describe('Stat Store', () => {
 
       const modifiers = statStore.getModifiersByStatId('strength')
 
-      expect(modifiers[0].availableMs).toBe(Infinity)
+      expect(modifiers[0].availableSeconds).toBe(Infinity)
     })
   })
 
@@ -229,7 +229,7 @@ describe('Stat Store', () => {
       expect(valueNoFilter).toBe(toFixed(10))
 
       // With duration longer than available, should exclude the modifier
-      const valueWithFilter = statStore.getStatValue('strength', 10000)
+      const valueWithFilter = statStore.getStatValue('strength', 10)
       expect(valueWithFilter).toBe(toFixed(0))
     })
   })
@@ -433,7 +433,7 @@ describe('Stat Store', () => {
       expect(valueShort).toBe(toFixed(110))
 
       // Long duration - should exclude modifier (if consumable doesn't have enough time)
-      const valueLong = statStore.calculateDerivedValue(config, 100000)
+      const valueLong = statStore.calculateDerivedValue(config, 100)
       expect(valueLong).toBe(toFixed(100))
     })
 

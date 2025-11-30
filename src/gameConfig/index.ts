@@ -148,7 +148,7 @@ export function loadGameConfig() {
         // 转换消耗品配置
         if (item.consumable) {
           itemInternal.consumable = {
-            duration: toFixed(item.consumable.duration),
+            durationSeconds: toFixed(item.consumable.durationSeconds),
             consumableType: item.consumable.consumableType,
             effects: item.consumable.effects.map((effect) => ({
               statId: effect.statId,
@@ -172,7 +172,7 @@ export function loadGameConfig() {
       case 'action':
         const actionInternal: ActionConfigInternal = {
           ...config,
-          duration: convertDerivedValue(config.duration),
+          durationSeconds: convertDerivedValue(config.durationSeconds),
           xp: convertDerivedValue(config.xp),
           chestPoints: convertDerivedValue(config.chestPoints),
         } as ActionConfigInternal

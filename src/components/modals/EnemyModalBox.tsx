@@ -53,7 +53,9 @@ export default defineComponent({
     // 玩家战斗属性
     const playerMaxHp = computed(() => combatStore.maxHp)
     const playerDamage = computed(() => combatStore.currentDamage)
-    const playerAttackInterval = computed(() => combatStore.currentAttackInterval)
+    const playerAttackIntervalSeconds = computed(
+      () => combatStore.currentAttackIntervalSeconds,
+    )
 
     const hasLoot = computed(() => {
       if (!enemy.value) return false
@@ -73,11 +75,11 @@ export default defineComponent({
         // 使用 previewBattle 仅模拟，不修改战斗状态
         const result = combatStore.previewBattle(enemy.value.id, stringToNumber(amountString.value))
         if (result && result.canWin) {
-          const singleBattleDuration = result.perBattleSummary[0]?.duration ?? 0
+          const singleBattleDurationSeconds = result.perBattleSummary[0]?.durationSeconds ?? 0
           actionQueueStore.addCombatAction(
             enemy.value.id,
             stringToNumber(amountString.value),
-            singleBattleDuration,
+            singleBattleDurationSeconds,
           )
         }
         closeModal()
@@ -151,7 +153,7 @@ export default defineComponent({
               <div class="flex justify-between items-center py-1">
                 <span class="text-sm font-medium text-gray-700">{t('ui.combat.attackInterval')}</span>
                 <span class="text-sm text-gray-900">
-                  ⏱️ {(enemy.value.attackInterval / 1000).toFixed(1)}s
+                  ⏱️ {enemy.value.attackIntervalSeconds.toFixed(1)}s
                 </span>
               </div>
               <div class="flex justify-between items-center py-1">
@@ -182,7 +184,7 @@ export default defineComponent({
               <div class="flex justify-between items-center py-1">
                 <span class="text-sm font-medium text-blue-700">{t('ui.combat.attackInterval')}</span>
                 <span class="text-sm text-blue-900">
-                  ⏱️ {(playerAttackInterval.value / 1000).toFixed(1)}s
+                  ⏱️ {playerAttackIntervalSeconds.value.toFixed(1)}s
                 </span>
               </div>
             </div>

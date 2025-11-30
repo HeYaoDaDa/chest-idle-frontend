@@ -32,8 +32,8 @@ export interface CombatUnit {
   maxHp: number
   /** 攻击力（原始伤害） */
   attack: number
-  /** 攻击间隔（毫秒） */
-  attackInterval: number
+  /** 攻击间隔（秒） */
+  attackIntervalSeconds: number
   /** 攻击类型（仅玩家有意义） */
   attackType?: AttackType
   /** 物理伤害承受比例（0-1，1表示全额受伤） */
@@ -47,7 +47,7 @@ export interface PlayerCombatStats {
   maxHp: number
   maxMp: number
   attack: number
-  attackInterval: number
+  attackIntervalSeconds: number
   attackType: AttackType
   /** 物理伤害承受比例 */
   physicalDamageTakenPercent: number
@@ -57,8 +57,8 @@ export interface PlayerCombatStats {
  * 战斗事件
  */
 export interface CombatEvent {
-  /** 事件发生时间（毫秒） */
-  time: number
+  /** 事件发生时间（秒） */
+  timeSeconds: number
   /** 攻击方：'player' | 'enemy' */
   actorSide: 'player' | 'enemy'
   /** 攻击者在阵容中的索引（v1 固定为 0） */
@@ -93,8 +93,8 @@ export interface CombatXpGains {
 export interface SingleBattleResult {
   /** 玩家是否获胜 */
   canWin: boolean
-  /** 战斗持续时间（毫秒） */
-  duration: number
+  /** 战斗持续时间（秒） */
+  durationSeconds: number
   /** 战斗事件流 */
   log: CombatEvent[]
   /** 经验增益 */
@@ -109,8 +109,8 @@ export interface SingleBattleResult {
  * 批量战斗的单场摘要
  */
 export interface BattleSummary {
-  /** 战斗持续时间（毫秒） */
-  duration: number
+  /** 战斗持续时间（秒） */
+  durationSeconds: number
   /** 经验增益 */
   xpGains: CombatXpGains
   /** 玩家剩余生命值 */
@@ -121,8 +121,8 @@ export interface BattleSummary {
  * 批量战斗聚合结果
  */
 export interface AggregatedBattleResult {
-  /** 总战斗时间（毫秒） */
-  duration: number
+  /** 总战斗时间（秒） */
+  durationSeconds: number
   /** 总经验增益 */
   xpGains: CombatXpGains
   /** 掉落物品 */
@@ -183,7 +183,7 @@ function createPlayerUnit(stats: PlayerCombatStats): CombatUnit {
     hp: stats.maxHp,
     maxHp: stats.maxHp,
     attack: stats.attack,
-    attackInterval: stats.attackInterval,
+    attackIntervalSeconds: stats.attackIntervalSeconds,
     attackType: stats.attackType,
     damageTakenPercent: stats.physicalDamageTakenPercent,
   }
@@ -197,7 +197,7 @@ function createEnemyUnit(enemy: EnemyConfig): CombatUnit {
     hp: enemy.hp,
     maxHp: enemy.hp,
     attack: enemy.attack,
-    attackInterval: enemy.attackInterval,
+    attackIntervalSeconds: enemy.attackIntervalSeconds,
     attackType: 'melee', // 敌人默认近战
     damageTakenPercent: 1, // v1 敌人无防御
   }
@@ -223,9 +223,9 @@ export function simulateSingleBattle(
   const enemy = createEnemyUnit(enemyConfig)
 
   // 战斗状态
-  let currentTime = 0
-  let playerNextAttackTime = player.attackInterval
-  let enemyNextAttackTime = enemy.attackInterval
+  let currentTimeSeconds = 0
+  let playerNextAttackTime = player.attackIntervalSeconds
+  let enemyNextAttackTime = enemy.attackIntervalSeconds
 
   // 事件日志
   const log: CombatEvent[] = []
@@ -240,7 +240,7 @@ export function simulateSingleBattle(
 
     if (playerAttacksFirst) {
       // 玩家攻击敌人
-      currentTime = playerNextAttackTime
+      currentTimeSeconds = playerNextAttackTime
 
       // 计算伤害（敌人 v1 无防御）
       const rawDamage = player.attack
@@ -251,7 +251,7 @@ export function simulateSingleBattle(
 
       // 记录事件
       const event: CombatEvent = {
-        time: currentTime,
+        timeSeconds: currentTimeSeconds,
         actorSide: 'player',
         actorIndex: 0,
         targetIndex: 0,
@@ -267,10 +267,10 @@ export function simulateSingleBattle(
       xpGains[attackType] += actualDamage
 
       // 更新玩家下次攻击时间
-      playerNextAttackTime = currentTime + player.attackInterval
+      playerNextAttackTime = currentTimeSeconds + player.attackIntervalSeconds
     } else {
       // 敌人攻击玩家
-      currentTime = enemyNextAttackTime
+      currentTimeSeconds = enemyNextAttackTime
 
       // 计算伤害（考虑玩家防御）
       const rawDamage = enemy.attack
@@ -281,7 +281,7 @@ export function simulateSingleBattle(
 
       // 记录事件
       const event: CombatEvent = {
-        time: currentTime,
+        timeSeconds: currentTimeSeconds,
         actorSide: 'enemy',
         actorIndex: 0,
         targetIndex: 0,
@@ -300,7 +300,7 @@ export function simulateSingleBattle(
       xpGains.stamina += actualDamage
 
       // 更新敌人下次攻击时间
-      enemyNextAttackTime = currentTime + enemy.attackInterval
+      enemyNextAttackTime = currentTimeSeconds + enemy.attackIntervalSeconds
     }
   }
 
@@ -309,7 +309,7 @@ export function simulateSingleBattle(
 
   return {
     canWin,
-    duration: currentTime,
+    durationSeconds: currentTimeSeconds,
     log,
     xpGains,
     playerHpRemaining: player.hp,
@@ -339,7 +339,7 @@ export function simulateBattles(
       canWin: false,
       perBattleSummary: [],
       aggregatedResult: {
-        duration: 0,
+        durationSeconds: 0,
         xpGains: createEmptyXpGains(),
         lootItems: [],
         chestPoints: [],
@@ -355,7 +355,7 @@ export function simulateBattles(
 
   // 能赢，进行批量模拟
   const perBattleSummary: BattleSummary[] = []
-  let totalDuration = 0
+  let totalDurationSeconds = 0
   let totalXpGains = createEmptyXpGains()
 
   // 由于战斗是确定性的，每场战斗结果相同
@@ -364,12 +364,12 @@ export function simulateBattles(
     // 对于相同的玩家属性和敌人，每场战斗结果相同
     // v1 简化：直接复用第一场的结果
     perBattleSummary.push({
-      duration: firstBattle.duration,
+      durationSeconds: firstBattle.durationSeconds,
       xpGains: { ...firstBattle.xpGains },
       playerHpRemaining: firstBattle.playerHpRemaining,
     })
 
-    totalDuration += firstBattle.duration
+    totalDurationSeconds += firstBattle.durationSeconds
     totalXpGains = mergeXpGains(totalXpGains, firstBattle.xpGains)
   }
 
@@ -395,7 +395,7 @@ export function simulateBattles(
     canWin: true,
     perBattleSummary,
     aggregatedResult: {
-      duration: totalDuration,
+      durationSeconds: totalDurationSeconds,
       xpGains: totalXpGains,
       lootItems,
       chestPoints,
@@ -413,7 +413,7 @@ export function buildPlayerStatsFromStore(combatStore: {
   maxHp: number
   maxMp: number
   currentDamage: number
-  currentAttackInterval: number
+  currentAttackIntervalSeconds: number
   currentAttackType: AttackType
   physicalDamageTakenPercent: number
 }): PlayerCombatStats {
@@ -421,7 +421,7 @@ export function buildPlayerStatsFromStore(combatStore: {
     maxHp: combatStore.maxHp,
     maxMp: combatStore.maxMp,
     attack: combatStore.currentDamage,
-    attackInterval: combatStore.currentAttackInterval,
+    attackIntervalSeconds: combatStore.currentAttackIntervalSeconds,
     attackType: combatStore.currentAttackType,
     physicalDamageTakenPercent: combatStore.physicalDamageTakenPercent,
   }

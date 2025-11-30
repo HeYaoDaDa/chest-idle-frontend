@@ -25,6 +25,12 @@ export const SCALE = 1000
  */
 export type FixedPoint = number & { readonly __brand: 'FixedPoint' }
 
+/** 时间（秒）的语义别名 */
+export type Seconds = number
+
+/** 使用定点数表示的秒数 */
+export type SecondsFixed = FixedPoint
+
 /**
  * 将普通数字转换为定点数
  * @param n 普通数字
@@ -41,6 +47,20 @@ export function toFixed(n: number): FixedPoint {
  */
 export function fromFixed(fp: FixedPoint): number {
   return fp / SCALE
+}
+
+/**
+ * 将秒（浮点）转换为定点秒
+ */
+export function toSecondsFixed(seconds: Seconds): SecondsFixed {
+  return toFixed(seconds) as SecondsFixed
+}
+
+/**
+ * 将定点秒转换为普通秒
+ */
+export function fromSecondsFixed(secondsFixed: SecondsFixed): Seconds {
+  return fromFixed(secondsFixed)
 }
 
 // ==================== 四则运算 ====================

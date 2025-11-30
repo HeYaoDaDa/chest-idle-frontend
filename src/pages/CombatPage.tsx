@@ -91,11 +91,11 @@ export default defineComponent({
         return
       }
 
-      // 将战斗 action 添加到队列，使用单场战斗时长
+      // 将战斗 action 添加到队列，使用单场战斗时长（秒）
       actionQueueStore.startCombatImmediately(
         data.enemyId,
         data.amount,
-        combatStore.currentBattle.singleBattleDuration,
+        combatStore.currentBattle.singleBattleDurationSeconds,
       )
     }
 
@@ -158,7 +158,7 @@ export default defineComponent({
                 <div class="w-full mt-3">
                   <div class="text-xs text-gray-600 mb-0.5 text-center">
                     {t('ui.combat.attackInterval')}:{' '}
-                    {(combatStore.currentAttackInterval / 1000).toFixed(1)}s
+                    {combatStore.currentAttackIntervalSeconds.toFixed(1)}s
                   </div>
                   <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div
@@ -205,7 +205,7 @@ export default defineComponent({
                 <div class="w-full mt-3">
                   <div class="text-xs text-gray-600 mb-0.5 text-center">
                     {t('ui.combat.attackInterval')}:{' '}
-                    {(currentEnemy.value.attackInterval / 1000).toFixed(1)}s
+                    {currentEnemy.value.attackIntervalSeconds.toFixed(1)}s
                   </div>
                   <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
                     <div

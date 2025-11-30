@@ -25,7 +25,9 @@ export default defineComponent({
 
     const remainingTime = computed(() => {
       if (slot.value?.remaining && slot.value.remaining > 0) {
-        return formatDurationMs(fromFixed(slot.value.remaining), locale.value, {
+        const remainingSeconds = fromFixed(slot.value.remaining)
+        const remainingMs = remainingSeconds * 1000
+        return formatDurationMs(remainingMs, locale.value, {
           maxFractionDigits: 0,
         })
       }
