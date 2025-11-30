@@ -7,7 +7,7 @@ import { type Seconds } from '@/utils/fixedPoint'
 import log from '@/utils/log'
 
 import { useActionStore } from './action'
-import { useCombatStore } from './combat'
+import { useCombatStore, type CurrentBattle } from './combat'
 
 /**
  * 队列中的行动项类型
@@ -31,6 +31,7 @@ export interface ActionQueueItem {
 export const useActionQueueStore = defineStore('actionQueue', () => {
   const actionStore = useActionStore()
   const combatStore = useCombatStore()
+  const getCurrentBattle = () => combatStore.currentBattle as CurrentBattle | null
 
   const actionQueue = ref<ActionQueueItem[]>([])
   const actionStartDate = ref<number | null>(null)
@@ -201,10 +202,11 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
     () => currentAction.value,
     (action) => {
       if (!action || action.type !== 'combat') return
-      if (combatStore.currentBattle) return
+      if (getCurrentBattle()) return
 
       const result = combatStore.startBattle(action.actionId, action.amount)
-      if (!result || !result.canWin || !combatStore.currentBattle) {
+      const battle = getCurrentBattle()
+      if (!result || !result.canWin || !battle) {
         log.warn('无法启动排队中的战斗行动，自动移除', {
           enemyId: action.actionId,
         })
@@ -212,7 +214,7 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
         return
       }
 
-      action.combatDurationSeconds = combatStore.currentBattle.singleBattleDurationSeconds
+      action.combatDurationSeconds = battle.singleBattleDurationSeconds
       actionStartDate.value = performance.now()
     },
   )

@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type ModifierConfigInternal } from '@/gameConfig'
 
-import { toFixed, fpMul, fpDiv } from '../../utils/fixedPoint'
+import { toFixed, fpMul, fpDiv, toSecondsFixed } from '../../utils/fixedPoint'
 import { useStatStore } from '../stat'
 
 // Mock gameConfig - use literal values instead of toFixed to avoid hoisting issues
@@ -142,7 +142,7 @@ describe('Stat Store', () => {
       expect(modifiers).toHaveLength(2)
     })
 
-    it('should set availableMs to Infinity for non-consumable sources', () => {
+    it('should set availableSeconds to Infinity for non-consumable sources', () => {
       const statStore = useStatStore()
 
       statStore.addEffectsFromSource('equipment', [
@@ -325,8 +325,8 @@ describe('Stat Store', () => {
       const derivedValue = statStore.getDerivedStatValue(
         [],
         toFixed(100),
-        { type: 'flat', value: toFixed(20), availableMs: Infinity },
-        { type: 'percentage', value: toFixed(0.5), availableMs: Infinity },
+        { type: 'flat', value: toFixed(20), availableSeconds: Infinity },
+        { type: 'percentage', value: toFixed(0.5), availableSeconds: Infinity },
       )
 
       // Base 100, flat +20, percentage +50%
@@ -392,7 +392,7 @@ describe('Stat Store', () => {
         return undefined
       }
 
-      const value = statStore.calculateDerivedValue(config, 0, resolver)
+      const value = statStore.calculateDerivedValue(config, toSecondsFixed(0), resolver)
       // 100 * (1 + 0.5) = 150
       expect(value).toBe(toFixed(150))
     })
@@ -429,11 +429,11 @@ describe('Stat Store', () => {
       }
 
       // Short duration - should include modifier
-      const valueShort = statStore.calculateDerivedValue(config, 0)
+      const valueShort = statStore.calculateDerivedValue(config, toSecondsFixed(0))
       expect(valueShort).toBe(toFixed(110))
 
       // Long duration - should exclude modifier (if consumable doesn't have enough time)
-      const valueLong = statStore.calculateDerivedValue(config, 100)
+      const valueLong = statStore.calculateDerivedValue(config, toSecondsFixed(100))
       expect(valueLong).toBe(toFixed(100))
     })
 
