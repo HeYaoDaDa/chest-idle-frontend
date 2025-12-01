@@ -8,7 +8,7 @@ import ChestResultsModal from '../ChestResultsModal'
 import { createTestI18n } from '@/../test/setup'
 
 describe('ChestResultsModal', () => {
-  it('shows ItemTag and opens ItemModal when clicked', async () => {
+  it('shows result cards and opens ItemModal when clicked', async () => {
     const i18n = createTestI18n()
     const wrapper = mount(ChestResultsModal, {
       props: {
@@ -22,16 +22,39 @@ describe('ChestResultsModal', () => {
     const itemModal = useItemModalStore()
     expect(itemModal.show).toBe(false)
 
-    // Find the rendered item name in teleported body and click
-    const container = document.querySelector('.font-medium') as HTMLElement | null
-    expect(container).not.toBeNull()
-    const button = container?.querySelector('[role="button"]') as HTMLElement | null
-    expect(button).not.toBeNull()
-    button?.click()
+    // Find the rendered item card in teleported body and click
+    const card = document.querySelector('.card-item') as HTMLButtonElement | null
+    expect(card).not.toBeNull()
+    card?.click()
     await wrapper.vm.$nextTick()
 
     expect(itemModal.show).toBe(true)
     expect(itemModal.itemId).toBe('coffee')
+
+    wrapper.unmount()
+  })
+
+  it('handles unknown item id gracefully and opens ItemModal', async () => {
+    const i18n = createTestI18n()
+    const wrapper = mount(ChestResultsModal, {
+      props: {
+        show: true,
+        results: [{ itemId: 'unknownItem', amount: 1 }],
+      },
+      global: { plugins: [i18n] },
+      attachTo: document.body,
+    })
+
+    const itemModal = useItemModalStore()
+    expect(itemModal.show).toBe(false)
+
+    const card = document.querySelector('.card-item') as HTMLButtonElement | null
+    expect(card).not.toBeNull()
+    card?.click()
+    await wrapper.vm.$nextTick()
+
+    expect(itemModal.show).toBe(true)
+    expect(itemModal.itemId).toBe('unknownItem')
 
     wrapper.unmount()
   })

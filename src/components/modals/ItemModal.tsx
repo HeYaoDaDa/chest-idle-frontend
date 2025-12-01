@@ -1,6 +1,7 @@
 import { computed, defineComponent, ref, watch, type PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import ChestRewardItem from '@/components/ChestRewardItem'
 import ModalBox from '@/components/ModalBox'
 import { itemConfigMap, slotConfigMap } from '@/gameConfig'
 import { useEquippedItemStore } from '@/stores/equippedItem'
@@ -108,6 +109,23 @@ export default defineComponent({
                 <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
                   <span class="text-sm font-medium text-gray-700">{t('ui.slot')}</span>
                   <span class="text-sm text-gray-900">{t(slotInfo.value.name)}</span>
+                </div>
+              )}
+
+              {(item.value?.chest || itemConfigMap[props.itemId]?.chest) && (
+                <div class="flex flex-col gap-2">
+                  <div class="text-sm font-semibold text-gray-700">{t('ui.possibleRewards')}</div>
+                  <div class="flex flex-col gap-2">
+                    {(item.value?.chest?.loots ?? itemConfigMap[props.itemId]?.chest?.loots ?? []).map((loot) => (
+                      <ChestRewardItem
+                        key={loot.itemId}
+                        itemId={loot.itemId}
+                        minCount={loot.min}
+                        maxCount={loot.max}
+                        probability={loot.chance * 100}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

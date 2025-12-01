@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
+import { loadGameConfig } from '@/gameConfig'
+import { itemConfigMap } from '@/gameConfig'
 import { useInventoryStore } from '@/stores/inventory'
 
 import ItemModal from '../ItemModal'
@@ -8,12 +10,16 @@ import ItemModal from '../ItemModal'
 import { createTestI18n } from '@/../test/setup'
 
 describe('ItemModal', () => {
+  beforeAll(() => {
+    loadGameConfig()
+  })
   describe('read-only view mode', () => {
     it('hides inventory quantity and action buttons when mode is view', async () => {
       const i18n = createTestI18n()
       const inv = useInventoryStore()
       inv.addItem('coffee', 2)
 
+      loadGameConfig()
       const wrapper = mount(ItemModal, {
         props: { show: true, itemId: 'coffee', mode: 'view' },
         global: { plugins: [i18n] },
@@ -38,6 +44,24 @@ describe('ItemModal', () => {
 
       // Should not show `ui.type` or slot name in view mode
       expect(document.body.innerHTML).not.toContain('Type')
+
+      wrapper.unmount()
+    })
+
+    it('shows possible rewards when opening a chest in view mode', async () => {
+      const i18n = createTestI18n()
+
+      const wrapper = mount(ItemModal, {
+        props: { show: true, itemId: 'copperMineChest', mode: 'view' },
+        global: { plugins: [i18n] },
+        attachTo: document.body,
+      })
+
+      // Should show possible rewards section
+      expect(document.body.innerHTML).toContain('Possible Rewards')
+
+      // sanity check: itemConfigMap should include chest data
+      expect(itemConfigMap['copperMineChest']?.chest).toBeDefined()
 
       wrapper.unmount()
     })

@@ -1,7 +1,7 @@
 import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import ItemTag from '@/components/ItemTag'
+import ChestRewardItem from '@/components/ChestRewardItem'
 import ModalBox from '@/components/ModalBox'
 import { itemConfigMap } from '@/gameConfig'
 import { useChestPointStore } from '@/stores/chestPoint'
@@ -103,32 +103,13 @@ export default defineComponent({
 
               <div class="flex flex-col gap-3 mt-2">
                 {lootWithProbability.value.map((loot, index) => (
-                  <div
+                  <ChestRewardItem
                     key={index}
-                    class="flex flex-col gap-1 p-2 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 hover:border-blue-300 transition-all"
-                  >
-                    <div class="flex justify-between items-center">
-                      <span class="font-semibold text-gray-900 text-sm">
-                        <ItemTag itemId={loot.itemId} />
-                      </span>
-                      <span class="text-xs text-gray-600 font-medium">
-                        ×
-                        {loot.minCount === loot.maxCount
-                          ? formatNumber(loot.minCount, locale.value, 3)
-                          : `${formatNumber(loot.minCount, locale.value, 3)}-${formatNumber(
-                              loot.maxCount,
-                              locale.value,
-                              3,
-                            )}`}
-                      </span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs">
-                      <span class="text-gray-500">{t('ui.dropChance')}:</span>
-                      <span class="text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded">
-                        {formatPercent(loot.probability, locale.value, 3)}
-                      </span>
-                    </div>
-                  </div>
+                    itemId={loot.itemId}
+                    minCount={loot.minCount}
+                    maxCount={loot.maxCount}
+                    probability={loot.probability}
+                  />
                 ))}
               </div>
             </div>
