@@ -36,7 +36,7 @@ export default defineComponent({
 
     return () => (
       <div class="flex flex-col gap-2 p-4">
-        <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
+        <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
           <div class="flex justify-between items-baseline mb-2">
             <h2 class="text-2xl font-bold text-gray-900">{t('ui.chests')}</h2>
           </div>

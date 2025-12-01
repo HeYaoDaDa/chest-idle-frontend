@@ -57,11 +57,11 @@ export default defineComponent({
     return () =>
       props.show ? (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-4 min-w-[min(420px,100%)]">
-            <div class="flex justify-between items-start gap-4">
+          <div class="flex flex-col gap-1 min-w-[min(380px,100%)] compact-base">
+            <div class="flex justify-between items-start gap-2">
               <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-wider text-gray-500">{t('ui.chest')}</span>
-                <h2 class="text-2xl font-bold text-gray-900 leading-tight">
+                <h2 class="text-xl font-bold text-gray-900 leading-tight">
                   {t(chest.value?.name ?? '')}
                 </h2>
                 <p class="text-gray-600 text-sm leading-normal">
@@ -101,7 +101,7 @@ export default defineComponent({
                 <span class="text-sm text-gray-700">{t('ui.possibleRewards')}</span>
               </div>
 
-              <div class="flex flex-col gap-3 mt-2">
+              <div class="flex flex-col gap-2 mt-2">
                 {lootWithProbability.value.map((loot, index) => (
                   <ChestRewardItem
                     key={index}

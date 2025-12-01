@@ -45,8 +45,8 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-3 min-w-[min(420px,100%)]">
-            <div class="flex justify-between items-center mb-4">
+          <div class="flex flex-col gap-1 min-w-[min(380px,100%)] compact-base">
+            <div class="flex justify-between items-center mb-2">
               <h3 class="text-xl font-bold text-gray-900">{t('ui.consumable.selectTitle')}</h3>
             </div>
 

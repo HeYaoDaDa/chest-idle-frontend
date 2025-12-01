@@ -32,7 +32,7 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={close}>
-          <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-1 compact-base">
             <div>
               <h3 class="text-lg font-bold text-gray-900 mb-1">{t('ui.chestOpenResults')}</h3>
             </div>

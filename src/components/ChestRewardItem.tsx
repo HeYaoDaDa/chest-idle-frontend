@@ -23,7 +23,7 @@ export default defineComponent({
     }
 
     return () => (
-        <div class="flex items-center justify-between gap-3 py-1">
+        <div class="flex items-center justify-between gap-2 py-1 compact-base">
         <div class="flex items-center">
           <span class="text-sm text-gray-900 font-medium">
             {countText()}

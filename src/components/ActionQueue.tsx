@@ -102,16 +102,16 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="flex flex-col gap-3 w-full max-w-2xl">
-        <div class="flex flex-wrap gap-2.5 items-center">
+      <div class="flex flex-col gap-2 w-full max-w-2xl compact-base">
+        <div class="flex flex-wrap gap-2 items-center">
           <span class="text-base font-semibold text-neutral-600 flex-1 min-w-0 truncate">
             {runningActionDisplay.value}
           </span>
           {hasRunningAction.value && (
-            <div class="flex flex-wrap gap-1.5 justify-end flex-shrink-0">
+            <div class="flex flex-wrap gap-1 justify-end flex-shrink-0">
               <button
                 type="button"
-                class="btn btn-secondary rounded-full px-3 py-2 text-sm whitespace-nowrap"
+                class="btn-secondary rounded-full px-2 py-1 text-sm whitespace-nowrap"
                 onClick={openQueueModal}
                 disabled={!canOpenQueue.value}
               >
@@ -119,7 +119,7 @@ export default defineComponent({
               </button>
               <button
                 type="button"
-                class="btn btn-destructive rounded-full px-3 py-2 text-sm whitespace-nowrap"
+                class="btn-destructive rounded-full px-2 py-1 text-sm whitespace-nowrap"
                 onClick={stopCurrentAction}
               >
                 {t('stop')}
@@ -130,9 +130,9 @@ export default defineComponent({
 
         {/* 战斗时显示HP/MP进度条，非战斗时显示普通进度条 */}
         {hasRunningAction.value && isCombatAction.value && combatStore.currentBattle ? (
-          <div class="flex flex-col gap-1.5">
+          <div class="flex flex-col gap-1">
             <div
-              class="relative h-3 w-full bg-neutral-50 rounded-full overflow-hidden"
+              class="relative h-2 w-full bg-neutral-50 rounded-full overflow-hidden"
               aria-label="HP"
             >
               <div
@@ -144,7 +144,7 @@ export default defineComponent({
               </span>
             </div>
             <div
-              class="relative h-3 w-full bg-neutral-50 rounded-full overflow-hidden"
+              class="relative h-2 w-full bg-neutral-50 rounded-full overflow-hidden"
               aria-label="MP"
             >
               <div

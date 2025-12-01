@@ -22,7 +22,7 @@ export default defineComponent({
             <button
               key={enemy.id}
               type="button"
-              class="card-item p-3 flex flex-col items-center gap-2 hover:shadow-md transition-shadow"
+              class="card-item p-2 flex flex-col items-center gap-2 hover:shadow-md transition-shadow compact-base"
               onClick={() => handleSelectEnemy(enemy.id)}
               aria-label={t(enemy.name)}
             >

@@ -98,7 +98,7 @@ export default defineComponent({
 
       return (
         <div class="flex flex-col gap-2 p-4 pb-32">
-          <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
+          <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
             <div class="flex justify-between items-baseline mb-2">
               <h2 class="text-2xl font-bold text-gray-900">{t(skill.value.name)}</h2>
               <div class="text-sm font-semibold text-blue-700 px-2 py-1 bg-white rounded">

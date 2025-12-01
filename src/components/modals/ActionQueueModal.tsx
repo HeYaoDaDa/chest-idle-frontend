@@ -41,7 +41,7 @@ export default defineComponent({
       if (!props.show) return null
       return (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-4 min-w-[min(420px,90vw)]">
+          <div class="flex flex-col gap-1 min-w-[min(420px,90vw)] compact-base">
             <div class="flex justify-between items-center pb-3 border-b border-neutral-100">
               <h3 class="text-lg font-bold text-neutral-600">{t('ui.queue')}</h3>
               <span class="badge bg-primary/10 text-primary">
@@ -50,10 +50,10 @@ export default defineComponent({
             </div>
 
             <div class="max-h-96 overflow-y-auto">
-              <ul class="flex flex-col gap-3 list-none p-0 m-0">
+              <ul class="flex flex-col gap-2 list-none p-0 m-0">
                 {actionQueueStore.currentAction && (
-                  <li class="flex flex-wrap justify-between items-center gap-4 bg-surface-subtle border border-primary/30 rounded-lg p-3 transition-all">
-                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                  <li class="flex flex-wrap justify-between items-center gap-2 bg-surface-subtle border border-primary/30 rounded-md p-2 transition-all">
+                    <div class="flex items-center gap-2 flex-1 min-w-0">
                       <span class="flex items-center justify-center w-7 h-7 bg-primary/10 text-primary rounded-full text-sm font-bold flex-shrink-0">
                         0
                       </span>
@@ -84,7 +84,7 @@ export default defineComponent({
                     <div class="flex gap-2">
                       <button
                         type="button"
-                        class="btn btn-secondary px-2 py-1 text-xs"
+                        class="btn-secondary px-2 py-1 text-xs"
                         title="Top"
                         disabled
                       >
@@ -92,7 +92,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="btn btn-secondary px-2 py-1 text-xs"
+                        class="btn-secondary px-2 py-1 text-xs"
                         title="Up"
                         disabled
                       >
@@ -100,7 +100,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="btn btn-secondary px-2 py-1 text-xs"
+                        class="btn-secondary px-2 py-1 text-xs"
                         title="Down"
                         disabled={unifiedLength.value <= 1}
                         onClick={() => moveActionDown(0)}
@@ -109,7 +109,7 @@ export default defineComponent({
                       </button>
                       <button
                         type="button"
-                        class="btn btn-secondary px-2 py-1 text-xs"
+                        class="btn-secondary px-2 py-1 text-xs"
                         title="Bottom"
                         disabled={unifiedLength.value <= 1}
                         onClick={() => moveActionToBottom(0)}
@@ -119,7 +119,7 @@ export default defineComponent({
                     </div>
                     <button
                       type="button"
-                      class="btn btn-destructive rounded-full px-2.5 py-2 text-sm flex-shrink-0"
+                      class="btn-destructive rounded-full px-2 py-1 text-sm flex-shrink-0"
                       onClick={stopCurrentAction}
                     >
                       {t('stop')}
@@ -138,9 +138,9 @@ export default defineComponent({
                   return (
                     <li
                       key={index}
-                      class="flex justify-between items-center gap-4 bg-surface border border-neutral-50 rounded-lg p-3 transition-all hover:border-primary/40"
+                      class="flex justify-between items-center gap-2 bg-surface border border-neutral-50 rounded-md p-2 transition-all hover:border-primary/40"
                     >
-                      <div class="flex items-center gap-4 flex-1 min-w-0">
+                      <div class="flex items-center gap-2 flex-1 min-w-0">
                         <span class="flex items-center justify-center w-7 h-7 bg-primary/10 text-primary rounded-full text-sm font-bold flex-shrink-0">
                           {unifiedIndex}
                         </span>
@@ -156,7 +156,7 @@ export default defineComponent({
                       <div class="flex gap-2">
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs"
+                          class="btn-secondary px-2 py-1 text-xs"
                           title="Top"
                           disabled={unifiedIndex === 0}
                           onClick={() => moveActionToTop(unifiedIndex)}
@@ -165,7 +165,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs"
+                          class="btn-secondary px-2 py-1 text-xs"
                           title="Up"
                           disabled={unifiedIndex === 0}
                           onClick={() => moveActionUp(unifiedIndex)}
@@ -174,7 +174,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs"
+                          class="btn-secondary px-2 py-1 text-xs"
                           title="Down"
                           disabled={unifiedIndex >= unifiedLength.value - 1}
                           onClick={() => moveActionDown(unifiedIndex)}
@@ -183,7 +183,7 @@ export default defineComponent({
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary px-2 py-1 text-xs"
+                          class="btn-secondary px-2 py-1 text-xs"
                           title="Bottom"
                           disabled={unifiedIndex >= unifiedLength.value - 1}
                           onClick={() => moveActionToBottom(unifiedIndex)}
@@ -193,7 +193,7 @@ export default defineComponent({
                       </div>
                       <button
                         type="button"
-                        class="btn btn-destructive rounded-full px-2.5 py-2 text-sm flex-shrink-0"
+                        class="btn-destructive rounded-full px-2 py-1 text-sm flex-shrink-0"
                         onClick={() => removeQueuedAction(index)}
                       >
                         {t('remove')}

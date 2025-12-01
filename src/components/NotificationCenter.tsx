@@ -43,10 +43,10 @@ export default defineComponent({
               type="button"
               aria-labelledby={`notification-label-${entry.id} notification-${entry.id}`}
               onClick={() => dismiss(entry.id)}
-              class={`
+                class={`
                 pointer-events-auto min-w-60 max-w-90
-                p-3 rounded-lg bg-surface shadow-panel
-                flex items-start gap-3
+                p-2 rounded-none bg-surface shadow-panel
+                flex items-start gap-2
                 border-l-4
                 select-none cursor-pointer
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary

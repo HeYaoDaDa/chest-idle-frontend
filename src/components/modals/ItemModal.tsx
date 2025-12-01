@@ -87,9 +87,9 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={close}>
-          <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-1 compact-base">
             <div class="flex flex-col gap-2">
-              <h3 class="text-2xl font-bold text-gray-900">{itemName.value}</h3>
+              <h3 class="text-xl font-bold text-gray-900">{itemName.value}</h3>
               {isEquipmentMode.value && slotInfo.value && (
                 <span class="text-sm text-gray-600">
                   {t('ui.type')}: {t(slotInfo.value.name)}
@@ -102,11 +102,11 @@ export default defineComponent({
               )}
             </div>
 
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-2">
               <p class="text-gray-700 text-sm leading-normal">{itemDescription.value}</p>
 
               {isInventoryMode.value && slotInfo.value && (
-                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                <div class="flex justify-between items-center p-2 bg-gray-50 rounded-md">
                   <span class="text-sm font-medium text-gray-700">{t('ui.slot')}</span>
                   <span class="text-sm text-gray-900">{t(slotInfo.value.name)}</span>
                 </div>
@@ -131,12 +131,12 @@ export default defineComponent({
             </div>
 
             {!isViewMode.value && (
-              <div class="flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
                 {/* Equipment mode: Unequip button */}
                 {isEquipmentMode.value && (
                   <button
                     type="button"
-                    class="btn-secondary w-full py-3 px-4 rounded-lg font-semibold transition-all"
+                    class="btn-secondary w-full py-2 px-3 rounded-md font-semibold transition-all"
                     onClick={unequip}
                   >
                     {t('ui.unequip')}
@@ -149,7 +149,7 @@ export default defineComponent({
                     {inventoryItem.value?.item.equipment && (
                       <button
                         type="button"
-                        class="btn-primary w-full py-3 px-4 rounded-lg font-semibold transition-all"
+                        class="btn-primary w-full py-2 px-3 rounded-md font-semibold transition-all"
                         onClick={equip}
                       >
                         {t('ui.equip')}
@@ -170,12 +170,12 @@ export default defineComponent({
                                   (e.target as HTMLInputElement).value,
                                 ))
                               }
-                              class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              class="flex-1 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                               placeholder={String(maxChestAmount.value)}
                             />
                             <button
                               type="button"
-                              class="btn-secondary px-4 py-2 rounded-lg font-semibold"
+                              class="btn-secondary px-3 py-1 rounded-md font-semibold"
                               onClick={setMaxChestAmount}
                             >
                               Max
@@ -184,7 +184,7 @@ export default defineComponent({
                         )}
                         <button
                           type="button"
-                          class="btn-primary w-full py-3 px-4 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          class="btn-primary w-full py-2 px-3 rounded-md font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                           disabled={!isValidChestAmount.value}
                           onClick={openChest}
                         >

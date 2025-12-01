@@ -109,7 +109,7 @@ export default defineComponent({
             leaveToClass="opacity-0 translate-y-3 scale-98"
             appear
           >
-            <div class="relative max-h-[min(720px,90vh)] w-[min(480px,100%)] bg-white rounded-lg shadow-2xl overflow-auto p-3 lg:p-4">
+            <div class="relative max-h-[min(720px,90vh)] w-[min(460px,100%)] bg-white rounded-lg shadow-2xl overflow-auto p-2 lg:p-2">
               <div
                 ref={dialogRef}
                 tabindex={-1}

@@ -157,13 +157,13 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-3 min-w-[min(420px,100%)]">
-            <div class="flex justify-between items-start gap-4">
+          <div class="flex flex-col gap-1 min-w-[min(380px,100%)] compact-base">
+            <div class="flex justify-between items-start gap-2">
               <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-wider text-gray-500">
                   {skill.value ? t(skill.value.name) : ''}
                 </span>
-                <h2 class="text-2xl font-bold text-gray-900 leading-tight">
+                <h2 class="text-xl font-bold text-gray-900 leading-tight">
                   {t(action.value.name)}
                 </h2>
                 <p class="text-gray-600 text-sm leading-normal">{t(action.value.description)}</p>
@@ -205,7 +205,7 @@ export default defineComponent({
 
               <div
                 class={[
-                  'flex justify-between items-start py-2',
+                  'flex justify-between items-start py-1',
                   hasIngredients.value && hasInsufficientIngredients.value ? 'text-red-600' : '',
                 ]}
               >
@@ -249,7 +249,7 @@ export default defineComponent({
               </div>
             </div>
 
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-2">
               <label class="flex flex-col gap-2">
                 <span class="text-sm font-semibold text-gray-900">{t('ui.amount')}</span>
                 <div class="flex gap-2">
@@ -259,11 +259,11 @@ export default defineComponent({
                     onInput={(e) => (amountString.value = (e.target as HTMLInputElement).value)}
                     data-autofocus-ignore
                     onClick={(e) => (e.target as HTMLInputElement).select()}
-                    class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <button
                     type="button"
-                    class="btn btn-secondary"
+                    class="btn-secondary"
                     title={t('ui.unlimited')}
                     onClick={() => (amountString.value = '∞')}
                   >
@@ -271,11 +271,11 @@ export default defineComponent({
                   </button>
                 </div>
               </label>
-              <div class="flex gap-3">
+              <div class="flex gap-2">
                 {hasCurrentAction.value && (
                   <button
                     type="button"
-                    class="btn-secondary flex-1 py-3 px-4 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="btn-secondary flex-1 py-2 px-3 rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={!allowAmount.value || !canStartAction.value.canStart}
                     onClick={addAction}
                   >
@@ -284,7 +284,7 @@ export default defineComponent({
                 )}
                 <button
                   type="button"
-                  class="btn-primary flex-1 py-3 px-4 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="btn-primary flex-1 py-2 px-3 rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={!allowAmount.value || !canStartAction.value.canStart}
                   onClick={hasCurrentAction.value ? startImmediately : addAction}
                 >

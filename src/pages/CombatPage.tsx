@@ -127,7 +127,7 @@ export default defineComponent({
                   {t('ui.combat.playerStats')}
                 </span>
                 <div class="flex justify-center">
-                  <div class="w-20 h-20 bg-primary/10 rounded-lg flex items-center justify-center text-4xl">
+                  <div class="w-20 h-20 bg-primary/10 rounded-none flex items-center justify-center text-4xl">
                     🧙
                   </div>
                 </div>
@@ -168,7 +168,7 @@ export default defineComponent({
                   {t(currentEnemy.value.name)}
                 </span>
                 <div class="flex justify-center">
-                  <div class="w-20 h-20 bg-error/10 rounded-lg flex items-center justify-center text-4xl">
+                  <div class="w-20 h-20 bg-error/10 rounded-none flex items-center justify-center text-4xl">
                     👾
                   </div>
                 </div>
@@ -235,13 +235,13 @@ export default defineComponent({
           {currentTab.value === 'overview' && (
             <div class="h-full overflow-auto">
               {/* 战斗技能 Header */}
-              <div class="m-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200">
+              <div class="m-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
                 <h2 class="text-xl font-bold text-gray-900 mb-3">{t('ui.combat.title')}</h2>
                 <div class="flex flex-wrap gap-4">
                   {combatSkills.value.map((skill) => (
                     <div
                       key={skill.id}
-                      class="flex-1 min-w-[200px] p-3 bg-white rounded-lg shadow-sm"
+                      class="flex-1 min-w-[200px] p-3 bg-white rounded-none shadow-sm"
                     >
                       <div class="flex justify-between items-center mb-1">
                         <span class="text-sm font-semibold text-gray-900">{t(skill.name)}</span>

@@ -126,7 +126,7 @@ export default defineComponent({
       const isPlayerAction = event.actorSide === 'player'
 
       return [
-        'flex items-start gap-3 p-2 rounded-lg transition-all duration-300',
+        'flex items-start gap-2 p-1 rounded-none transition-all duration-300 divider',
         isPastEvent ? 'opacity-100' : 'opacity-30',
         isCurrentEvent ? 'bg-yellow-100 border border-yellow-300 scale-102' : '',
         isPlayerAction ? 'bg-blue-50/50' : 'bg-red-50/50',
@@ -151,9 +151,9 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 compact-base">
         {/* 标题和时间进度 */}
-        <div class="flex justify-between items-center mb-2">
+        <div class="flex justify-between items-center mb-1">
           <h4 class="text-md font-semibold text-gray-700">{t('ui.combat.eventLog.title')}</h4>
           <span class="text-sm text-gray-500">
             {formatTime(Math.min(currentTimeSeconds.value, props.totalDurationSeconds))} /{' '}
@@ -171,7 +171,7 @@ export default defineComponent({
               return (
                 <div key={`${event.timeSeconds}-${index}`} class={getEventClass(event, index)}>
                   {/* 时间戳 */}
-                  <div class="flex-shrink-0 w-12 text-xs text-gray-500 font-mono">
+                  <div class="flex-shrink-0 w-10 text-xs text-gray-500 font-mono">
                     {formatTime(event.timeSeconds)}
                   </div>
 
@@ -181,7 +181,7 @@ export default defineComponent({
                   {/* 事件内容 */}
                   <div class="flex-1 min-w-0">
                     <div class="text-sm text-gray-800">{getEventDescription(event)}</div>
-                    <div class="flex gap-4 text-xs text-gray-500 mt-1">
+                    <div class="flex gap-2 text-xs text-gray-500 mt-1">
                       {/* HP 变化 */}
                       <span class={targetSide === 'player' ? 'text-red-500' : 'text-green-500'}>
                         {targetSide === 'player' ? '❤️ ' : '💀 '}
@@ -206,7 +206,7 @@ export default defineComponent({
 
         {/* 战斗总结（战斗结束后显示） */}
         {!props.isActive && props.events.length > 0 && (
-          <div class="mt-2 p-3 bg-green-50 rounded-lg border border-green-200">
+          <div class="mt-2 p-2 bg-green-50 rounded-md border border-green-200">
             <div class="text-sm font-semibold text-green-700">
               {t('ui.combat.eventLog.battleComplete')}
             </div>
