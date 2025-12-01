@@ -25,11 +25,15 @@ describe('NotificationCenter', () => {
 
     expect(wrapper.text()).toContain('Confirm')
 
-    const closeBtn = wrapper.find('button')
-    expect(closeBtn.exists()).toBe(true)
-    expect(closeBtn.attributes('aria-label')).toBeDefined()
-    // `btn-ghost` is the preferred transparent icon button
-    expect(closeBtn.classes()).toContain('btn-ghost')
+    // Now the notification should be clickable itself to dismiss
+    const notificationButton = wrapper.find('button')
+    expect(notificationButton.exists()).toBe(true)
+    expect(notificationButton.text()).toContain('Confirm')
+    // Click it to dismiss
+    notificationButton.trigger('click')
+    await wrapper.vm.$nextTick()
+    // After clicking it should be removed from the DOM
+    expect(wrapper.find('button').exists()).toBe(false)
   })
 
   it('should render error with role alert', async () => {

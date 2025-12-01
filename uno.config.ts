@@ -47,7 +47,7 @@ export default defineConfig({
     'nav-link':
       'flex flex-col justify-center items-stretch gap-0.5 p-2 px-2.5 rounded-md bg-neutral-50 font-semibold text-neutral-500 transition cursor-pointer select-none hover:bg-neutral-100 hover:text-neutral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-sm lg:text-base no-underline',
     'card-item':
-      'rounded-lg bg-surface border border-neutral-50 shadow-card hover:shadow-panel hover:-translate-y-0.5 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+      'rounded-lg bg-surface border border-neutral-50 shadow-card hover:shadow-panel hover:-translate-y-0.5 transition cursor-pointer focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
     'progress-bar':
       'h-full bg-gradient-to-r from-cyan-400 to-primary transition-all shadow-inner shadow-primary/20',
     // Buttons & interactive shortcuts

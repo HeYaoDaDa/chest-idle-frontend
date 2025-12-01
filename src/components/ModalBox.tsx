@@ -26,6 +26,9 @@ export default defineComponent({
       if (modalStack[modalStack.length - 1] !== modalId) return
       if (!dialogRef.value) return
 
+      // For trap navigation we WANT to allow tabbing to any focusable elements, even
+      // if they are set to `data-autofocus-ignore` (that attribute only opts-out of
+      // automatic focus, not from being reachable via keyboard navigation).
       const focusableSelector =
         'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
       const focusable = Array.from(dialogRef.value.querySelectorAll<HTMLElement>(focusableSelector))
@@ -56,10 +59,13 @@ export default defineComponent({
       // Focus container for screen readers and keyboard navigation
       previousActiveElement = document.activeElement as HTMLElement | null
       if (dialogRef.value) {
-        const focusableSelector =
-          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        // When determining the element that should receive focus when the modal opens,
+        // we should exclude `data-autofocus-ignore` elements so that inputs can
+        // opt-out of being automatically focused.
+        const autofocusExcludedSelector =
+          'a[href], area[href], input:not([disabled]):not([data-autofocus-ignore]), select:not([disabled]):not([data-autofocus-ignore]), textarea:not([disabled]):not([data-autofocus-ignore]), button:not([disabled]):not([data-autofocus-ignore]), [tabindex]:not([tabindex="-1"]):not([data-autofocus-ignore])'
         const focusables = Array.from(
-          dialogRef.value.querySelectorAll<HTMLElement>(focusableSelector),
+          dialogRef.value.querySelectorAll<HTMLElement>(autofocusExcludedSelector),
         )
         if (focusables.length > 0) {
           focusables[0].focus()

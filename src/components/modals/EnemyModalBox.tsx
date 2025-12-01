@@ -94,10 +94,7 @@ export default defineComponent({
       }
     }
 
-    const handleAmountFocus = (event: FocusEvent) => {
-      const target = event.target as HTMLInputElement
-      window.requestAnimationFrame(() => target.select())
-    }
+    // We intentionally do not auto-select on focus; the input selection is handled on click.
 
     watch(
       () => props.show,
@@ -230,7 +227,8 @@ export default defineComponent({
                     type="text"
                     value={amountString.value}
                     onInput={(e) => (amountString.value = (e.target as HTMLInputElement).value)}
-                    onFocus={handleAmountFocus}
+                    data-autofocus-ignore
+                    onClick={(e) => (e.target as HTMLInputElement).select()}
                     class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <button
