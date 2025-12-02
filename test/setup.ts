@@ -26,6 +26,8 @@ export const createTestI18n = () => {
   return createI18n({
     legacy: false,
     locale: 'en',
+    missingWarn: false,
+    fallbackWarn: false,
     messages: {
       en: {
         gameName: 'Test Game',

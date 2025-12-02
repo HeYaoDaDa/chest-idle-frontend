@@ -77,42 +77,61 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       const battle = combatStore.currentBattle
       const currentTime = performance.now()
       const battleElapsedSeconds = (currentTime - battle.startTime) / 1000
-
-      // 玩家攻击进度（以秒计算）
-      const playerIntervalSeconds = combatStore.currentAttackIntervalSeconds
-      const playerProgress =
-        playerIntervalSeconds > 0
-          ? (battleElapsedSeconds % playerIntervalSeconds) / playerIntervalSeconds
-          : 0
-      battle.playerAttackProgress = Math.min(playerProgress, 1)
-
-      // 敌人攻击进度
       const enemy = enemyConfigMap[battle.enemyId]
-      if (enemy) {
-        const enemyIntervalSeconds = enemy.attackIntervalSeconds
-        const enemyProgress =
-          enemyIntervalSeconds > 0
-            ? (battleElapsedSeconds % enemyIntervalSeconds) / enemyIntervalSeconds
-            : 0
-        battle.enemyAttackProgress = Math.min(enemyProgress, 1)
+
+      const calcAttackProgress = (
+        lastAttackTime: number,
+        nextAttackTime: number | null,
+      ): number => {
+        if (nextAttackTime === null) {
+          return lastAttackTime > 0 ? 1 : 0
+        }
+        if (nextAttackTime <= lastAttackTime) {
+          return 1
+        }
+        const elapsedSinceLast = battleElapsedSeconds - lastAttackTime
+        if (elapsedSinceLast <= 0) {
+          return 0
+        }
+        const interval = nextAttackTime - lastAttackTime
+        return Math.min(1, Math.max(0, elapsedSinceLast / interval))
       }
 
       // 根据战斗事件流更新HP（事件时间以秒为单位，转换为毫秒比较）
       const events = battle.representativeLog
       let lastPlayerHp = combatStore.maxHp
       let lastEnemyHp = enemy?.hp || 0
+      let lastPlayerAttackTime = 0
+      let nextPlayerAttackTime: number | null = null
+      let lastEnemyAttackTime = 0
+      let nextEnemyAttackTime: number | null = null
 
       for (const event of events) {
-        if (event.timeSeconds > battleElapsedSeconds) break
-
-        if (event.actorSide === 'player') {
-          // 玩家攻击敌人
-          lastEnemyHp = event.targetHpAfter
+        if (event.timeSeconds <= battleElapsedSeconds) {
+          if (event.actorSide === 'player') {
+            // 玩家攻击敌人
+            lastEnemyHp = event.targetHpAfter
+            lastPlayerAttackTime = event.timeSeconds
+          } else {
+            // 敌人攻击玩家
+            lastPlayerHp = event.targetHpAfter
+            lastEnemyAttackTime = event.timeSeconds
+          }
         } else {
-          // 敌人攻击玩家
-          lastPlayerHp = event.targetHpAfter
+          if (event.actorSide === 'player' && nextPlayerAttackTime === null) {
+            nextPlayerAttackTime = event.timeSeconds
+          } else if (event.actorSide === 'enemy' && nextEnemyAttackTime === null) {
+            nextEnemyAttackTime = event.timeSeconds
+          }
+
+          if (nextPlayerAttackTime !== null && nextEnemyAttackTime !== null) {
+            break
+          }
         }
       }
+
+      battle.playerAttackProgress = calcAttackProgress(lastPlayerAttackTime, nextPlayerAttackTime)
+      battle.enemyAttackProgress = calcAttackProgress(lastEnemyAttackTime, nextEnemyAttackTime)
 
       battle.playerCurrentHp = lastPlayerHp
       battle.enemyCurrentHp = lastEnemyHp

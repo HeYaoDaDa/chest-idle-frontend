@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { describe, it, beforeEach, expect } from 'vitest'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import { axe } from 'vitest-axe'
 
 import ActionQueue from '@/components/ActionQueue'
@@ -31,8 +32,15 @@ describe('Accessibility (axe) checks', () => {
   })
 
   it('LeftSidebar should have no detectable a11y violations', async () => {
+    const router = createRouter({
+      history: createMemoryHistory(),
+      routes: [{ path: '/', name: 'home', component: { template: '<div />' } }],
+    })
+    await router.push('/')
+    await router.isReady()
+
     const wrapper = mount(LeftSidebar, {
-      global: { plugins: [createTestI18n()], stubs: { RouterLink: true } },
+      global: { plugins: [createTestI18n(), router], stubs: { RouterLink: true } },
     })
 
     const results = await axe(wrapper.element, { rules: { 'color-contrast': { enabled: false } } })

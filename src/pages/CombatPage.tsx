@@ -104,106 +104,69 @@ export default defineComponent({
       if (!isInBattle.value || !currentEnemy.value || !combatStore.currentBattle) return null
 
       const battle = combatStore.currentBattle
+      const enemyInfo = currentEnemy.value
 
-      const statBadge = (label: string, value: string) => (
-        <div class="flex justify-between text-xs text-neutral-500 mb-0.5">
-          <span>{label}</span>
-          <span>{value}</span>
+      const renderStatRow = (label: string, current: number, max: number, fillClass: string) => (
+        <div class="w-full space-y-1" aria-label={label}>
+          <div class="h-7 bg-gray-100 rounded-full overflow-hidden relative">
+            <div
+              class={`h-full ${fillClass}`}
+              style={{ width: `${max === 0 ? 0 : Math.min(100, Math.max(0, (current / max) * 100))}%` }}
+            />
+            <span class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white drop-shadow">
+              {formatNumber(current, locale.value)}/{formatNumber(max, locale.value)}
+            </span>
+          </div>
         </div>
       )
 
-      const progressTrack = (value: number, colorClass: string) => (
-        <div class="h-3 bg-neutral-50 rounded-full overflow-hidden">
-          <div class={`h-full ${colorClass} transition-all duration-300`} style={{ width: `${value}%` }} />
+      const renderProgress = (label: string, progress: number) => (
+        <div class="w-full">
+          <div class="h-7 bg-gray-100 rounded-full overflow-hidden relative">
+            <div
+              class="h-full bg-primary transition-all duration-200"
+              style={{ width: `${Math.min(100, Math.max(progress * 100, 0))}%` }}
+            />
+            <span class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white drop-shadow">
+              {label}
+            </span>
+          </div>
         </div>
       )
 
-      return (
-        <div class="flex flex-col gap-3 h-full">
-          <div class="panel p-4 flex-1 flex flex-col gap-6">
-            <div class="flex flex-col gap-6 lg:flex-row">
-              <div class="flex-1 flex flex-col items-stretch gap-3 border border-primary/20 rounded-xl p-4 bg-surface">
-                <span class="text-base font-semibold text-neutral-600 text-center">
-                  {t('ui.combat.playerStats')}
-                </span>
-                <div class="flex justify-center">
-                  <div class="w-20 h-20 bg-primary/10 rounded-none flex items-center justify-center text-4xl">
-                    🧙
-                  </div>
-                </div>
-                <div>
-                  {statBadge(
-                    'HP',
-                    `${formatNumber(battle.playerCurrentHp, locale.value)}/${formatNumber(combatStore.maxHp, locale.value)}`,
-                  )}
-                  {progressTrack((battle.playerCurrentHp / combatStore.maxHp) * 100, 'bg-red-500')}
-                </div>
-                <div>
-                  {statBadge(
-                    'MP',
-                    `${formatNumber(combatStore.maxMp, locale.value)}/${formatNumber(combatStore.maxMp, locale.value)}`,
-                  )}
-                  {progressTrack(100, 'bg-blue-500')}
-                </div>
-                <div class="flex gap-1 flex-wrap justify-center">
-                  <span class="badge bg-primary/10 text-primary">
-                    ⚔️ {formatNumber(combatStore.currentDamage, locale.value)}
-                  </span>
-                </div>
-                <div>
-                  <div class="text-xs text-neutral-500 mb-0.5 text-center">
-                    {t('ui.combat.attackInterval')}: {combatStore.currentAttackIntervalSeconds.toFixed(1)}s
-                  </div>
-                  <div class="h-2 bg-neutral-50 rounded-full overflow-hidden">
-                    <div
-                      class="h-full bg-gradient-to-r from-amber-500 to-amber-400 transition-all duration-100"
-                      style={{ width: `${(battle.playerAttackProgress || 0) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
+      const renderFighterCard = (side: 'player' | 'enemy') => {
+        const isPlayer = side === 'player'
+        const currentHp = isPlayer ? battle.playerCurrentHp : battle.enemyCurrentHp
+        const maxHp = isPlayer ? combatStore.maxHp : enemyInfo.hp
+        const enemyMpStat = (enemyInfo as typeof enemyInfo & { mp?: number }).mp ?? enemyInfo.hp
+        const currentMp = isPlayer ? combatStore.maxMp : enemyMpStat
+        const maxMp = isPlayer ? combatStore.maxMp : enemyMpStat
+        const avatar = isPlayer ? '🧙' : '👾'
+        const progress = isPlayer ? battle.playerAttackProgress || 0 : battle.enemyAttackProgress || 0
+        const name = isPlayer ? t('ui.combat.playerStats') : t(enemyInfo.name)
 
-              <div class="flex-1 flex flex-col items-stretch gap-3 border border-error/20 rounded-xl p-4 bg-surface">
-                <span class="text-base font-semibold text-neutral-600 text-center">
-                  {t(currentEnemy.value.name)}
-                </span>
-                <div class="flex justify-center">
-                  <div class="w-20 h-20 bg-error/10 rounded-none flex items-center justify-center text-4xl">
-                    👾
-                  </div>
-                </div>
-                <div>
-                  {statBadge(
-                    'HP',
-                    `${formatNumber(battle.enemyCurrentHp, locale.value)}/${formatNumber(currentEnemy.value.hp, locale.value)}`,
-                  )}
-                  {progressTrack((battle.enemyCurrentHp / currentEnemy.value.hp) * 100, 'bg-red-500')}
-                </div>
-                <div class="flex gap-1 flex-wrap justify-center">
-                  <span class="badge bg-error/10 text-error">
-                    ⚔️ {formatNumber(currentEnemy.value.attack, locale.value)}
-                  </span>
-                </div>
-                <div>
-                  <div class="text-xs text-neutral-500 mb-0.5 text-center">
-                    {t('ui.combat.attackInterval')}: {currentEnemy.value.attackIntervalSeconds.toFixed(1)}s
-                  </div>
-                  <div class="h-2 bg-neutral-50 rounded-full overflow-hidden">
-                    <div
-                      class="h-full bg-red-500 transition-all duration-100"
-                      style={{ width: `${(battle.enemyAttackProgress || 0) * 100}%` }}
-                    />
-                  </div>
-                </div>
+        return (
+          <div class="panel flex-1 max-w-sm w-full p-4 flex flex-col gap-4 items-center text-center">
+            <div class="text-base font-semibold text-gray-900 w-full">{name}</div>
+            {renderStatRow(t('ui.combat.hp'), currentHp, maxHp, 'bg-emerald-400')}
+            {renderStatRow('MP', currentMp, maxMp, 'bg-sky-400')}
+            <div class="w-full flex justify-center py-3">
+              <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-4xl">
+                {avatar}
               </div>
             </div>
+            {renderProgress(t('ui.combat.autoAttack'), progress)}
           </div>
+        )
+      }
 
-          <div class="panel p-4 text-center">
-            <span class="text-sm text-neutral-500 block">{t('ui.combat.remainingBattles')}</span>
-            <span class="text-2xl font-bold text-neutral-600">
-              {battle.totalAmount === -1 ? '∞' : battle.totalAmount - battle.completedAmount}
-            </span>
+      return (
+        <div class="h-full flex items-center justify-center">
+          <div class="w-full max-w-5xl px-4 py-6">
+            <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+              {renderFighterCard('player')}
+              {renderFighterCard('enemy')}
+            </div>
           </div>
         </div>
       )
