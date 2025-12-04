@@ -194,11 +194,10 @@ export default defineComponent({
                     <>
                       {enemy.value.fixedLootItems.map((loot, idx) => (
                         <span key={loot.itemId}>
-                          <ItemTag itemId={loot.itemId} />
                           <span class="text-xs text-gray-600 font-medium">
-                            {' '}
-                            ×{formatNumber(loot.count, locale.value)}
+                            {formatNumber(loot.count, locale.value)}
                           </span>
+                          <ItemTag itemId={loot.itemId} />
                           {idx < enemy.value!.fixedLootItems.length - 1 && '，'}
                         </span>
                       ))}

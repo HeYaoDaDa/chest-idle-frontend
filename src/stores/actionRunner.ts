@@ -22,6 +22,7 @@ import { useChestPointStore } from './chestPoint'
 import { useCombatStore } from './combat'
 import { useConsumableStore } from './consumable'
 import { useInventoryStore } from './inventory'
+import { useLootNotificationStore } from './lootNotification'
 import { useNotificationStore } from './notification'
 import { useSkillStore } from './skill'
 
@@ -35,6 +36,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
   const chestPointStore = useChestPointStore()
   const consumableStore = useConsumableStore()
   const combatStore = useCombatStore()
+  const lootNotificationStore = useLootNotificationStore()
 
   let isRunning = false
 
@@ -191,6 +193,8 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
       if (xpGains.stamina > 0) skillStore.addSkillXpRaw('stamina', xpGains.stamina)
       if (xpGains.intelligence > 0) skillStore.addSkillXpRaw('intelligence', xpGains.intelligence)
 
+      const lootNotifications: { itemId: string; count: number }[] = []
+
       // 添加掉落物品到背包
       if (battleRewards.lootItems.length > 0) {
         const itemsToAdd: [string, number][] = battleRewards.lootItems.map((loot) => [
@@ -198,6 +202,7 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
           loot.count,
         ])
         inventoryStore.addManyItems(itemsToAdd)
+        lootNotifications.push(...battleRewards.lootItems)
       }
 
       // 添加宝箱点数
@@ -205,7 +210,12 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
         const chestCount = chestPointStore.addChestPoints(cp.chestId, toFixed(cp.points))
         if (chestCount > 0) {
           inventoryStore.addItem(cp.chestId, chestCount)
+          lootNotifications.push({ itemId: cp.chestId, count: chestCount })
         }
+      }
+
+      if (lootNotifications.length > 0) {
+        lootNotificationStore.addNotification(lootNotifications)
       }
     }
 
@@ -314,16 +324,22 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     )
 
     const rewards: [string, number][] = []
+    const lootNotifications: { itemId: string; count: number }[] = []
+
     for (const product of action.products) {
-      rewards.push([product.itemId, product.count * computedAmount])
+      const count = product.count * computedAmount
+      rewards.push([product.itemId, count])
+      lootNotifications.push({ itemId: product.itemId, count })
     }
 
     if (chestCount > 0) {
       rewards.push([action.chestId, chestCount])
+      lootNotifications.push({ itemId: action.chestId, count: chestCount })
     }
 
     if (rewards.length > 0) {
       inventoryStore.addManyItems(rewards)
+      lootNotificationStore.addNotification(lootNotifications)
     }
   }
 

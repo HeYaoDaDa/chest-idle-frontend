@@ -214,11 +214,10 @@ export default defineComponent({
                   {hasIngredients.value && action.value ? (
                     action.value.ingredients.map((ingredient, idx) => (
                       <span key={ingredient.itemId}>
-                        <ItemTag itemId={ingredient.itemId} />
                         <span class="text-xs text-gray-600 font-medium">
-                          {' '}
-                          ×{formatNumber(ingredient.count, locale.value)}
+                          {formatNumber(ingredient.count, locale.value)}
                         </span>
+                        <ItemTag itemId={ingredient.itemId} />
                         {idx < action.value!.ingredients.length - 1 && '，'}
                       </span>
                     ))
@@ -234,11 +233,10 @@ export default defineComponent({
                   {hasProducts.value && action.value ? (
                     action.value.products.map((product, idx) => (
                       <span key={product.itemId}>
-                        <ItemTag itemId={product.itemId} />
                         <span class="text-xs text-gray-600 font-medium">
-                          {' '}
-                          ×{formatNumber(product.count, locale.value)}
+                          {formatNumber(product.count, locale.value)}
                         </span>
+                        <ItemTag itemId={product.itemId} />
                         {idx < action.value!.products.length - 1 && '，'}
                       </span>
                     ))
