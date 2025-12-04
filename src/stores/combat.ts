@@ -18,6 +18,11 @@ import { useSkillStore } from './skill'
 export type AttackType = 'melee' | 'ranged' | 'magic'
 
 /**
+ * 战斗阶段状态
+ */
+export type BattleState = 'fighting' | 'cooldown'
+
+/**
  * 当前战斗状态
  */
 export interface CurrentBattle {
@@ -47,6 +52,12 @@ export interface CurrentBattle {
   playerCurrentHp: number
   /** 敌人当前HP */
   enemyCurrentHp: number
+  /** 当前战斗阶段 */
+  state: BattleState
+  /** 冷却结束时间（performance.now()），仅在 state='cooldown' 时有效 */
+  cooldownEndTime?: number
+  /** 冷却总时长（秒） */
+  cooldownDurationSeconds: number
 }
 
 /**
@@ -58,6 +69,7 @@ const BASE_HP_CONSTANT = 10 // HP 常数
 const BASE_MP_MULTIPLIER = 10 // MP 乘数
 const BASE_MP_CONSTANT = 10 // MP 常数
 const ARMOR_COEFFICIENT = 0.2 // 护甲系数
+const DEFAULT_COOLDOWN_SECONDS = 3 // 默认战斗间隔 (秒)
 
 /**
  * 玩家战斗属性 Store
@@ -302,6 +314,8 @@ export const useCombatStore = defineStore('combat', () => {
       enemyAttackProgress: 0,
       playerCurrentHp: maxHp.value,
       enemyCurrentHp: enemyConfig.hp,
+      state: 'fighting',
+      cooldownDurationSeconds: enemyConfig.respawnTimeSeconds ?? DEFAULT_COOLDOWN_SECONDS,
     }
 
     return result
@@ -331,7 +345,64 @@ export const useCombatStore = defineStore('combat', () => {
   }
 
   /**
+   * 进入冷却状态（战斗间隔）
+   */
+  function startCooldown(): void {
+    if (!currentBattle.value) return
+    currentBattle.value.state = 'cooldown'
+    currentBattle.value.cooldownEndTime =
+      performance.now() + currentBattle.value.cooldownDurationSeconds * 1000
+  }
+
+  /**
+   * 开始下一回合战斗（从冷却状态恢复）
+   *
+   * @returns 新的单场战斗时长，如果无法继续战斗返回 null
+   */
+  function startNextRound(): number | null {
+    if (!currentBattle.value) return null
+
+    const enemyConfig = enemyConfigMap[currentBattle.value.enemyId]
+    if (!enemyConfig) return null
+
+    // 使用当前玩家属性重新模拟一场战斗
+    const playerStats = getPlayerStats()
+    const result = simulateBattles(playerStats, enemyConfig, 1)
+
+    if (!result.canWin) {
+      // 玩家属性变化导致无法继续获胜
+      return null
+    }
+
+    // 更新战斗状态
+    const newDurationSeconds = result.perBattleSummary[0]?.durationSeconds ?? 0
+    currentBattle.value.singleBattleDurationSeconds = newDurationSeconds
+    currentBattle.value.representativeLog = result.representativeBattleLog
+    currentBattle.value.startTime = performance.now()
+    currentBattle.value.singleXpGains = result.perBattleSummary[0]?.xpGains ?? {
+      melee: 0,
+      ranged: 0,
+      magic: 0,
+      defense: 0,
+      stamina: 0,
+      intelligence: 0,
+    }
+    // 重置HP到满血状态
+    currentBattle.value.playerCurrentHp = maxHp.value
+    currentBattle.value.enemyCurrentHp = enemyConfig.hp
+    // 重置攻击进度
+    currentBattle.value.playerAttackProgress = 0
+    currentBattle.value.enemyAttackProgress = 0
+    // 切换回战斗状态
+    currentBattle.value.state = 'fighting'
+    currentBattle.value.cooldownEndTime = undefined
+
+    return newDurationSeconds
+  }
+
+  /**
    * 重置当前战斗的开始时间（用于开始下一场战斗）
+   * @deprecated 使用 startNextRound 替代
    */
   function resetBattleStartTime(): void {
     if (currentBattle.value) {
@@ -369,38 +440,8 @@ export const useCombatStore = defineStore('combat', () => {
    * @returns 新的单场战斗时长，如果无法继续战斗返回 null
    */
   function refreshBattleStats(): number | null {
-    if (!currentBattle.value) return null
-
-    const enemyConfig = enemyConfigMap[currentBattle.value.enemyId]
-    if (!enemyConfig) return null
-
-    // 使用当前玩家属性重新模拟一场战斗
-    const playerStats = getPlayerStats()
-    const result = simulateBattles(playerStats, enemyConfig, 1)
-
-    if (!result.canWin) {
-      // 玩家属性变化导致无法继续获胜
-      return null
-    }
-
-    // 更新战斗状态
-    const newDurationSeconds = result.perBattleSummary[0]?.durationSeconds ?? 0
-    currentBattle.value.singleBattleDurationSeconds = newDurationSeconds
-    currentBattle.value.representativeLog = result.representativeBattleLog
-    currentBattle.value.startTime = performance.now()
-    currentBattle.value.singleXpGains = result.perBattleSummary[0]?.xpGains ?? {
-      melee: 0,
-      ranged: 0,
-      magic: 0,
-      defense: 0,
-      stamina: 0,
-      intelligence: 0,
-    }
-    // 重置HP到满血状态
-    currentBattle.value.playerCurrentHp = maxHp.value
-    currentBattle.value.enemyCurrentHp = enemyConfig.hp
-
-    return newDurationSeconds
+    // 兼容旧逻辑，直接调用 startNextRound
+    return startNextRound()
   }
 
   /**
@@ -447,6 +488,8 @@ export const useCombatStore = defineStore('combat', () => {
     previewBattle,
     startBattle,
     completeBattle,
+    startCooldown,
+    startNextRound,
     resetBattleStartTime,
     cancelBattle,
     clearBattle,

@@ -98,6 +98,8 @@ export default {
       enemyInfo: '敌人属性',
       expectedRewards: '预期奖励',
       perBattleRewards: '单场奖励',
+      respawning: '寻找敌人中...',
+      preparingNextBattle: '正在准备下一场战斗',
       eventLog: {
         title: '战斗日志',
         noEvents: '暂无战斗事件',

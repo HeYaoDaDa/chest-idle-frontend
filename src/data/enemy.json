@@ -10,7 +10,8 @@
     "fixedChestPoints": [],
     "name": "enemy.slime.name",
     "description": "enemy.slime.description",
-    "attackIntervalSeconds": 3
+    "attackIntervalSeconds": 3,
+    "respawnTimeSeconds": 3
   },
   {
     "type": "enemy",
@@ -23,7 +24,8 @@
     "fixedChestPoints": [],
     "name": "enemy.goblin.name",
     "description": "enemy.goblin.description",
-    "attackIntervalSeconds": 2.5
+    "attackIntervalSeconds": 2.5,
+    "respawnTimeSeconds": 3
   },
   {
     "type": "enemy",
@@ -36,6 +38,7 @@
     "fixedChestPoints": [],
     "name": "enemy.skeleton.name",
     "description": "enemy.skeleton.description",
-    "attackIntervalSeconds": 2.8
+    "attackIntervalSeconds": 2.8,
+    "respawnTimeSeconds": 3
   }
 ]

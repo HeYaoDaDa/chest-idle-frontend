@@ -123,6 +123,7 @@ interface EnemyConfig {
   hp: number
   attack: number
   attackIntervalSeconds: number
+  respawnTimeSeconds?: number
   xpReward: number
   fixedLootItems: { itemId: string; count: number }[]
   fixedChestPoints: { chestId: string; points: number }[]

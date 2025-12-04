@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { describe, it, beforeEach, expect } from 'vitest'
-import { createMemoryHistory, createRouter } from 'vue-router'
 import { axe } from 'vitest-axe'
+import { createMemoryHistory, createRouter } from 'vue-router'
 
 import ActionQueue from '@/components/ActionQueue'
 import ConsumableSlot from '@/components/ConsumableSlot'

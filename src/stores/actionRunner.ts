@@ -76,24 +76,48 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     if (combatStore.currentBattle) {
       const battle = combatStore.currentBattle
       const currentTime = performance.now()
+
+      // 处理冷却状态
+      if (battle.state === 'cooldown') {
+        if (battle.cooldownEndTime && currentTime >= battle.cooldownEndTime) {
+          // 冷却结束，开始下一场战斗
+          const newDurationSeconds = combatStore.startNextRound()
+          if (newDurationSeconds !== null) {
+            // 更新队列中的战斗时长（秒）
+            actionQueueStore.currentAction.combatDurationSeconds = newDurationSeconds
+          } else {
+            // 无法继续战斗，统一停止当前行动
+            actionQueueStore.stopCurrentAction()
+          }
+        }
+        // 冷却期间不消耗 elapsed，直接返回
+        // 注意：这里我们假设冷却时间不计入 actionQueue 的进度
+        // 如果需要计入，逻辑会更复杂，目前先简单处理
+        return 0
+      }
+
+      // 处理战斗状态
       const battleElapsedSeconds = (currentTime - battle.startTime) / 1000
       const enemy = enemyConfigMap[battle.enemyId]
 
       const calcAttackProgress = (
         lastAttackTime: number,
         nextAttackTime: number | null,
+        intervalSeconds: number,
       ): number => {
-        if (nextAttackTime === null) {
-          return lastAttackTime > 0 ? 1 : 0
-        }
-        if (nextAttackTime <= lastAttackTime) {
+        // 如果没有下一次攻击事件，说明战斗在下一次攻击前结束了
+        // 但进度条应该继续跑，直到战斗结束
+        // 此时目标时间就是 上次攻击时间 + 攻击间隔
+        const targetTime = nextAttackTime ?? lastAttackTime + intervalSeconds
+
+        if (targetTime <= lastAttackTime) {
           return 1
         }
         const elapsedSinceLast = battleElapsedSeconds - lastAttackTime
         if (elapsedSinceLast <= 0) {
           return 0
         }
-        const interval = nextAttackTime - lastAttackTime
+        const interval = targetTime - lastAttackTime
         return Math.min(1, Math.max(0, elapsedSinceLast / interval))
       }
 
@@ -130,8 +154,19 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
         }
       }
 
-      battle.playerAttackProgress = calcAttackProgress(lastPlayerAttackTime, nextPlayerAttackTime)
-      battle.enemyAttackProgress = calcAttackProgress(lastEnemyAttackTime, nextEnemyAttackTime)
+      const playerInterval = combatStore.currentAttackIntervalSeconds
+      const enemyInterval = enemy?.attackIntervalSeconds ?? 2.0
+
+      battle.playerAttackProgress = calcAttackProgress(
+        lastPlayerAttackTime,
+        nextPlayerAttackTime,
+        playerInterval,
+      )
+      battle.enemyAttackProgress = calcAttackProgress(
+        lastEnemyAttackTime,
+        nextEnemyAttackTime,
+        enemyInterval,
+      )
 
       battle.playerCurrentHp = lastPlayerHp
       battle.enemyCurrentHp = lastEnemyHp
@@ -181,17 +216,9 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     // 完成当前行动（减少计数）
     actionQueueStore.completeCurrentAction(computedElapsedTime, 1)
 
-    // 如果还有剩余战斗次数，刷新战斗属性并继续下一场
+    // 如果还有剩余战斗次数，进入冷却状态
     if (actionQueueStore.currentAction && actionQueueStore.isCombatAction) {
-      // 重新模拟以获取最新的玩家属性
-      const newDurationSeconds = combatStore.refreshBattleStats()
-      if (newDurationSeconds !== null) {
-        // 更新队列中的战斗时长（秒）
-        actionQueueStore.currentAction.combatDurationSeconds = newDurationSeconds
-      } else {
-        // 无法继续战斗，统一停止当前行动
-        actionQueueStore.stopCurrentAction()
-      }
+      combatStore.startCooldown()
     } else {
       // 所有战斗完成，清除战斗状态
       combatStore.clearBattle()

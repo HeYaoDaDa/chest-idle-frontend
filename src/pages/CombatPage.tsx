@@ -106,34 +106,6 @@ export default defineComponent({
       const battle = combatStore.currentBattle
       const enemyInfo = currentEnemy.value
 
-      const renderStatRow = (label: string, current: number, max: number, fillClass: string) => (
-        <div class="w-full space-y-1" aria-label={label}>
-          <div class="h-7 bg-gray-100 rounded-full overflow-hidden relative">
-            <div
-              class={`h-full ${fillClass}`}
-              style={{ width: `${max === 0 ? 0 : Math.min(100, Math.max(0, (current / max) * 100))}%` }}
-            />
-            <span class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white drop-shadow">
-              {formatNumber(current, locale.value)}/{formatNumber(max, locale.value)}
-            </span>
-          </div>
-        </div>
-      )
-
-      const renderProgress = (label: string, progress: number) => (
-        <div class="w-full">
-          <div class="h-7 bg-gray-100 rounded-full overflow-hidden relative">
-            <div
-              class="h-full bg-primary transition-all duration-200"
-              style={{ width: `${Math.min(100, Math.max(progress * 100, 0))}%` }}
-            />
-            <span class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white drop-shadow">
-              {label}
-            </span>
-          </div>
-        </div>
-      )
-
       const renderFighterCard = (side: 'player' | 'enemy') => {
         const isPlayer = side === 'player'
         const currentHp = isPlayer ? battle.playerCurrentHp : battle.enemyCurrentHp
@@ -146,27 +118,85 @@ export default defineComponent({
         const name = isPlayer ? t('ui.combat.playerStats') : t(enemyInfo.name)
 
         return (
-          <div class="panel flex-1 max-w-sm w-full p-4 flex flex-col gap-4 items-center text-center">
-            <div class="text-base font-semibold text-gray-900 w-full">{name}</div>
-            {renderStatRow(t('ui.combat.hp'), currentHp, maxHp, 'bg-emerald-400')}
-            {renderStatRow('MP', currentMp, maxMp, 'bg-sky-400')}
-            <div class="w-full flex justify-center py-3">
-              <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-4xl">
+          <div class="flex-1 max-w-xs w-full bg-white rounded-lg overflow-hidden shadow-lg flex flex-col text-gray-900 border border-gray-200">
+            {/* 名字 */}
+            <div class="py-2 px-4 text-center font-bold text-lg bg-gray-50 border-b border-gray-200 truncate">
+              {name}
+            </div>
+
+            {/* 状态条区域 */}
+            <div class="flex flex-col gap-px bg-gray-200 border-b border-gray-200">
+              {/* HP */}
+              <div class="h-6 bg-gray-100 relative w-full">
+                <div
+                  class="h-full bg-emerald-500 transition-none"
+                  style={{ width: `${maxHp === 0 ? 0 : Math.min(100, Math.max(0, (currentHp / maxHp) * 100))}%` }}
+                />
+                <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-md">
+                  {formatNumber(currentHp, locale.value)}/{formatNumber(maxHp, locale.value)}
+                </span>
+              </div>
+              {/* MP */}
+              <div class="h-6 bg-gray-100 relative w-full">
+                <div
+                  class="h-full bg-sky-500 transition-none"
+                  style={{ width: `${maxMp === 0 ? 0 : Math.min(100, Math.max(0, (currentMp / maxMp) * 100))}%` }}
+                />
+                <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-md">
+                  {formatNumber(currentMp, locale.value)}/{formatNumber(maxMp, locale.value)}
+                </span>
+              </div>
+            </div>
+
+            {/* 头像区域 */}
+            <div class="flex-1 flex items-center justify-center py-6 bg-white min-h-[160px]">
+              <div class="transform scale-150 text-6xl filter drop-shadow-sm">
                 {avatar}
               </div>
             </div>
-            {renderProgress(t('ui.combat.autoAttack'), progress)}
+
+            {/* 自动攻击条 */}
+            <div class="h-8 bg-gray-100 relative w-full mt-auto border-t border-gray-200">
+              <div
+                class="h-full bg-purple-500 transition-none"
+                style={{ width: `${Math.min(100, Math.max(progress * 100, 0))}%` }}
+              />
+              <span class="absolute inset-0 flex items-center justify-center text-sm font-bold text-white drop-shadow-md">
+                {t('ui.combat.autoAttack')}
+              </span>
+            </div>
           </div>
         )
       }
 
       return (
-        <div class="h-full flex items-center justify-center">
-          <div class="w-full max-w-5xl px-4 py-6">
-            <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
-              {renderFighterCard('player')}
-              {renderFighterCard('enemy')}
+        <div class="h-full w-full flex flex-col md:flex-row relative bg-gray-50/30">
+          {/* Cooldown Overlay */}
+          {battle.state === 'cooldown' && (
+            <div class="absolute inset-0 z-20 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center text-white">
+              <div class="text-2xl font-bold mb-2">{t('ui.combat.respawning')}</div>
+              <div class="text-sm opacity-80">{t('ui.combat.preparingNextBattle')}</div>
+              <div class="mt-4 w-64 h-1 bg-white/20 rounded-full overflow-hidden">
+                <div class="h-full bg-white animate-pulse w-full origin-left" />
+              </div>
             </div>
+          )}
+
+          {/* Player Side */}
+          <div class="flex-1 flex items-center justify-center p-6 border-b md:border-b-0 md:border-r border-gray-200">
+            {renderFighterCard('player')}
+          </div>
+
+          {/* VS Badge (Desktop) */}
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
+            <div class="text-3xl font-black text-gray-300 italic bg-white px-3 py-1 rounded-full shadow-sm border border-gray-100">
+              VS
+            </div>
+          </div>
+
+          {/* Enemy Side */}
+          <div class="flex-1 flex items-center justify-center p-6">
+            {renderFighterCard('enemy')}
           </div>
         </div>
       )

@@ -98,6 +98,8 @@ export default {
       enemyInfo: 'Enemy Stats',
       expectedRewards: 'Expected Rewards',
       perBattleRewards: 'Rewards per Battle',
+      respawning: 'Respawning...',
+      preparingNextBattle: 'Preparing for next battle',
       eventLog: {
         title: 'Battle Log',
         noEvents: 'No battle events yet',
