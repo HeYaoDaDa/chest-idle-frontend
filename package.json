@@ -51,5 +51,13 @@
     "vitest-axe": "^0.1.0",
     "vue-tsc": "^2.2.8",
     "@types/loglevel": "^1.4.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ],
+    "overrides": {
+      "esbuild": "^0.25.0"
+    }
   }
 }
