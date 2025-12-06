@@ -68,6 +68,18 @@ pnpm test:coverage
 
 # Open Vitest UI
 pnpm test:ui
+
+### End-to-end (Playwright)
+
+This project includes a basic Playwright E2E test setup. To run them:
+
+```bash
+# Install browsers (first time only)
+pnpm exec playwright install
+
+# Run Playwright E2E tests
+pnpm run test:e2e
+```
 ```
 
 ## Documentation

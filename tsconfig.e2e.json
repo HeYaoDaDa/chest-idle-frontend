@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.test.json",
+  "include": ["env.d.ts", "src/**/*", "e2e/**/*"],
+  "compilerOptions": {
+    "types": ["@playwright/test", "node"]
+  }
+}

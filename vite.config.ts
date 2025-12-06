@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [vueJsx(), UnoCSS()],
   server: {
     host: '0.0.0.0',
-    allowedHosts: ['frontend', '.localhost'],
+    allowedHosts: ['devcontainer'],
   },
   resolve: {
     alias: {
