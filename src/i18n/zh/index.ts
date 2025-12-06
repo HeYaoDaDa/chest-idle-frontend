@@ -14,6 +14,7 @@ export default {
     levelUp: '技能 {skill} 升级到 {level}!',
     levelTooLow: '{skill} 等级 {level} 无法执行 {action}（需要 {required} 级）。',
     notEnoughMaterials: '{action} 所需材料不足。',
+    chestObtained: '获得 {count} 个{chest}',
   },
   ui: {
     level: 'Lv.{level}',

@@ -14,6 +14,7 @@ export default {
     levelUp: 'Skill {skill} upgrade to {level}!',
     levelTooLow: '{skill} level {level} is too low for {action} (requires {required}).',
     notEnoughMaterials: 'Not enough materials for {action}.',
+    chestObtained: 'Obtained {count} {chest}',
   },
   ui: {
     level: 'Lv.{level}',

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { enemyConfigMap } from '@/gameConfig'
+import { enemyConfigMap, itemConfigMap } from '@/gameConfig'
 import i18n from '@/i18n'
 import { isInfiniteAmount, toFiniteForCompute, fromComputeResult } from '@/utils/amount'
 import {
@@ -211,6 +211,12 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
         if (chestCount > 0) {
           inventoryStore.addItem(cp.chestId, chestCount)
           lootNotifications.push({ itemId: cp.chestId, count: chestCount })
+          // 添加宝箱获得通知
+          const chestConfig = itemConfigMap[cp.chestId]
+          notificationStore.info('notification.chestObtained', {
+            count: chestCount,
+            chest: chestConfig ? i18n.global.t(chestConfig.name) : cp.chestId,
+          })
         }
       }
 
@@ -335,6 +341,12 @@ export const useActionRunnerStore = defineStore('actionRunner', () => {
     if (chestCount > 0) {
       rewards.push([action.chestId, chestCount])
       lootNotifications.push({ itemId: action.chestId, count: chestCount })
+      // 添加宝箱获得通知
+      const chestConfig = itemConfigMap[action.chestId]
+      notificationStore.info('notification.chestObtained', {
+        count: chestCount,
+        chest: chestConfig ? i18n.global.t(chestConfig.name) : action.chestId,
+      })
     }
 
     if (rewards.length > 0) {
