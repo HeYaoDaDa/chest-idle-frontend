@@ -171,17 +171,6 @@ export default defineComponent({
 
       return (
         <div class="h-full w-full flex flex-col md:flex-row relative bg-gray-50/30">
-          {/* Cooldown Overlay */}
-          {battle.state === 'cooldown' && (
-            <div class="absolute inset-0 z-20 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center text-white">
-              <div class="text-2xl font-bold mb-2">{t('ui.combat.respawning')}</div>
-              <div class="text-sm opacity-80">{t('ui.combat.preparingNextBattle')}</div>
-              <div class="mt-4 w-64 h-1 bg-white/20 rounded-full overflow-hidden">
-                <div class="h-full bg-white animate-pulse w-full origin-left" />
-              </div>
-            </div>
-          )}
-
           {/* Player Side */}
           <div class="flex-1 flex items-center justify-center p-6 border-b md:border-b-0 md:border-r border-gray-200">
             {renderFighterCard('player')}
