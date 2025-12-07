@@ -21,6 +21,31 @@ export const useInventoryStore = defineStore('inventory', () => {
       : [],
   )
 
+  const inventoryItemsByCategory = computed(() => {
+    const groups = {
+      chest: [] as InventoryItem[],
+      resource: [] as InventoryItem[],
+      equipment: [] as InventoryItem[],
+      consumable: [] as InventoryItem[],
+    }
+
+    for (const item of inventoryItems.value) {
+      const category = item.item.category
+      if (category in groups) {
+        groups[category].push(item)
+      }
+    }
+
+    return groups
+  })
+
+  const categoryStats = computed(() => ({
+    chest: inventoryItemsByCategory.value.chest.length,
+    resource: inventoryItemsByCategory.value.resource.length,
+    equipment: inventoryItemsByCategory.value.equipment.length,
+    consumable: inventoryItemsByCategory.value.consumable.length,
+  }))
+
   function addItem(itemId: string, amount: number): void {
     const existingItem = inventoryMap.value[itemId]
     if (existingItem) {
@@ -99,6 +124,8 @@ export const useInventoryStore = defineStore('inventory', () => {
 
   return {
     inventoryItems,
+    inventoryItemsByCategory,
+    categoryStats,
     inventoryMap,
 
     addItem,

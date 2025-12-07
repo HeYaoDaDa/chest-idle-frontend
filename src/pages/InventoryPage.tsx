@@ -1,6 +1,7 @@
 import { defineComponent, computed, shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import InventoryGroup from '@/components/InventoryGroup'
 import { ChestResultsModal, ItemModal } from '@/components/modals'
 import { slotConfigs, itemConfigMap } from '@/gameConfig'
 import { useChestResultsStore } from '@/stores/chestResults'
@@ -50,7 +51,15 @@ export default defineComponent({
       return slotConfigs.map((slot) => ({ id: slot.id, name: slot.name }))
     })
 
-    const openEquipmentModal = (slotId: string, equipmentId: string): void => {
+    // 物品类别配置
+    const categoryConfig = [
+      { key: 'chest' as const, i18nKey: 'ui.categoryChest' },
+      { key: 'resource' as const, i18nKey: 'ui.categoryResource' },
+      { key: 'equipment' as const, i18nKey: 'ui.categoryEquipment' },
+      { key: 'consumable' as const, i18nKey: 'ui.categoryConsumable' },
+    ] as const
+
+    const openEquipmentModal = (slotId: string, equipmentId: string) => {
       selectedItemId.value = equipmentId
       selectedContext.value = 'equipped'
     }
@@ -140,29 +149,17 @@ export default defineComponent({
 
         <div class="flex-1 overflow-auto p-4">
           {activeTab.value === 'inventory' && (
-            <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
-              {inventoryStore.inventoryItems.map((inventoryItem) => (
-                <button
-                  key={inventoryItem.item.id}
-                  class="card-item w-16 h-16 relative"
-                  type="button"
-                  onClick={() => openInventoryModal(inventoryItem)}
-                  aria-label={t(inventoryItem.item.name)}
-                  aria-expanded={
-                    selectedContext.value === 'inventory' &&
-                    selectedItemId.value === inventoryItem.item.id
-                  }
-                >
-                  <div class="text-xs font-semibold text-neutral-600 text-center leading-tight">
-                    {t(inventoryItem.item.name)}
-                  </div>
-                  {inventoryItem.count > 1 && (
-                    <div class="absolute top-0 right-0 bg-primary text-white text-[10px] px-1 rounded-bl">
-                      x{inventoryItem.count}
-                    </div>
-                  )}
-                </button>
-              ))}
+            <div class="space-y-6">
+              {categoryConfig
+                .filter(({ key }) => inventoryStore.categoryStats[key] > 0)
+                .map(({ key, i18nKey }) => (
+                  <InventoryGroup
+                    key={key}
+                    title={t(i18nKey)}
+                    items={inventoryStore.inventoryItemsByCategory[key]}
+                    onItemClick={openInventoryModal}
+                  />
+                ))}
             </div>
           )}
 
