@@ -6,11 +6,11 @@ export type ChestResult = { itemId: string; amount: number }
 export const useChestResultsStore = defineStore('chestResults', () => {
   const results = ref<ChestResult[] | null>(null)
 
-  function open(r: ChestResult[]) {
+  function open(r: ChestResult[]): void {
     results.value = r
   }
 
-  function close() {
+  function close(): void {
     results.value = null
   }
 

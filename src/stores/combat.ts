@@ -8,6 +8,7 @@ import {
   type CombatEvent,
   type CombatXpGains,
   type BatchBattleResult,
+  type PlayerCombatStats,
 } from '@/utils/combatSimulator'
 
 import { useEquippedItemStore } from './equippedItem'
@@ -231,7 +232,7 @@ export const useCombatStore = defineStore('combat', () => {
   /**
    * 获取当前玩家的战斗属性（用于模拟器）
    */
-  function getPlayerStats() {
+  function getPlayerStats(): PlayerCombatStats {
     return buildPlayerStatsFromStore({
       maxHp: maxHp.value,
       maxMp: maxMp.value,

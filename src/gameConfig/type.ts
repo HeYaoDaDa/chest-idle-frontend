@@ -15,13 +15,17 @@ export type {
   DerivedValueConfig,
 }
 
+export type ItemCategory = 'resource' | 'chest' | 'equipment' | 'consumable'
+export type SkillType = 'production' | 'combat'
+export type AttackType = 'melee' | 'ranged' | 'magic'
+
 type GameConfig = SkillConfig | SlotConfig | StatConfig | ItemConfig | ActionConfig | EnemyConfig
 
 interface SkillConfig {
   type: 'skill'
   id: string
   sort: number
-  skillType: 'production' | 'combat'
+  skillType: SkillType
   name: string
   description: string
 }
@@ -46,7 +50,7 @@ interface StatConfig {
 
 interface ItemConfig {
   type: 'item'
-  category: 'resource' | 'chest' | 'equipment' | 'consumable'
+  category: ItemCategory
   id: string
   sort: number
   chest?: {
@@ -56,7 +60,7 @@ interface ItemConfig {
   equipment?: {
     slotId: string
     occupiedSlots?: string[]  // NEW: 实际占用的所有槽位
-    attackType?: 'melee' | 'ranged' | 'magic'  // NEW: 武器攻击类型
+    attackType?: AttackType
     effects: EffectConfig[]
   }
   consumable?: {
@@ -200,7 +204,7 @@ export interface ItemConfigInternal extends Omit<ItemConfig, 'chest' | 'equipmen
   equipment?: {
     slotId: string
     occupiedSlots?: string[]  // NEW
-    attackType?: 'melee' | 'ranged' | 'magic'  // NEW
+    attackType?: AttackType
     effects: EffectConfigInternal[]
   }
   consumable?: {

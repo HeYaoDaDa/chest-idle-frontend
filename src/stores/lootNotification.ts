@@ -18,7 +18,7 @@ export const useLootNotificationStore = defineStore('lootNotification', () => {
   const NOTIFICATION_DURATION = 3000 // 3 seconds
   let timeoutId: number | null = null
 
-  function addNotification(items: LootNotificationItem[]) {
+  function addNotification(items: LootNotificationItem[]): void {
     if (items.length === 0) return
 
     // Clear existing timer

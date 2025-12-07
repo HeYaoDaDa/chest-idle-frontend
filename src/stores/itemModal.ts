@@ -6,13 +6,13 @@ export const useItemModalStore = defineStore('itemModal', () => {
   const itemId = ref<string | null>(null)
   const mode = ref<'inventory' | 'equipped' | 'view' | undefined>(undefined)
 
-  function open(id: string, _mode?: 'inventory' | 'equipped' | 'view') {
+  function open(id: string, _mode?: 'inventory' | 'equipped' | 'view'): void {
     itemId.value = id
     mode.value = _mode
     show.value = true
   }
 
-  function close() {
+  function close(): void {
     show.value = false
     itemId.value = null
     mode.value = undefined
