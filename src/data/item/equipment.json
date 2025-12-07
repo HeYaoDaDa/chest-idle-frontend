@@ -1150,5 +1150,132 @@
     },
     "name": "item.adamantineBrewingKit.name",
     "description": "item.adamantineBrewingKit.description"
+  },
+  {
+    "type": "item",
+    "category": "equipment",
+    "id": "copperSword",
+    "sort": 100,
+    "equipment": {
+      "slotId": "mainHand",
+      "occupiedSlots": ["mainHand"],
+      "attackType": "melee",
+      "effects": [
+        {
+          "statId": "meleeAttack",
+          "type": "flat",
+          "value": 5
+        }
+      ]
+    },
+    "name": "item.copperSword.name",
+    "description": "item.copperSword.description"
+  },
+  {
+    "type": "item",
+    "category": "equipment",
+    "id": "ironGreatsword",
+    "sort": 101,
+    "equipment": {
+      "slotId": "mainHand",
+      "occupiedSlots": ["mainHand", "offHand"],
+      "attackType": "melee",
+      "effects": [
+        {
+          "statId": "meleeAttack",
+          "type": "flat",
+          "value": 15
+        },
+        {
+          "statId": "meleeAttack",
+          "type": "percentage",
+          "value": 10
+        }
+      ]
+    },
+    "name": "item.ironGreatsword.name",
+    "description": "item.ironGreatsword.description"
+  },
+  {
+    "type": "item",
+    "category": "equipment",
+    "id": "shortBow",
+    "sort": 102,
+    "equipment": {
+      "slotId": "mainHand",
+      "occupiedSlots": ["mainHand"],
+      "attackType": "ranged",
+      "effects": [
+        {
+          "statId": "rangedAttack",
+          "type": "flat",
+          "value": 8
+        }
+      ]
+    },
+    "name": "item.shortBow.name",
+    "description": "item.shortBow.description"
+  },
+  {
+    "type": "item",
+    "category": "equipment",
+    "id": "magicStaff",
+    "sort": 103,
+    "equipment": {
+      "slotId": "mainHand",
+      "occupiedSlots": ["mainHand", "offHand"],
+      "attackType": "magic",
+      "effects": [
+        {
+          "statId": "magicAttack",
+          "type": "flat",
+          "value": 12
+        },
+        {
+          "statId": "intelligence",
+          "type": "flat",
+          "value": 2
+        }
+      ]
+    },
+    "name": "item.magicStaff.name",
+    "description": "item.magicStaff.description"
+  },
+  {
+    "type": "item",
+    "category": "equipment",
+    "id": "woodenShield",
+    "sort": 104,
+    "equipment": {
+      "slotId": "offHand",
+      "occupiedSlots": ["offHand"],
+      "effects": [
+        {
+          "statId": "defense",
+          "type": "flat",
+          "value": 5
+        }
+      ]
+    },
+    "name": "item.woodenShield.name",
+    "description": "item.woodenShield.description"
+  },
+  {
+    "type": "item",
+    "category": "equipment",
+    "id": "ironHelmet",
+    "sort": 105,
+    "equipment": {
+      "slotId": "head",
+      "effects": [
+        {
+          "statId": "defense",
+          "type": "flat",
+          "value": 3
+        }
+      ]
+    },
+    "name": "item.ironHelmet.name",
+    "description": "item.ironHelmet.description"
   }
 ]

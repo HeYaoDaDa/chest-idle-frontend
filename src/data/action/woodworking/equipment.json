@@ -1,0 +1,118 @@
+[
+  {
+    "type": "action",
+    "id": "craftWoodenShield",
+    "skillId": "woodworking",
+    "minLevel": 0,
+    "sort": 1,
+    "tab": "equipment",
+    "xp": {
+      "baseValue": 12,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingXpGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "chestId": "willowPlankChest",
+    "chestPoints": {
+      "baseValue": 35,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingChestPointsGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "ingredients": [
+      {
+        "itemId": "willowPlank",
+        "count": 2
+      }
+    ],
+    "products": [
+      {
+        "itemId": "woodenShield",
+        "count": 1
+      }
+    ],
+    "name": "action.craftWoodenShield.name",
+    "description": "action.craftWoodenShield.description",
+    "durationSeconds": {
+      "baseValue": 8,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
+  },
+  {
+    "type": "action",
+    "id": "craftShortBow",
+    "skillId": "woodworking",
+    "minLevel": 3,
+    "sort": 3,
+    "tab": "equipment",
+    "xp": {
+      "baseValue": 20,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingXpGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "chestId": "willowPlankChest",
+    "chestPoints": {
+      "baseValue": 50,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingChestPointsGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "ingredients": [
+      {
+        "itemId": "willowPlank",
+        "count": 3
+      }
+    ],
+    "products": [
+      {
+        "itemId": "shortBow",
+        "count": 1
+      }
+    ],
+    "name": "action.craftShortBow.name",
+    "description": "action.craftShortBow.description",
+    "durationSeconds": {
+      "baseValue": 12,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "woodworkingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
+  }
+]

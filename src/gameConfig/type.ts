@@ -30,6 +30,7 @@ interface SlotConfig {
   type: 'slot'
   id: string
   sort: number
+  category?: 'production' | 'combat' | 'accessory'  // NEW
   name: string
   description: string
 }
@@ -54,6 +55,8 @@ interface ItemConfig {
   }
   equipment?: {
     slotId: string
+    occupiedSlots?: string[]  // NEW: 实际占用的所有槽位
+    attackType?: 'melee' | 'ranged' | 'magic'  // NEW: 武器攻击类型
     effects: EffectConfig[]
   }
   consumable?: {
@@ -196,6 +199,8 @@ export interface ItemConfigInternal extends Omit<ItemConfig, 'chest' | 'equipmen
   }
   equipment?: {
     slotId: string
+    occupiedSlots?: string[]  // NEW
+    attackType?: 'melee' | 'ranged' | 'magic'  // NEW
     effects: EffectConfigInternal[]
   }
   consumable?: {

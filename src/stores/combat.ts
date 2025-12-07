@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-import { enemyConfigMap } from '@/gameConfig'
+import { enemyConfigMap, itemConfigMap } from '@/gameConfig'
 import {
   simulateBattles,
   buildPlayerStatsFromStore,
@@ -10,6 +10,7 @@ import {
   type BatchBattleResult,
 } from '@/utils/combatSimulator'
 
+import { useEquippedItemStore } from './equippedItem'
 import { useSkillStore } from './skill'
 
 /**
@@ -80,6 +81,7 @@ const DEFAULT_COOLDOWN_SECONDS = 3 // 默认战斗间隔 (秒)
  */
 export const useCombatStore = defineStore('combat', () => {
   const skillStore = useSkillStore()
+  const equippedItemStore = useEquippedItemStore()
 
   // ==================== 基础属性（来自技能等级，1:1 映射） ====================
 
@@ -188,12 +190,17 @@ export const useCombatStore = defineStore('combat', () => {
 
   /**
    * 获取当前攻击类型
-   * v1：未装备武器时默认为近战
-   * TODO: 后续需要从装备 store 获取当前武器类型
+   * 根据主手装备的武器类型决定
+   * 未装备武器时默认为近战
    */
   const currentAttackType = computed<AttackType>(() => {
-    // v1: 默认近战，后续从装备 store 读取
-    return 'melee'
+    const mainHandItemId = equippedItemStore.getEquippedItem('mainHand')
+    if (!mainHandItemId) {
+      return 'melee' // 默认空手近战
+    }
+
+    const weapon = itemConfigMap[mainHandItemId]
+    return weapon.equipment?.attackType ?? 'melee'
   })
 
   /**

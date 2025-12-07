@@ -1,8 +1,57 @@
 [
   {
     "type": "slot",
+    "id": "head",
+    "sort": 100,
+    "category": "combat",
+    "name": "slot.head.name",
+    "description": "slot.head.description"
+  },
+  {
+    "type": "slot",
+    "id": "chest",
+    "sort": 101,
+    "category": "combat",
+    "name": "slot.chest.name",
+    "description": "slot.chest.description"
+  },
+  {
+    "type": "slot",
+    "id": "legs",
+    "sort": 102,
+    "category": "combat",
+    "name": "slot.legs.name",
+    "description": "slot.legs.description"
+  },
+  {
+    "type": "slot",
+    "id": "feet",
+    "sort": 103,
+    "category": "combat",
+    "name": "slot.feet.name",
+    "description": "slot.feet.description"
+  },
+  {
+    "type": "slot",
+    "id": "mainHand",
+    "sort": 104,
+    "category": "combat",
+    "name": "slot.mainHand.name",
+    "description": "slot.mainHand.description"
+  },
+  {
+    "type": "slot",
+    "id": "offHand",
+    "sort": 105,
+    "category": "combat",
+    "name": "slot.offHand.name",
+    "description": "slot.offHand.description"
+  },
+  {
+    "type": "slot",
     "id": "miningTool",
     "sort": 0,
+    "category": "production",
     "name": "slot.miningTool.name",
     "description": "slot.miningTool.description"
   },
@@ -10,6 +59,7 @@
     "type": "slot",
     "id": "woodcuttingTool",
     "sort": 1,
+    "category": "production",
     "name": "slot.woodcuttingTool.name",
     "description": "slot.woodcuttingTool.description"
   },
@@ -17,6 +67,7 @@
     "type": "slot",
     "id": "foragingTool",
     "sort": 2,
+    "category": "production",
     "name": "slot.foragingTool.name",
     "description": "slot.foragingTool.description"
   },
@@ -24,6 +75,7 @@
     "type": "slot",
     "id": "smithingTool",
     "sort": 3,
+    "category": "production",
     "name": "slot.smithingTool.name",
     "description": "slot.smithingTool.description"
   },
@@ -31,6 +83,7 @@
     "type": "slot",
     "id": "woodworkingTool",
     "sort": 4,
+    "category": "production",
     "name": "slot.woodworkingTool.name",
     "description": "slot.woodworkingTool.description"
   },
@@ -38,6 +91,7 @@
     "type": "slot",
     "id": "tailoringTool",
     "sort": 5,
+    "category": "production",
     "name": "slot.tailoringTool.name",
     "description": "slot.tailoringTool.description"
   },
@@ -45,6 +99,7 @@
     "type": "slot",
     "id": "cookingTool",
     "sort": 6,
+    "category": "production",
     "name": "slot.cookingTool.name",
     "description": "slot.cookingTool.description"
   },
@@ -52,6 +107,7 @@
     "type": "slot",
     "id": "brewingTool",
     "sort": 7,
+    "category": "production",
     "name": "slot.brewingTool.name",
     "description": "slot.brewingTool.description"
   }

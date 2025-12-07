@@ -1,0 +1,234 @@
+[
+  {
+    "type": "action",
+    "id": "craftCopperSword",
+    "skillId": "smithing",
+    "minLevel": 0,
+    "sort": 0,
+    "tab": "equipment",
+    "xp": {
+      "baseValue": 15,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingXpGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "chestId": "copperMineChest",
+    "chestPoints": {
+      "baseValue": 40,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingChestPointsGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "ingredients": [
+      {
+        "itemId": "copperIngot",
+        "count": 1
+      }
+    ],
+    "products": [
+      {
+        "itemId": "copperSword",
+        "count": 1
+      }
+    ],
+    "name": "action.craftCopperSword.name",
+    "description": "action.craftCopperSword.description",
+    "durationSeconds": {
+      "baseValue": 10,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
+  },
+  {
+    "type": "action",
+    "id": "craftIronGreatsword",
+    "skillId": "smithing",
+    "minLevel": 5,
+    "sort": 2,
+    "tab": "equipment",
+    "xp": {
+      "baseValue": 30,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingXpGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "chestId": "ironMineChest",
+    "chestPoints": {
+      "baseValue": 80,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingChestPointsGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "ingredients": [
+      {
+        "itemId": "ironIngot",
+        "count": 3
+      }
+    ],
+    "products": [
+      {
+        "itemId": "ironGreatsword",
+        "count": 1
+      }
+    ],
+    "name": "action.craftIronGreatsword.name",
+    "description": "action.craftIronGreatsword.description",
+    "durationSeconds": {
+      "baseValue": 15,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
+  },
+  {
+    "type": "action",
+    "id": "craftMagicStaff",
+    "skillId": "smithing",
+    "minLevel": 8,
+    "sort": 4,
+    "tab": "equipment",
+    "xp": {
+      "baseValue": 35,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingXpGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "chestId": "ironMineChest",
+    "chestPoints": {
+      "baseValue": 90,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingChestPointsGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "ingredients": [
+      {
+        "itemId": "silverIngot",
+        "count": 3
+      }
+    ],
+    "products": [
+      {
+        "itemId": "magicStaff",
+        "count": 1
+      }
+    ],
+    "name": "action.craftMagicStaff.name",
+    "description": "action.craftMagicStaff.description",
+    "durationSeconds": {
+      "baseValue": 18,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
+  },
+  {
+    "type": "action",
+    "id": "craftIronHelmet",
+    "skillId": "smithing",
+    "minLevel": 2,
+    "sort": 5,
+    "tab": "armor",
+    "xp": {
+      "baseValue": 18,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingXpGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "chestId": "ironMineChest",
+    "chestPoints": {
+      "baseValue": 45,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingChestPointsGain",
+          "type": "percentage"
+        }
+      ]
+    },
+    "ingredients": [
+      {
+        "itemId": "ironIngot",
+        "count": 2
+      }
+    ],
+    "products": [
+      {
+        "itemId": "ironHelmet",
+        "count": 1
+      }
+    ],
+    "name": "action.craftIronHelmet.name",
+    "description": "action.craftIronHelmet.description",
+    "durationSeconds": {
+      "baseValue": 10,
+      "modifiers": [
+        {
+          "modifierType": "stat",
+          "statId": "smithingSpeed",
+          "type": "inversePercentage"
+        },
+        {
+          "modifierType": "skillLevel",
+          "type": "inversePercentage",
+          "perLevelValue": 0.01
+        }
+      ]
+    }
+  }
+]

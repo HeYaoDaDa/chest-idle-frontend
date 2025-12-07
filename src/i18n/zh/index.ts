@@ -136,8 +136,23 @@ export default {
         volcano: '火山',
       },
     },
-    smithing: { name: '锻造', description: '锻造。' },
-    woodworking: { name: '木工', description: '木工。' },
+    smithing: {
+      name: '锻造',
+      description: '锻造。',
+      tab: {
+        materials: '材料',
+        equipment: '武器',
+        armor: '护甲',
+      },
+    },
+    woodworking: {
+      name: '木工',
+      description: '木工。',
+      tab: {
+        materials: '材料',
+        equipment: '武器',
+      },
+    },
     tailoring: { name: '裁缝', description: '裁缝。' },
     cooking: { name: '烹饪', description: '烹饪。' },
     brewing: { name: '酿造', description: '酿造。' },
@@ -149,6 +164,12 @@ export default {
     magic: { name: '魔法', description: '魔法。' },
   },
   slot: {
+    head: { name: '头部', description: '佩戴头盔' },
+    chest: { name: '上身', description: '佩戴胸甲' },
+    legs: { name: '下身', description: '佩戴腿甲' },
+    feet: { name: '脚部', description: '佩戴靴子' },
+    mainHand: { name: '主手', description: '主要武器槽位' },
+    offHand: { name: '副手', description: '副手武器或盾牌' },
     miningTool: { name: '采矿工具' },
     woodcuttingTool: { name: '伐木工具' },
     foragingTool: { name: '采摘工具' },
@@ -354,6 +375,12 @@ export default {
     adamantineBrewingKit: { name: '精金酿造套件', description: '精金酿造套件。' },
     adamantineAlchemistKit: { name: '精金炼金套件', description: '精金炼金套件。' },
     adamantineEnhancingTool: { name: '精金强化工具', description: '精金强化工具。' },
+    copperSword: { name: '铜剑', description: '低级单手剑' },
+    ironGreatsword: { name: '铁质大剑', description: '威力强大的双手剑' },
+    shortBow: { name: '短弓', description: '轻便的远程武器' },
+    magicStaff: { name: '魔法杖', description: '释放魔法的双手武器' },
+    woodenShield: { name: '木盾', description: '基础防御工具' },
+    ironHelmet: { name: '铁盔', description: '保护头部的防具' },
     willowWood: { name: '柳木', description: '柳木。' },
     pineWood: { name: '松木', description: '松木。' },
     oakWood: { name: '橡木', description: '橡木。' },
@@ -553,6 +580,14 @@ export default {
       name: '工具',
       description: '用于生产与采集的工具与器具。',
     },
+    equipment: {
+      name: '武器',
+      description: '制造各种武器装备。',
+    },
+    armor: {
+      name: '护甲',
+      description: '制造各种防御装备。',
+    },
     copperMine: {
       name: '铜矿',
       description: '在铜矿中采摘铜矿石。',
@@ -691,6 +726,12 @@ export default {
     adamantineBrewingKit: { name: '精金酿造套件', description: '制作精金酿造套件的配方。' },
     adamantineAlchemistKit: { name: '精金炼金套件', description: '制作精金炼金套件的配方。' },
     adamantineEnhancingTool: { name: '精金强化工具', description: '制作精金强化工具的配方。' },
+    craftCopperSword: { name: '锻造铜剑', description: '用铜锭锻造一把铜剑' },
+    craftWoodenShield: { name: '制造木盾', description: '用柳木板制造一面木盾' },
+    craftIronGreatsword: { name: '锻造铁质大剑', description: '用铁锭锻造一把强大的双手剑' },
+    craftShortBow: { name: '制造短弓', description: '用柳木板制造一把短弓' },
+    craftMagicStaff: { name: '锻造魔法杖', description: '用银锭锻造魔法杖' },
+    craftIronHelmet: { name: '锻造铁盔', description: '用铁锭锻造一顶铁盔' },
     willowTree: {
       name: '柳树',
       description: '使用斧头砍伐柳木。',
@@ -1035,3 +1076,4 @@ export default {
     },
   },
 }
+
