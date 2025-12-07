@@ -7,7 +7,6 @@ import { useAppStore } from '../app'
 
 // Mock implementations
 const mockStart = vi.fn()
-const mockProgressStart = vi.fn()
 const mockLoadGameConfig = vi.fn()
 
 // Mock gameConfig
@@ -22,20 +21,12 @@ vi.mock('../actionRunner', () => ({
   }),
 }))
 
-// Mock actionProgress
-vi.mock('../actionProgress', () => ({
-  useActionProgressStore: () => ({
-    start: mockProgressStart,
-  }),
-}))
-
 describe('App Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     vi.clearAllMocks()
     mockLoadGameConfig.mockReset()
     mockStart.mockReset()
-    mockProgressStart.mockReset()
   })
 
   describe('initial state', () => {
@@ -73,14 +64,6 @@ describe('App Store', () => {
       expect(mockStart).toHaveBeenCalledTimes(1)
     })
 
-    it('should start action progress tracker', async () => {
-      const appStore = useAppStore()
-
-      await appStore.loadApplication()
-
-      expect(mockProgressStart).toHaveBeenCalledTimes(1)
-    })
-
     it('should set state to error if loadGameConfig throws', async () => {
       mockLoadGameConfig.mockImplementation(() => {
         throw new Error('Load failed')
@@ -100,22 +83,6 @@ describe('App Store', () => {
     it('should set state to error if actionRunner.start throws', async () => {
       mockStart.mockImplementation(() => {
         throw new Error('Start failed')
-      })
-
-      const appStore = useAppStore()
-      const consoleErrorSpy = vi.spyOn(log, 'error').mockImplementation(() => {})
-
-      await appStore.loadApplication()
-
-      expect(appStore.state).toBe('error')
-      expect(consoleErrorSpy).toHaveBeenCalled()
-
-      consoleErrorSpy.mockRestore()
-    })
-
-    it('should set state to error if actionProgress.start throws', async () => {
-      mockProgressStart.mockImplementation(() => {
-        throw new Error('Progress failed')
       })
 
       const appStore = useAppStore()

@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import { loadGameConfig } from '@/gameConfig'
 import log from '@/utils/log'
 
-import { useActionProgressStore } from './actionProgress'
 import { useActionRunnerStore } from './actionRunner'
 
 export const useAppStore = defineStore('app', () => {
@@ -19,9 +18,7 @@ export const useAppStore = defineStore('app', () => {
     try {
       loadGameConfig()
       const actionRunnerStore = useActionRunnerStore()
-      const actionProgressStore = useActionProgressStore()
       actionRunnerStore.start()
-      actionProgressStore.start()
       state.value = 'ready'
     } catch (error) {
       log.error('Failed to load application:', { error: `${error}` })
