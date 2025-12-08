@@ -87,34 +87,34 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={close}>
-          <div class="flex flex-col gap-1 compact-base">
+          <div class="flex flex-col gap-1">
             <div class="flex flex-col gap-2">
-              <h3 class="text-xl font-bold text-gray-900">{itemName.value}</h3>
+              <h3 class="text-xl sm:text-2xl font-bold text-neutral-900">{itemName.value}</h3>
               {isEquipmentMode.value && slotInfo.value && (
-                <span class="text-sm text-gray-600">
+                <span class="text-sm text-neutral-600">
                   {t('ui.type')}: {t(slotInfo.value.name)}
                 </span>
               )}
               {isInventoryMode.value && (
-                <span class="text-sm text-gray-600">
+                <span class="text-sm text-neutral-600">
                   {t('ui.quantity')}: {quantity.value}
                 </span>
               )}
             </div>
 
             <div class="flex flex-col gap-2">
-              <p class="text-gray-700 text-sm leading-normal">{itemDescription.value}</p>
+              <p class="text-neutral-700 text-sm leading-normal">{itemDescription.value}</p>
 
               {isInventoryMode.value && slotInfo.value && (
-                <div class="flex justify-between items-center p-2 bg-gray-50 rounded-md">
-                  <span class="text-sm font-medium text-gray-700">{t('ui.slot')}</span>
-                  <span class="text-sm text-gray-900">{t(slotInfo.value.name)}</span>
+                <div class="card-item w-full justify-between px-3 py-2">
+                  <span class="text-sm font-medium text-neutral-700">{t('ui.slot')}</span>
+                  <span class="text-sm text-neutral-900">{t(slotInfo.value.name)}</span>
                 </div>
               )}
 
               {(item.value?.chest || itemConfigMap[props.itemId]?.chest) && (
                 <div class="flex flex-col gap-2">
-                  <div class="text-sm font-semibold text-gray-700">{t('ui.possibleRewards')}</div>
+                  <div class="text-sm font-semibold text-neutral-700">{t('ui.possibleRewards')}</div>
                   <div class="flex flex-col gap-2">
                     {(item.value?.chest?.loots ?? itemConfigMap[props.itemId]?.chest?.loots ?? []).map((loot) => (
                       <ChestRewardItem
@@ -136,7 +136,7 @@ export default defineComponent({
                 {isEquipmentMode.value && (
                   <button
                     type="button"
-                    class="btn-secondary w-full py-2 px-3 rounded-md font-semibold transition-all"
+                    class="btn-secondary w-full"
                     onClick={unequip}
                   >
                     {t('ui.unequip')}
@@ -149,7 +149,7 @@ export default defineComponent({
                     {inventoryItem.value?.item.equipment && (
                       <button
                         type="button"
-                        class="btn-primary w-full py-2 px-3 rounded-md font-semibold transition-all"
+                        class="btn-primary w-full"
                         onClick={equip}
                       >
                         {t('ui.equip')}
@@ -170,12 +170,12 @@ export default defineComponent({
                                   (e.target as HTMLInputElement).value,
                                 ))
                               }
-                              class="flex-1 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              class="input-base flex-1 py-1"
                               placeholder={String(maxChestAmount.value)}
                             />
                             <button
                               type="button"
-                              class="btn-secondary px-3 py-1 rounded-md font-semibold"
+                              class="btn-secondary btn-sm"
                               onClick={setMaxChestAmount}
                             >
                               Max
@@ -184,7 +184,7 @@ export default defineComponent({
                         )}
                         <button
                           type="button"
-                          class="btn-primary w-full py-2 px-3 rounded-md font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          class="btn-primary w-full"
                           disabled={!isValidChestAmount.value}
                           onClick={openChest}
                         >

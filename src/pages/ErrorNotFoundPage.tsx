@@ -5,7 +5,7 @@ export default defineComponent({
   setup() {
     return () => (
       <div class="h-screen flex justify-center items-center">
-        <h1 class="text-6xl font-bold text-gray-800">404</h1>
+        <h1 class="text-6xl font-bold text-neutral-800">404</h1>
       </div>
     )
   },

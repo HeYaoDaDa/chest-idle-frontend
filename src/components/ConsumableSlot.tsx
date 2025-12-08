@@ -48,7 +48,7 @@ export default defineComponent({
       >
         {item.value ? (
           <>
-            <div class="text-sm font-bold text-gray-900 text-center leading-tight">
+            <div class="text-sm font-bold text-neutral-900 text-center leading-tight">
               <ItemTag itemId={item.value.id} />
             </div>
             {remainingTime.value && (
@@ -56,7 +56,7 @@ export default defineComponent({
             )}
           </>
         ) : (
-          <div class="text-sm text-gray-400 italic">{t('ui.consumable.empty')}</div>
+          <div class="text-sm text-neutral-400 italic">{t('ui.consumable.empty')}</div>
         )}
       </button>
     )

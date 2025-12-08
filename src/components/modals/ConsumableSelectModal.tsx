@@ -45,16 +45,16 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-1 min-w-[min(380px,100%)] compact-base">
+          <div class="flex flex-col gap-1 min-w-[min(380px,100%)]">
             <div class="flex justify-between items-center mb-2">
-              <h3 class="text-xl font-bold text-gray-900">{t('ui.consumable.selectTitle')}</h3>
+              <h3 class="text-xl sm:text-2xl font-bold text-neutral-900">{t('ui.consumable.selectTitle')}</h3>
             </div>
 
             <div class="max-h-96 overflow-y-auto">
               {availableConsumables.value.length === 0 ? (
-                <div class="text-center text-gray-500 py-8">{t('ui.consumable.noItems')}</div>
+                <div class="text-center text-neutral-500 py-8">{t('ui.consumable.noItems')}</div>
               ) : (
-                <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
+                <div class="flex flex-wrap gap-0.5">
                   {availableConsumables.value.map((item) => {
                     const inventoryCount = inventoryStore.inventoryMap[item.id] ?? 0
 
@@ -64,7 +64,7 @@ export default defineComponent({
                         class="card-item w-16 h-16 mt-0 relative"
                         onClick={() => handleSelectConsumable(item.id)}
                       >
-                        <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
+                        <div class="text-xs font-semibold text-neutral-900 text-center leading-tight">
                           {t(item.name)}
                         </div>
                         {inventoryCount > 1 && (

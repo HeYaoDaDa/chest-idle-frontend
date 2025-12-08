@@ -103,7 +103,7 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="relative flex flex-col gap-2 w-full max-w-2xl compact-base">
+      <div class="relative flex flex-col gap-2 w-full max-w-2xl">
         <div class="flex flex-wrap gap-2 items-center">
           <span class="text-base font-semibold text-neutral-600 flex-1 min-w-0 truncate">
             {runningActionDisplay.value}
@@ -112,7 +112,7 @@ export default defineComponent({
             <div class="flex flex-wrap gap-1 justify-end flex-shrink-0">
               <button
                 type="button"
-                class="btn-secondary rounded-full px-2 py-1 text-sm whitespace-nowrap"
+                class="btn-secondary btn-sm rounded-full whitespace-nowrap"
                 onClick={openQueueModal}
                 disabled={!canOpenQueue.value}
               >
@@ -120,7 +120,7 @@ export default defineComponent({
               </button>
               <button
                 type="button"
-                class="btn-destructive rounded-full px-2 py-1 text-sm whitespace-nowrap"
+                class="btn-destructive btn-sm rounded-full whitespace-nowrap"
                 onClick={stopCurrentAction}
               >
                 {t('stop')}

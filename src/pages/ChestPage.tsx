@@ -38,12 +38,12 @@ export default defineComponent({
       <div class="flex flex-col gap-2 p-4">
         <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
           <div class="flex justify-between items-baseline mb-2">
-            <h2 class="text-2xl font-bold text-gray-900">{t('ui.chests')}</h2>
+            <h2 class="text-2xl font-bold text-neutral-900">{t('ui.chests')}</h2>
           </div>
-          <div class="text-gray-700">{t('ui.chestsDescription')}</div>
+          <div class="text-neutral-700">{t('ui.chestsDescription')}</div>
         </div>
 
-        <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
+        <div class="flex flex-wrap gap-2">
           {chests.value.map((chest) => (
             <button
               key={chest.id}
@@ -53,11 +53,11 @@ export default defineComponent({
               aria-label={t(chest.name)}
               aria-expanded={modalVisible.value && selectedChestId.value === chest.id}
             >
-              <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
+              <div class="text-xs font-semibold text-neutral-900 text-center leading-tight">
                 {t(chest.name)}
               </div>
               <div
-                class="w-full h-1 bg-gray-200 rounded-full mt-1 overflow-hidden"
+                class="w-full h-1 bg-neutral-200 rounded-full mt-1 overflow-hidden"
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"

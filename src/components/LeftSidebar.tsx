@@ -65,7 +65,7 @@ export default defineComponent({
               <span class="text-[10px] opacity-80">{t('ui.level', { level: skill.level })}</span>
             </div>
             <div class="hidden lg:block w-full">
-              <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-1 bg-neutral-200 rounded-full overflow-hidden">
                 <div
                   class="progress-bar duration-75"
                   style={{ width: skill.upgradeProgress * 100 + '%' }}
@@ -107,7 +107,7 @@ export default defineComponent({
                         {t('ui.level', { level: skill.level })}
                       </span>
                     </div>
-                    <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+                    <div class="h-1 bg-neutral-200 rounded-full overflow-hidden">
                       <div
                         class="progress-bar duration-75"
                         style={{ width: skill.upgradeProgress * 100 + '%' }}

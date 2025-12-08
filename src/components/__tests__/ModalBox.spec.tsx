@@ -44,7 +44,7 @@ describe('ModalBox Component', () => {
         attachTo: document.body,
       })
 
-      expect(document.body.innerHTML).toContain('bg-gray-900/55')
+      expect(document.body.innerHTML).toContain('bg-surface-overlay')
       wrapper.unmount()
     })
 
@@ -56,7 +56,7 @@ describe('ModalBox Component', () => {
         attachTo: document.body,
       })
 
-      expect(document.body.innerHTML).toContain('bg-white')
+      expect(document.body.innerHTML).toContain('bg-surface')
       expect(document.body.innerHTML).toContain('rounded-lg')
       wrapper.unmount()
     })
@@ -71,8 +71,8 @@ describe('ModalBox Component', () => {
         attachTo: document.body,
       })
 
-      // Find backdrop in document body
-      const backdrop = document.querySelector('.bg-gray-900\\/55') as HTMLElement
+      // Find backdrop in document body - look for the first div with position fixed that contains inset-0
+      const backdrop = document.querySelector('[class*="bg-surface-overlay"]') as HTMLElement
       backdrop?.click()
 
       await wrapper.vm.$nextTick()

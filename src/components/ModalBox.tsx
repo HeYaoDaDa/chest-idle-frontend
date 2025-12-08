@@ -94,7 +94,7 @@ export default defineComponent({
       <Teleport to="body">
         <div class="fixed inset-0 z-2000 grid place-items-center p-4 lg:p-8">
           <div
-            class="absolute inset-0 bg-gray-900/55 backdrop-blur-sm"
+            class="absolute inset-0 bg-surface-overlay/80 backdrop-blur-sm"
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
@@ -109,7 +109,7 @@ export default defineComponent({
             leaveToClass="opacity-0 translate-y-3 scale-98"
             appear
           >
-            <div class="relative max-h-[min(720px,90vh)] w-[min(460px,100%)] bg-white rounded-lg shadow-2xl overflow-auto p-2 lg:p-2">
+            <div class="relative max-h-[min(720px,90vh)] w-[min(360px,95%)] sm:w-[min(460px,100%)] lg:w-[min(520px,100%)] bg-surface rounded-lg shadow-2xl overflow-auto p-2 sm:p-3 lg:p-4">
               <div
                 ref={dialogRef}
                 tabindex={-1}

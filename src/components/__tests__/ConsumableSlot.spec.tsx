@@ -87,7 +87,7 @@ describe('ConsumableSlot Component', () => {
       })
 
       expect(wrapper.text()).toContain('Empty')
-      expect(wrapper.find('.text-gray-400').exists()).toBe(true)
+      expect(wrapper.find('.text-neutral-400').exists()).toBe(true)
     })
 
     it('should display item name when slot has item', () => {
@@ -258,7 +258,7 @@ describe('ConsumableSlot Component', () => {
         },
       })
 
-      const emptyText = wrapper.find('.text-gray-400')
+      const emptyText = wrapper.find('.text-neutral-400')
       expect(emptyText.exists()).toBe(true)
       expect(emptyText.classes()).toContain('italic')
     })
@@ -284,7 +284,7 @@ describe('ConsumableSlot Component', () => {
 
       const itemName = wrapper.find('.font-bold')
       expect(itemName.exists()).toBe(true)
-      expect(itemName.classes()).toContain('text-gray-900')
+      expect(itemName.classes()).toContain('text-neutral-900')
     })
 
     it('should have proper styling for remaining time', () => {

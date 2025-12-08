@@ -6,6 +6,7 @@ import ModalBox from '@/components/ModalBox'
 import { enemyConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { useCombatStore } from '@/stores/combat'
+import { isIntegerOrInfinity, parseAmountString } from '@/utils/amountParser'
 import { INFINITE_AMOUNT } from '@/utils/constants'
 import { formatNumber } from '@/utils/format'
 
@@ -30,23 +31,9 @@ export default defineComponent({
       return enemyConfigMap[props.enemyId] ?? null
     })
 
-    function isIntegerOrInfinity(str: string): boolean {
-      const pattern = /^-?\d+$|^∞$/
-      return pattern.test(str)
-    }
-
-    function stringToNumber(str: string): number {
-      if (str === '∞') return INFINITE_AMOUNT
-      const num = Number(str)
-      if (!isNaN(num) && Number.isInteger(num) && num > 0) {
-        return num
-      }
-      return 1
-    }
-
     const allowAmount = computed(() => {
       if (!isIntegerOrInfinity(amountString.value)) return false
-      const num = stringToNumber(amountString.value)
+      const num = parseAmountString(amountString.value, 1, { allowZero: false })
       return num === INFINITE_AMOUNT || num > 0
     })
 
@@ -71,12 +58,12 @@ export default defineComponent({
     const addToQueue = () => {
       if (enemy.value && allowAmount.value) {
         // 使用 previewBattle 仅模拟，不修改战斗状态
-        const result = combatStore.previewBattle(enemy.value.id, stringToNumber(amountString.value))
+        const result = combatStore.previewBattle(enemy.value.id, parseAmountString(amountString.value, 1, { allowZero: false }))
         if (result && result.canWin) {
           const singleBattleDurationSeconds = result.perBattleSummary[0]?.durationSeconds ?? 0
           actionQueueStore.addCombatAction(
             enemy.value.id,
-            stringToNumber(amountString.value),
+            parseAmountString(amountString.value, 1, { allowZero: false }),
             singleBattleDurationSeconds,
           )
         }
@@ -88,7 +75,7 @@ export default defineComponent({
       if (enemy.value && allowAmount.value) {
         emit('startBattle', {
           enemyId: enemy.value.id,
-          amount: stringToNumber(amountString.value),
+          amount: parseAmountString(amountString.value, 1, { allowZero: false }),
         })
         closeModal()
       }

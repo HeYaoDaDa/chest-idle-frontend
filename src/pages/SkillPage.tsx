@@ -100,27 +100,27 @@ export default defineComponent({
         <div class="flex flex-col gap-2 p-4 pb-32">
           <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
             <div class="flex justify-between items-baseline mb-2">
-              <h2 class="text-2xl font-bold text-gray-900">{t(skill.value.name)}</h2>
+              <h2 class="text-2xl sm:text-3xl font-bold text-neutral-900">{t(skill.value.name)}</h2>
               <div class="text-sm font-semibold text-blue-700 px-2 py-1 bg-white rounded">
                 {t('ui.level', { level: skill.value.level })}
               </div>
             </div>
-            <div class="text-gray-700 mb-3">{t(skill.value.description)}</div>
+            <div class="text-neutral-700 mb-3">{t(skill.value.description)}</div>
             <div class="flex gap-6 mb-2">
               <div class="flex flex-col">
-                <span class="text-xs text-gray-500 uppercase">{t('ui.xp')}</span>
-                <span class="text-base font-semibold text-gray-900">
+                <span class="text-xs text-neutral-500 uppercase">{t('ui.xp')}</span>
+                <span class="text-base font-semibold text-neutral-900">
                   {formatNumber(fromFixed(skill.value.xp), locale.value)}
                 </span>
               </div>
               <div class="flex flex-col">
-                <span class="text-xs text-gray-500 uppercase">{t('ui.nextLevel')}</span>
-                <span class="text-base font-semibold text-gray-900">
+                <span class="text-xs text-neutral-500 uppercase">{t('ui.nextLevel')}</span>
+                <span class="text-base font-semibold text-neutral-900">
                   {formatNumber(fromFixed(skill.value.remainingXpForUpgrade), locale.value)}
                 </span>
               </div>
             </div>
-            <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+            <div class="progress-track">
               <div
                 class="h-full progress-bar"
                 style={{ width: skill.value.upgradeProgress * 100 + '%' }}
@@ -134,14 +134,14 @@ export default defineComponent({
           </div>
 
           {hasTabGroups.value && (
-            <div class="flex gap-1 mb-2 border-b border-gray-200">
+            <div class="flex gap-1 mb-2 border-b border-neutral-200">
               {tabEntries.value.map((tab) => (
                 <button
                   key={tab.id}
                   class={`btn font-semibold transition border-b-2 cursor-pointer ${
                     currentTab.value === tab.id
                       ? 'border-primary text-primary'
-                      : 'border-transparent text-gray-600 hover:text-gray-900'
+                      : 'border-transparent text-neutral-600 hover:text-neutral-900'
                   }`}
                   aria-pressed={currentTab.value === tab.id}
                   onClick={() => (currentTab.value = tab.id)}
@@ -152,7 +152,7 @@ export default defineComponent({
             </div>
           )}
 
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
+          <div class="flex flex-wrap gap-2">
             {displayedActions.value.map((action) => (
               <button
                 key={action.id}
@@ -162,7 +162,7 @@ export default defineComponent({
                 aria-label={t(action.name)}
                 aria-expanded={modalVisible.value && selectedActionId.value === action.id}
               >
-                <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
+                <div class="text-xs font-semibold text-neutral-900 text-center leading-tight">
                   {t(action.name)}
                 </div>
               </button>
@@ -176,7 +176,7 @@ export default defineComponent({
           />
 
           {isProductionSkill.value && (
-            <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent py-4 px-8 border-t border-gray-200 shadow-lg">
+            <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent py-4 px-8 border-t border-neutral-200 shadow-lg\">
               <div class="flex justify-center gap-4">
                 {[0, 1, 2].map((slotIndex) => (
                   <ConsumableSlot

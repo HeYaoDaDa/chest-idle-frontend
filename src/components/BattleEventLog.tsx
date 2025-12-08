@@ -151,11 +151,11 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="flex flex-col gap-2 compact-base">
+      <div class="flex flex-col gap-2">
         {/* 标题和时间进度 */}
         <div class="flex justify-between items-center mb-1">
-          <h4 class="text-md font-semibold text-gray-700">{t('ui.combat.eventLog.title')}</h4>
-          <span class="text-sm text-gray-500">
+          <h4 class="text-md font-semibold text-neutral-700">{t('ui.combat.eventLog.title')}</h4>
+          <span class="text-sm text-neutral-500">
             {formatTime(Math.min(currentTimeSeconds.value, props.totalDurationSeconds))} /{' '}
             {formatTime(props.totalDurationSeconds)}
           </span>
@@ -164,14 +164,14 @@ export default defineComponent({
         {/* 事件列表 */}
         <div class="max-h-64 overflow-y-auto space-y-1 pr-1">
           {props.events.length === 0 ? (
-            <div class="text-center text-gray-400 py-4">{t('ui.combat.eventLog.noEvents')}</div>
+            <div class="text-center text-neutral-400 py-4">{t('ui.combat.eventLog.noEvents')}</div>
           ) : (
             props.events.map((event, index) => {
               const targetSide = getTargetSide(event)
               return (
                 <div key={`${event.timeSeconds}-${index}`} class={getEventClass(event, index)}>
                   {/* 时间戳 */}
-                  <div class="flex-shrink-0 w-10 text-xs text-gray-500 font-mono">
+                  <div class="flex-shrink-0 w-10 text-xs text-neutral-500 font-mono">
                     {formatTime(event.timeSeconds)}
                   </div>
 
@@ -180,8 +180,8 @@ export default defineComponent({
 
                   {/* 事件内容 */}
                   <div class="flex-1 min-w-0">
-                    <div class="text-sm text-gray-800">{getEventDescription(event)}</div>
-                    <div class="flex gap-2 text-xs text-gray-500 mt-1">
+                    <div class="text-sm text-neutral-800">{getEventDescription(event)}</div>
+                    <div class="flex gap-2 text-xs text-neutral-500 mt-1">
                       {/* HP 变化 */}
                       <span class={targetSide === 'player' ? 'text-red-500' : 'text-green-500'}>
                         {targetSide === 'player' ? '❤️ ' : '💀 '}

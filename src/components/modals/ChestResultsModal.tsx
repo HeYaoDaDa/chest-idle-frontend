@@ -32,14 +32,14 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={close}>
-          <div class="flex flex-col gap-1 compact-base">
+          <div class="flex flex-col gap-1">
             <div>
-              <h3 class="text-lg font-bold text-gray-900 mb-1">{t('ui.chestOpenResults')}</h3>
+              <h3 class="text-lg sm:text-xl font-bold text-neutral-900 mb-1">{t('ui.chestOpenResults')}</h3>
             </div>
 
             <div class="max-h-96 overflow-auto">
               {props.results.length > 0 ? (
-                <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
+                <div class="flex flex-wrap gap-0.5">
                   {props.results.map((result) => (
                     <button
                       key={result.itemId}
@@ -48,8 +48,8 @@ export default defineComponent({
                       onClick={() => itemModal.open(result.itemId, 'view')}
                       aria-label={t(itemConfigMap[result.itemId]?.name ?? `item.${result.itemId}.name`)}
                     >
-                      <div class="text-xs font-semibold text-gray-900 text-center leading-tight">
-                        <span class="font-medium text-gray-900">{t(itemConfigMap[result.itemId]?.name ?? `item.${result.itemId}.name`)}</span>
+                      <div class="text-xs font-semibold text-neutral-900 text-center leading-tight">
+                        <span class="font-medium text-neutral-900">{t(itemConfigMap[result.itemId]?.name ?? `item.${result.itemId}.name`)}</span>
                       </div>
                       <div class="absolute top-0 right-0 bg-primary text-white text-[10px] px-1 rounded-bl">
                         ×{result.amount}
@@ -58,7 +58,7 @@ export default defineComponent({
                   ))}
                 </div>
               ) : (
-                <div class="text-center text-gray-500 py-8">{t('ui.noItemsObtained')}</div>
+                <div class="text-center text-neutral-500 py-8">{t('ui.noItemsObtained')}</div>
               )}
             </div>
           </div>

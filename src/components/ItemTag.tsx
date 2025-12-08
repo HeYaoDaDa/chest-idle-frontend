@@ -36,7 +36,7 @@ export default defineComponent({
       <span
         role="button"
         tabindex={0}
-        class={`inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-sm font-medium hover:bg-gray-200 select-none ${props.class}`}
+        class={`inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2 py-0.5 text-sm font-medium hover:bg-neutral-200 select-none ${props.class}`}
         onClick={(e: Event) => open(e)}
         onKeydown={onKeyDown}
         aria-haspopup="dialog"

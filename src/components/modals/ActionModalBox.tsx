@@ -8,7 +8,7 @@ import { useActionStore } from '@/stores/action'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { useInventoryStore } from '@/stores/inventory'
 import { useSkillStore } from '@/stores/skill'
-import { INFINITE_AMOUNT } from '@/utils/constants'
+import { isIntegerOrInfinity, parseAmountString } from '@/utils/amountParser'
 import { fromFixed, toFixed } from '@/utils/fixedPoint'
 import { formatDurationMs, formatNumber } from '@/utils/format'
 
@@ -32,20 +32,6 @@ export default defineComponent({
       if (!props.actionId) return null
       return actionStore.getActionById(props.actionId)
     })
-
-    function isIntegerOrInfinity(str: string): boolean {
-      const pattern = /^-?\d+$|^∞$/
-      return pattern.test(str)
-    }
-
-    function stringToNumber(str: string): number {
-      if (str === '∞') return INFINITE_AMOUNT
-      const num = Number(str)
-      if (!isNaN(num) && Number.isInteger(num)) {
-        return num
-      }
-      return INFINITE_AMOUNT
-    }
 
     const skill = computed(() => {
       if (!action.value) return null
@@ -129,14 +115,14 @@ export default defineComponent({
 
     const addAction = () => {
       if (action.value) {
-        actionQueueStore.addAction(action.value.id, stringToNumber(amountString.value))
+        actionQueueStore.addAction(action.value.id, parseAmountString(amountString.value))
         closeModal()
       }
     }
 
     const startImmediately = () => {
       if (action.value) {
-        actionQueueStore.startImmediately(action.value.id, stringToNumber(amountString.value))
+        actionQueueStore.startImmediately(action.value.id, parseAmountString(amountString.value))
         closeModal()
       }
     }
@@ -157,16 +143,16 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-1 min-w-[min(380px,100%)] compact-base">
+          <div class="flex flex-col gap-1 min-w-[min(380px,100%)]">
             <div class="flex justify-between items-start gap-2">
               <div class="flex flex-col gap-2">
-                <span class="text-xs uppercase tracking-wider text-gray-500">
+                <span class="text-xs uppercase tracking-wider text-neutral-500">
                   {skill.value ? t(skill.value.name) : ''}
                 </span>
-                <h2 class="text-xl font-bold text-gray-900 leading-tight">
+                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 leading-tight">
                   {t(action.value.name)}
                 </h2>
-                <p class="text-gray-600 text-sm leading-normal">{t(action.value.description)}</p>
+                <p class="text-neutral-600 text-sm leading-normal">{t(action.value.description)}</p>
               </div>
             </div>
 
@@ -181,24 +167,24 @@ export default defineComponent({
                 <span class="text-sm">{action.value.minLevel}</span>
               </div>
               <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('duration')}</span>
-                <span class="text-sm text-gray-900">{durationDisplay.value}</span>
+                <span class="text-sm font-medium text-neutral-700">{t('duration')}</span>
+                <span class="text-sm text-neutral-900">{durationDisplay.value}</span>
               </div>
               <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.xpPerCycle')}</span>
-                <span class="text-sm text-gray-900">
+                <span class="text-sm font-medium text-neutral-700">{t('ui.xpPerCycle')}</span>
+                <span class="text-sm text-neutral-900">
                   {formatNumber(xpPerCycle.value, locale.value)}
                 </span>
               </div>
               <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.chestPoints')}</span>
-                <span class="text-sm text-gray-900">
+                <span class="text-sm font-medium text-neutral-700">{t('ui.chestPoints')}</span>
+                <span class="text-sm text-neutral-900">
                   {formatNumber(chestPointsPerCycle.value, locale.value, 3)}
                 </span>
               </div>
               <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.chest')}</span>
-                <span class="text-sm text-gray-900">
+                <span class="text-sm font-medium text-neutral-700">{t('ui.chest')}</span>
+                <span class="text-sm text-neutral-900">
                   <ItemTag itemId={action.value.chestId} />
                 </span>
               </div>
@@ -214,7 +200,7 @@ export default defineComponent({
                   {hasIngredients.value && action.value ? (
                     action.value.ingredients.map((ingredient, idx) => (
                       <span key={ingredient.itemId}>
-                        <span class="text-xs text-gray-600 font-medium">
+                        <span class="text-xs text-neutral-600 font-medium">
                           {formatNumber(ingredient.count, locale.value)}
                         </span>
                         <ItemTag itemId={ingredient.itemId} />
@@ -228,12 +214,12 @@ export default defineComponent({
               </div>
 
               <div class="flex justify-between items-start py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.rewards')}</span>
-                <span class="text-sm text-gray-900 text-right">
+                <span class="text-sm font-medium text-neutral-700">{t('ui.rewards')}</span>
+                <span class="text-sm text-neutral-900 text-right">
                   {hasProducts.value && action.value ? (
                     action.value.products.map((product, idx) => (
                       <span key={product.itemId}>
-                        <span class="text-xs text-gray-600 font-medium">
+                        <span class="text-xs text-neutral-600 font-medium">
                           {formatNumber(product.count, locale.value)}
                         </span>
                         <ItemTag itemId={product.itemId} />
@@ -249,7 +235,7 @@ export default defineComponent({
 
             <div class="flex flex-col gap-2">
               <label class="flex flex-col gap-2">
-                <span class="text-sm font-semibold text-gray-900">{t('ui.amount')}</span>
+                <span class="text-sm font-semibold text-neutral-900">{t('ui.amount')}</span>
                 <div class="flex gap-2">
                   <input
                     type="text"
@@ -257,7 +243,7 @@ export default defineComponent({
                     onInput={(e) => (amountString.value = (e.target as HTMLInputElement).value)}
                     data-autofocus-ignore
                     onClick={(e) => (e.target as HTMLInputElement).select()}
-                    class="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="input-base flex-1 py-1"
                   />
                   <button
                     type="button"
@@ -273,7 +259,7 @@ export default defineComponent({
                 {hasCurrentAction.value && (
                   <button
                     type="button"
-                    class="btn-secondary flex-1 py-2 px-3 rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="btn-secondary flex-1"
                     disabled={!allowAmount.value || !canStartAction.value.canStart}
                     onClick={addAction}
                   >
@@ -282,7 +268,7 @@ export default defineComponent({
                 )}
                 <button
                   type="button"
-                  class="btn-primary flex-1 py-2 px-3 rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="btn-primary flex-1"
                   disabled={!allowAmount.value || !canStartAction.value.canStart}
                   onClick={hasCurrentAction.value ? startImmediately : addAction}
                 >

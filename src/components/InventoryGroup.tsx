@@ -31,7 +31,7 @@ export default defineComponent({
         </div>
 
         {/* 物品网格 */}
-        <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
+        <div class="flex flex-wrap gap-0.5">
           {props.items.map((inventoryItem) => (
             <button
               key={inventoryItem.item.id}

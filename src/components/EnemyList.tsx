@@ -14,15 +14,15 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-2">
+      <div class="flex flex-wrap gap-2">
         {enemyConfigs.length === 0 ? (
-          <div class="col-span-full text-gray-500 text-center py-8">{t('ui.combat.noEnemies')}</div>
+          <div class="w-full text-neutral-500 text-center py-8">{t('ui.combat.noEnemies')}</div>
         ) : (
           enemyConfigs.map((enemy) => (
             <button
               key={enemy.id}
               type="button"
-              class="card-item p-2 flex flex-col items-center gap-2 hover:shadow-md transition-shadow compact-base"
+              class="w-32 card-item p-2 flex flex-col items-center gap-2 hover:shadow-md transition-shadow"
               onClick={() => handleSelectEnemy(enemy.id)}
               aria-label={t(enemy.name)}
             >
@@ -31,9 +31,9 @@ export default defineComponent({
                 <span class="text-2xl">👾</span>
               </div>
               {/* 敌人名称 */}
-              <div class="text-sm font-semibold text-gray-900 text-center">{t(enemy.name)}</div>
+              <div class="text-sm font-semibold text-neutral-900 text-center">{t(enemy.name)}</div>
               {/* 敌人属性简要 */}
-              <div class="flex gap-2 text-xs text-gray-500">
+              <div class="flex gap-2 text-xs text-neutral-500">
                 <span title={t('ui.combat.hp')}>❤️ {enemy.hp}</span>
                 <span title={t('ui.combat.attack')}>⚔️ {enemy.attack}</span>
               </div>

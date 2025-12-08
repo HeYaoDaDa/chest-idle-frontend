@@ -111,7 +111,7 @@ export default defineComponent({
 
     return () => (
       <div class="flex-1 flex flex-col h-full overflow-hidden">
-        <div class="flex gap-1 px-4 pt-4 border-b border-gray-200">
+        <div class="flex gap-1 px-4 pt-4 border-b border-neutral-200">
           <button
             class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
               activeTab.value === 'inventory'
@@ -164,7 +164,7 @@ export default defineComponent({
           )}
 
           {activeTab.value === 'equipment' && (
-            <div class="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-0.5">
+            <div class="flex flex-wrap gap-2">
               {slotList.value.map((slot) => (
                 <div key={slot.id} class="w-16 h-16">
                   {equippedBySlot.value[slot.id] ? (

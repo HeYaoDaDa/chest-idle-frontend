@@ -409,22 +409,6 @@ export const useCombatStore = defineStore('combat', () => {
   }
 
   /**
-   * 重置当前战斗的开始时间（用于开始下一场战斗）
-   * @deprecated 使用 startNextRound 替代
-   */
-  function resetBattleStartTime(): void {
-    if (currentBattle.value) {
-      currentBattle.value.startTime = performance.now()
-      // 重置HP到满血状态
-      currentBattle.value.playerCurrentHp = maxHp.value
-      const enemyConfig = enemyConfigMap[currentBattle.value.enemyId]
-      if (enemyConfig) {
-        currentBattle.value.enemyCurrentHp = enemyConfig.hp
-      }
-    }
-  }
-
-  /**
    * 取消当前战斗（不结算奖励）
    */
   function cancelBattle(): void {
@@ -498,7 +482,6 @@ export const useCombatStore = defineStore('combat', () => {
     completeBattle,
     startCooldown,
     startNextRound,
-    resetBattleStartTime,
     cancelBattle,
     clearBattle,
     refreshBattleStats,

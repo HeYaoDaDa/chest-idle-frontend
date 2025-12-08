@@ -26,12 +26,12 @@ export default defineComponent({
             >
               {store.currentNotification.items.map((item, index) => (
                 <div key={index} class="flex items-center gap-1">
-                  <span class="text-sm font-bold text-gray-600">
+                  <span class="text-sm font-bold text-neutral-600">
                     {formatNumber(item.count, locale.value)}
                   </span>
                   <ItemTag
                     itemId={item.itemId}
-                    class="pointer-events-none shadow-sm border border-gray-200 !bg-white"
+                    class="pointer-events-none shadow-sm border border-neutral-200 !bg-white"
                   />
                 </div>
               ))}

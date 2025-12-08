@@ -27,7 +27,7 @@ export default defineComponent({
 
     return () => (
       <div class="h-screen flex justify-center items-center">
-        <h1 class={`text-3xl font-bold ${fail.value ? 'text-red-700' : 'text-gray-800'}`}>
+        <h1 class={`text-3xl font-bold ${fail.value ? 'text-red-700' : 'text-neutral-800'}`}>
           {fail.value ? t('loadDataFail') : `${t('loading')}...`}
         </h1>
       </div>
