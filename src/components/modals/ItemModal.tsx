@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, watch, type PropType } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import ChestRewardItem from '@/components/ChestRewardItem'
@@ -7,15 +7,15 @@ import { itemConfigMap, slotConfigMap } from '@/gameConfig'
 import { useEquippedItemStore } from '@/stores/equippedItem'
 import { useInventoryStore } from '@/stores/inventory'
 
+import { modalPropTypes } from './types'
+
+import type { ItemModalProps } from './types'
+
 export default defineComponent({
   name: 'ItemModal',
-  props: {
-    show: { type: Boolean, required: true },
-    itemId: { type: String, required: true },
-    mode: { type: String as PropType<'inventory' | 'equipped' | 'view'>, required: false },
-  },
+  props: modalPropTypes.itemModal,
   emits: ['close', 'unequip', 'equip', 'openChest'],
-  setup(props, { emit }) {
+  setup(props: ItemModalProps, { emit }) {
     const { t } = useI18n()
     const inventoryStore = useInventoryStore()
     const equippedItemStore = useEquippedItemStore()

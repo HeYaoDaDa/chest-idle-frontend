@@ -13,6 +13,8 @@ import { parseAmountString } from '@/utils/amountParser'
 import { fromFixed, toFixed } from '@/utils/fixedPoint'
 import { formatDurationMs, formatNumber } from '@/utils/format'
 
+import type { BaseModalProps } from './types'
+
 export default defineComponent({
   name: 'ActionModalBox',
   props: {
@@ -20,7 +22,7 @@ export default defineComponent({
     actionId: { type: String, default: undefined },
   },
   emits: ['close'],
-  setup(props, { emit }) {
+  setup(props: BaseModalProps & { actionId?: string }, { emit }) {
     const { t, locale } = useI18n()
     const inventoryStore = useInventoryStore()
     const skillStore = useSkillStore()

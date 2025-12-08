@@ -1,24 +1,19 @@
 import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-
 import ModalBox from '@/components/ModalBox'
 import { itemConfigMap } from '@/gameConfig'
 import { useItemModalStore } from '@/stores/itemModal'
 
-interface ChestResult {
-  itemId: string
-  amount: number
-}
+import { modalPropTypes } from './types'
+
+import type { ChestResultModalProps } from './types'
 
 export default defineComponent({
   name: 'ChestResultsModal',
-  props: {
-    show: { type: Boolean, required: true },
-    results: { type: Array as () => ChestResult[] | null, default: null },
-  },
+  props: modalPropTypes.chestResultModal,
   emits: ['close'],
-  setup(props, { emit }) {
+  setup(props: ChestResultModalProps, { emit }) {
     const { t } = useI18n()
 
     const itemModal = useItemModalStore()

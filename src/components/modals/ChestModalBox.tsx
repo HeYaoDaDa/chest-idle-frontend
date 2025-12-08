@@ -8,6 +8,8 @@ import { useChestPointStore } from '@/stores/chestPoint'
 import { fromFixed, toFixed } from '@/utils/fixedPoint'
 import { formatNumber, formatPercent } from '@/utils/format'
 
+import type { BaseModalProps } from './types'
+
 export default defineComponent({
   name: 'ChestModalBox',
   props: {
@@ -15,7 +17,7 @@ export default defineComponent({
     chestId: { type: String, default: undefined },
   },
   emits: ['close'],
-  setup(props, { emit }) {
+  setup(props: BaseModalProps & { chestId?: string }, { emit }) {
     const { t, locale } = useI18n()
     const chestPointStore = useChestPointStore()
 

@@ -6,11 +6,15 @@ import { enemyConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { isInfiniteAmount } from '@/utils/amount'
 
+import { modalPropTypes } from './types'
+
+import type { BaseModalProps } from './types'
+
 export default defineComponent({
   name: 'ActionQueueModal',
-  props: { show: { type: Boolean, required: true } },
+  props: modalPropTypes.baseModal,
   emits: ['close'],
-  setup(props, { emit }) {
+  setup(props: BaseModalProps, { emit }) {
     const { t } = useI18n()
     const actionQueueStore = useActionQueueStore()
 

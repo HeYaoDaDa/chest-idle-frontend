@@ -11,6 +11,7 @@ import { isIntegerOrInfinity, parseAmountString } from '@/utils/amountParser'
 import { INFINITE_AMOUNT } from '@/utils/constants'
 import { formatNumber } from '@/utils/format'
 
+import type { BaseModalProps } from './types'
 import type { EnemyConfig } from '@/gameConfig'
 
 export default defineComponent({
@@ -20,7 +21,7 @@ export default defineComponent({
     enemyId: { type: String, default: undefined },
   },
   emits: ['close', 'startBattle'],
-  setup(props, { emit }) {
+  setup(props: BaseModalProps & { enemyId?: string }, { emit }) {
     const { t, locale } = useI18n()
     const combatStore = useCombatStore()
     const actionQueueStore = useActionQueueStore()

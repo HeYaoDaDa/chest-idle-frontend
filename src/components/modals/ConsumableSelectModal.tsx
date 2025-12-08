@@ -6,15 +6,15 @@ import { consumableConfigs } from '@/gameConfig'
 import { useConsumableStore } from '@/stores/consumable'
 import { useInventoryStore } from '@/stores/inventory'
 
+import { modalPropTypes } from './types'
+
+import type { SkillModalProps } from './types'
+
 export default defineComponent({
   name: 'ConsumableSelectModal',
-  props: {
-    show: { type: Boolean, required: true },
-    skillId: { type: String, required: true },
-    slotIndex: { type: Number, required: true },
-  },
+  props: modalPropTypes.skillModal,
   emits: ['close'],
-  setup(props, { emit }) {
+  setup(props: SkillModalProps, { emit }) {
     const { t } = useI18n()
     const consumableStore = useConsumableStore()
     const inventoryStore = useInventoryStore()
