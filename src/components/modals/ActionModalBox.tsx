@@ -1,14 +1,15 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import ItemTag from '@/components/ItemTag'
 import ModalBox from '@/components/ModalBox'
+import { useAmountInput, useQueueAction } from '@/composables'
 import { itemConfigMap } from '@/gameConfig'
 import { useActionStore } from '@/stores/action'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { useInventoryStore } from '@/stores/inventory'
 import { useSkillStore } from '@/stores/skill'
-import { isIntegerOrInfinity, parseAmountString } from '@/utils/amountParser'
+import { parseAmountString } from '@/utils/amountParser'
 import { fromFixed, toFixed } from '@/utils/fixedPoint'
 import { formatDurationMs, formatNumber } from '@/utils/format'
 
@@ -26,7 +27,15 @@ export default defineComponent({
     const actionStore = useActionStore()
     const actionQueueStore = useActionQueueStore()
 
-    const amountString = ref('∞')
+    // Use composables for amount input and queue management
+    const { amountString, allowAmount, resetAmount } = useAmountInput({ defaultValue: '∞' })
+    const { hasCurrentAction, queuePosition, closeModal: closeModalFromComposable } = useQueueAction(emit)
+
+    // Override closeModal to also reset amount
+    const closeModal = () => {
+      closeModalFromComposable()
+      resetAmount()
+    }
 
     const action = computed(() => {
       if (!props.actionId) return null
@@ -38,7 +47,6 @@ export default defineComponent({
       return skillStore.getSkill(action.value.skillId)
     })
 
-    const allowAmount = computed(() => isIntegerOrInfinity(amountString.value))
     const durationDisplay = computed(() => {
       const durationSeconds = action.value?.durationSeconds ?? toFixed(0)
       const durationMs = fromFixed(durationSeconds) * 1000
@@ -50,8 +58,6 @@ export default defineComponent({
     const chestPointsPerCycle = computed(() => fromFixed(action.value?.chestPoints ?? toFixed(0)))
     const hasIngredients = computed(() => (action.value?.ingredients.length ?? 0) > 0)
     const hasProducts = computed(() => (action.value?.products.length ?? 0) > 0)
-    const hasCurrentAction = computed(() => !!actionQueueStore.currentAction)
-    const queuePosition = computed(() => actionQueueStore.queueLength + 1)
 
     const isLevelInsufficient = computed(() => {
       if (!action.value || !skill.value) return false
@@ -108,11 +114,6 @@ export default defineComponent({
       }
     })
 
-    const closeModal = () => {
-      emit('close')
-      amountString.value = '∞'
-    }
-
     const addAction = () => {
       if (action.value) {
         actionQueueStore.addAction(action.value.id, parseAmountString(amountString.value))
@@ -133,7 +134,7 @@ export default defineComponent({
       () => props.show,
       (newValue) => {
         if (!newValue) {
-          amountString.value = '∞'
+          resetAmount()
         }
       },
     )

@@ -1,8 +1,9 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import ItemTag from '@/components/ItemTag'
 import ModalBox from '@/components/ModalBox'
+import { useAmountInput, useQueueAction } from '@/composables'
 import { enemyConfigMap } from '@/gameConfig'
 import { useActionQueueStore } from '@/stores/actionQueue'
 import { useCombatStore } from '@/stores/combat'
@@ -24,18 +25,29 @@ export default defineComponent({
     const combatStore = useCombatStore()
     const actionQueueStore = useActionQueueStore()
 
-    const amountString = ref('∞')
+    // Use composable with custom validator for combat (disallow zero)
+    const { amountString, allowAmount, resetAmount } = useAmountInput({
+      defaultValue: '∞',
+      validator: (value) => {
+        if (!isIntegerOrInfinity(value)) return false
+        const num = parseAmountString(value, 1, { allowZero: false })
+        return num === INFINITE_AMOUNT || num > 0
+      },
+    })
+    const { hasCurrentAction, queuePosition, closeModal: closeModalFromComposable } = useQueueAction(emit)
+
+    // Override closeModal to also reset amount
+    const closeModal = () => {
+      closeModalFromComposable()
+      resetAmount()
+    }
 
     const enemy = computed<EnemyConfig | null>(() => {
       if (!props.enemyId) return null
       return enemyConfigMap[props.enemyId] ?? null
     })
 
-    const allowAmount = computed(() => {
-      if (!isIntegerOrInfinity(amountString.value)) return false
-      const num = parseAmountString(amountString.value, 1, { allowZero: false })
-      return num === INFINITE_AMOUNT || num > 0
-    })
+    // allowAmount now from composable validator
 
     // 玩家战斗属性
     const playerMaxHp = computed(() => combatStore.maxHp)
@@ -46,14 +58,6 @@ export default defineComponent({
       if (!enemy.value) return false
       return enemy.value.fixedLootItems.length > 0 || enemy.value.fixedChestPoints.length > 0
     })
-
-    const hasCurrentAction = computed(() => !!actionQueueStore.currentAction)
-    const queuePosition = computed(() => actionQueueStore.queueLength + 1)
-
-    const closeModal = () => {
-      emit('close')
-      amountString.value = '1'
-    }
 
     const addToQueue = () => {
       if (enemy.value && allowAmount.value) {
@@ -87,7 +91,7 @@ export default defineComponent({
       () => props.show,
       (newValue) => {
         if (!newValue) {
-          amountString.value = '∞'
+          resetAmount()
         }
       },
     )
