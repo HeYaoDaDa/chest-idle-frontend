@@ -14,8 +14,11 @@ import {
   fpMod,
 } from '@/utils/fixedPoint'
 
+export type ChestResult = { itemId: string; amount: number }
+
 export const useChestPointStore = defineStore('chestPoint', () => {
   const chestPoints = ref<Record<string, FixedPoint>>(Object.create(null))
+  const results = ref<ChestResult[] | null>(null)
 
   function getChestPoints(chestId: string): FixedPoint {
     return chestPoints.value[chestId] ?? toFixed(0)
@@ -52,11 +55,20 @@ export const useChestPointStore = defineStore('chestPoint', () => {
 
   return {
     chestPoints,
+    results,
 
     getChestPoints,
     setChestPoints,
     addChestPoints,
     getChestRemaining,
     getChestProgress,
+
+    openResults(r: ChestResult[]): void {
+      results.value = r
+    },
+
+    closeResults(): void {
+      results.value = null
+    },
   }
 })

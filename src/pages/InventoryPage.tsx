@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import InventoryGroup from '@/components/InventoryGroup'
 import { ChestResultsModal, ItemModal } from '@/components/modals'
 import { slotConfigs, itemConfigMap } from '@/gameConfig'
-import { useChestResultsStore } from '@/stores/chestResults'
+import { useChestPointStore } from '@/stores/chestPoint'
 import { useEquippedItemStore } from '@/stores/equippedItem'
 import { useInventoryStore, type InventoryItem } from '@/stores/inventory'
 
@@ -17,7 +17,7 @@ export default defineComponent({
 
     const selectedItemId = shallowRef<string | null>(null)
     const selectedContext = shallowRef<'inventory' | 'equipped' | null>(null)
-    const chestResults = useChestResultsStore()
+    const chestPointStore = useChestPointStore()
     const activeTab = shallowRef<'inventory' | 'equipment' | 'abilities'>('inventory')
 
     const selectedInventoryItem = computed(() => {
@@ -74,7 +74,7 @@ export default defineComponent({
     const openInventoryModal = (item: InventoryItem): void => {
       selectedItemId.value = item.item.id
       selectedContext.value = 'inventory'
-      chestResults.close()
+      chestPointStore.closeResults()
     }
 
     const closeItemModal = (): void => {
@@ -94,14 +94,14 @@ export default defineComponent({
         const amountToOpen = amount ?? 1
         if (amountToOpen >= 1 && amountToOpen <= maxChestAmount.value) {
           const results = inventoryStore.openChest(selectedInventoryItem.value, amountToOpen)
-          chestResults.open(results)
+          chestPointStore.openResults(results)
           closeItemModal()
         }
       }
     }
 
     const closeChestResults = (): void => {
-      chestResults.close()
+      chestPointStore.closeResults()
     }
 
     const openSlotEquipment = (slotId: string): void => {
@@ -209,8 +209,8 @@ export default defineComponent({
         />
 
         <ChestResultsModal
-          show={!!chestResults.results}
-          results={chestResults.results}
+          show={!!chestPointStore.results}
+          results={chestPointStore.results}
           onClose={closeChestResults}
         />
       </div>
