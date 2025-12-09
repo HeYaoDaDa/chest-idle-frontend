@@ -198,9 +198,16 @@ export const useActionQueueStore = defineStore('actionQueue', () => {
     }
   }
 
+  // 统一监听当前行动变化：离开战斗时清理状态，进入战斗时尝试启动
   watch(
     () => currentAction.value,
-    (action) => {
+    (action, prevAction) => {
+      // 离开战斗 → 清理战斗状态，避免 UI 残留
+      if (prevAction?.type === 'combat' && action?.type !== 'combat') {
+        combatStore.cancelBattle()
+      }
+
+      // 进入战斗 → 启动模拟并建立状态
       if (!action || action.type !== 'combat') return
       if (getCurrentBattle()) return
 

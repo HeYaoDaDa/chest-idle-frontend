@@ -202,6 +202,26 @@ describe('actionQueue store', () => {
 
       expect(store.queueLength).toBe(0)
     })
+
+    it('should cancel battle when current action switches from combat to production', async () => {
+      const store = useActionQueueStore()
+
+      // 先让战斗成为当前行动并建立 currentBattle
+      store.addCombatAction('enemy-1', 1, 5)
+      await nextTick()
+      expect(combatStoreMock.currentBattle).not.toBeNull()
+
+      cancelBattleMock.mockClear()
+
+      // 插入生产行动并移动到顶部，触发离开战斗的 watch 分支
+      store.addAction('production-1')
+      store.moveTop(1)
+      await nextTick()
+
+      expect(store.currentAction?.type).toBe('production')
+      expect(cancelBattleMock).toHaveBeenCalledTimes(1)
+      expect(combatStoreMock.currentBattle).toBeNull()
+    })
   })
 
   describe('move operations', () => {
