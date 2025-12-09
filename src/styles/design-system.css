@@ -13,10 +13,7 @@ button {
 a {
   color: #2563eb;
   transition: color 200ms;
-}
-
-a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* 输入框默认样式 */
