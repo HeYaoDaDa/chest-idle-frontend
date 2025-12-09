@@ -25,8 +25,8 @@ export default defineComponent({
     return () => (
       <div class="mb-6">
         {/* 分组标题 */}
-        <div class="flex items-center gap-2 mb-2 px-2">
-          <span class="text-sm font-semibold text-neutral-700">{props.title}</span>
+        <div class="section-header">
+          <span class="section-title">{props.title}</span>
           <span class="text-xs text-neutral-400">({props.items.length})</span>
         </div>
 
@@ -35,7 +35,7 @@ export default defineComponent({
           {props.items.map((inventoryItem) => (
             <button
               key={inventoryItem.item.id}
-              class="card-item w-16 h-16 relative"
+              class="card-item-square-relative"
               type="button"
               onClick={() => props.onItemClick(inventoryItem)}
               aria-label={t(inventoryItem.item.name)}

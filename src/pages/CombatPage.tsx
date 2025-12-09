@@ -126,22 +126,22 @@ export default defineComponent({
             {/* 状态条区域 */}
             <div class="flex flex-col gap-px bg-neutral-200 border-b border-neutral-200">
               {/* HP */}
-              <div class="h-6 bg-neutral-100 relative w-full">
+              <div class="stat-bar-container">
                 <div
-                  class="h-full bg-emerald-500 transition-none"
+                  class="stat-bar-hp"
                   style={{ width: `${maxHp === 0 ? 0 : Math.min(100, Math.max(0, (currentHp / maxHp) * 100))}%` }}
                 />
-                <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-md">
+                <span class="stat-bar-label">
                   {formatNumber(currentHp, locale.value)}/{formatNumber(maxHp, locale.value)}
                 </span>
               </div>
               {/* MP */}
-              <div class="h-6 bg-neutral-100 relative w-full">
+              <div class="stat-bar-container">
                 <div
-                  class="h-full bg-sky-500 transition-none"
+                  class="stat-bar-mp"
                   style={{ width: `${maxMp === 0 ? 0 : Math.min(100, Math.max(0, (currentMp / maxMp) * 100))}%` }}
                 />
-                <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-md">
+                <span class="stat-bar-label">
                   {formatNumber(currentMp, locale.value)}/{formatNumber(maxMp, locale.value)}
                 </span>
               </div>
@@ -156,12 +156,12 @@ export default defineComponent({
             </div>
 
             {/* 自动攻击条 */}
-            <div class="h-8 bg-neutral-100 relative w-full mt-auto border-t border-neutral-200">
+            <div class="stat-bar-container h-8 mt-auto border-t border-neutral-200">
               <div
-                class="h-full bg-purple-500 transition-none"
+                class="stat-bar-attack"
                 style={{ width: `${Math.min(100, Math.max(progress * 100, 0))}%` }}
               />
-              <span class="absolute inset-0 flex items-center justify-center text-sm font-bold text-white drop-shadow-md">
+              <span class="stat-bar-label text-sm">
                 {t('ui.combat.autoAttack')}
               </span>
             </div>
@@ -178,7 +178,7 @@ export default defineComponent({
 
           {/* VS Badge (Desktop) */}
           <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
-            <div class="text-3xl font-black text-neutral-300 italic bg-white px-3 py-1 rounded-full shadow-sm border border-neutral-100">
+            <div class="badge-vs">
               VS
             </div>
           </div>
@@ -217,8 +217,8 @@ export default defineComponent({
           {currentTab.value === 'overview' && (
             <div class="h-full overflow-auto">
               {/* 战斗技能 Header */}
-              <div class="m-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
-                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 mb-3">{t('ui.combat.title')}</h2>
+              <div class="m-4 skill-header">
+                <h2 class="heading-modal mb-3">{t('ui.combat.title')}</h2>
                 <div class="flex flex-wrap gap-4">
                   {combatSkills.value.map((skill) => (
                     <div
@@ -227,7 +227,7 @@ export default defineComponent({
                     >
                       <div class="flex justify-between items-center mb-1">
                         <span class="text-sm font-semibold text-neutral-900">{t(skill.name)}</span>
-                        <span class="text-xs font-semibold text-blue-700 px-1.5 py-0.5 bg-blue-50 rounded">
+                        <span class="badge-primary px-1.5 py-0.5">
                           {t('ui.level', { level: skill.level })}
                         </span>
                       </div>

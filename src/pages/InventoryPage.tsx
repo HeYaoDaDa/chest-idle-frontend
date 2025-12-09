@@ -113,33 +113,21 @@ export default defineComponent({
       <div class="flex-1 flex flex-col h-full overflow-hidden">
         <div class="flex gap-1 px-4 pt-4 border-b border-neutral-200">
           <button
-            class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
-              activeTab.value === 'inventory'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-neutral-500 hover:text-neutral-700'
-            }`}
+            class={activeTab.value === 'inventory' ? 'tab-button-active' : 'tab-button-inactive'}
             aria-pressed={activeTab.value === 'inventory'}
             onClick={() => (activeTab.value = 'inventory')}
           >
             {t('ui.inventory')}
           </button>
           <button
-            class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
-              activeTab.value === 'equipment'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-neutral-500 hover:text-neutral-700'
-            }`}
+            class={activeTab.value === 'equipment' ? 'tab-button-active' : 'tab-button-inactive'}
             aria-pressed={activeTab.value === 'equipment'}
             onClick={() => (activeTab.value = 'equipment')}
           >
             {t('ui.equipment')}
           </button>
           <button
-            class={`btn font-semibold transition border-b-2 cursor-pointer text-sm ${
-              activeTab.value === 'abilities'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-neutral-500 hover:text-neutral-700'
-            }`}
+            class={activeTab.value === 'abilities' ? 'tab-button-active' : 'tab-button-inactive'}
             aria-pressed={activeTab.value === 'abilities'}
             onClick={() => (activeTab.value = 'abilities')}
           >
@@ -169,7 +157,7 @@ export default defineComponent({
                 <div key={slot.id} class="w-16 h-16">
                   {equippedBySlot.value[slot.id] ? (
                     <button
-                      class="card-item w-full h-full border-2 border-primary bg-surface-subtle flex items-center justify-center p-1 select-none"
+                      class="card-item-equipped"
                       type="button"
                       onClick={() => openSlotEquipment(slot.id)}
                       aria-label={t(equippedItemNameBySlot.value[slot.id])}
@@ -182,7 +170,7 @@ export default defineComponent({
                       </div>
                     </button>
                   ) : (
-                    <div class="w-full h-full rounded bg-neutral-50 border border-dashed border-neutral-100 flex items-center justify-center p-1 select-none">
+                    <div class="card-slot-empty">
                       <span class="text-[10px] text-neutral-400 text-center leading-tight">
                         {t(slot.name)}
                       </span>

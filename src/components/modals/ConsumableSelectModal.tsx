@@ -47,7 +47,7 @@ export default defineComponent({
         <ModalBox onClose={closeModal}>
           <div class="flex flex-col gap-1 min-w-[min(380px,100%)]">
             <div class="flex justify-between items-center mb-2">
-              <h3 class="text-xl sm:text-2xl font-bold text-neutral-900">{t('ui.consumable.selectTitle')}</h3>
+              <h3 class="heading-modal">{t('ui.consumable.selectTitle')}</h3>
             </div>
 
             <div class="max-h-96 overflow-y-auto">

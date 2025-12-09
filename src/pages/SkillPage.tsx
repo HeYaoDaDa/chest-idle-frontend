@@ -98,24 +98,24 @@ export default defineComponent({
 
       return (
         <div class="flex flex-col gap-2 p-4 pb-32">
-          <div class="mb-4 p-4 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-none border border-blue-200">
+          <div class="skill-header mb-4">
             <div class="flex justify-between items-baseline mb-2">
-              <h2 class="text-2xl sm:text-3xl font-bold text-neutral-900">{t(skill.value.name)}</h2>
-              <div class="text-sm font-semibold text-blue-700 px-2 py-1 bg-white rounded">
+              <h2 class="skill-title">{t(skill.value.name)}</h2>
+              <div class="heading-level">
                 {t('ui.level', { level: skill.value.level })}
               </div>
             </div>
-            <div class="text-neutral-700 mb-3">{t(skill.value.description)}</div>
+            <div class="skill-description">{t(skill.value.description)}</div>
             <div class="flex gap-6 mb-2">
               <div class="flex flex-col">
-                <span class="text-xs text-neutral-500 uppercase">{t('ui.xp')}</span>
-                <span class="text-base font-semibold text-neutral-900">
+                <span class="label-xs">{t('ui.xp')}</span>
+                <span class="label-md">
                   {formatNumber(fromFixed(skill.value.xp), locale.value)}
                 </span>
               </div>
               <div class="flex flex-col">
-                <span class="text-xs text-neutral-500 uppercase">{t('ui.nextLevel')}</span>
-                <span class="text-base font-semibold text-neutral-900">
+                <span class="label-xs">{t('ui.nextLevel')}</span>
+                <span class="label-md">
                   {formatNumber(fromFixed(skill.value.remainingXpForUpgrade), locale.value)}
                 </span>
               </div>
@@ -176,7 +176,7 @@ export default defineComponent({
           />
 
           {isProductionSkill.value && (
-            <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent py-4 px-8 border-t border-neutral-200 shadow-lg\">
+            <div class="footer-gradient-mask">
               <div class="flex justify-center gap-4">
                 {[0, 1, 2].map((slotIndex) => (
                   <ConsumableSlot

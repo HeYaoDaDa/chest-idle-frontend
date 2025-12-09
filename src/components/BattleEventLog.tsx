@@ -129,7 +129,7 @@ export default defineComponent({
         'flex items-start gap-2 p-1 rounded-none transition-all duration-300 divider',
         isPastEvent ? 'opacity-100' : 'opacity-30',
         isCurrentEvent ? 'bg-yellow-100 border border-yellow-300 scale-102' : '',
-        isPlayerAction ? 'bg-blue-50/50' : 'bg-red-50/50',
+        isPlayerAction ? 'bg-primary/5' : 'bg-error/5',
       ]
     }
 
@@ -183,7 +183,7 @@ export default defineComponent({
                     <div class="text-sm text-neutral-800">{getEventDescription(event)}</div>
                     <div class="flex gap-2 text-xs text-neutral-500 mt-1">
                       {/* HP 变化 */}
-                      <span class={targetSide === 'player' ? 'text-red-500' : 'text-green-500'}>
+                      <span class={targetSide === 'player' ? 'damage-player' : 'damage-enemy'}>
                         {targetSide === 'player' ? '❤️ ' : '💀 '}
                         {event.targetHpAfter} HP
                       </span>
@@ -206,11 +206,11 @@ export default defineComponent({
 
         {/* 战斗总结（战斗结束后显示） */}
         {!props.isActive && props.events.length > 0 && (
-          <div class="mt-2 p-2 bg-green-50 rounded-md border border-green-200">
-            <div class="text-sm font-semibold text-green-700">
+          <div class="mt-2 p-2 bg-success/10 rounded-md border border-success/30">
+            <div class="text-sm font-semibold text-success">
               {t('ui.combat.eventLog.battleComplete')}
             </div>
-            <div class="text-xs text-green-600 mt-1">
+            <div class="text-xs text-success/80 mt-1">
               {t('ui.combat.eventLog.totalEvents', { count: props.events.length })}
             </div>
           </div>

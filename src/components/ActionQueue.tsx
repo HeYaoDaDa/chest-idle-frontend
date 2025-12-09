@@ -137,7 +137,7 @@ export default defineComponent({
               aria-label="HP"
             >
               <div
-                class="h-full bg-red-500 transition-all duration-300"
+                class="h-full stat-bar-hp transition-all duration-300"
                 style={{ width: `${hpProgress.value}%` }}
               />
               <span class="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white drop-shadow">
@@ -149,7 +149,7 @@ export default defineComponent({
               aria-label="MP"
             >
               <div
-                class="h-full bg-blue-500 transition-all duration-300"
+                class="h-full stat-bar-mp transition-all duration-300"
                 style={{ width: `${mpProgress.value}%` }}
               />
               <span class="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white drop-shadow">

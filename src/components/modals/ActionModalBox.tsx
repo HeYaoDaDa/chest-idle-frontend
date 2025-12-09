@@ -152,7 +152,7 @@ export default defineComponent({
                 <span class="text-xs uppercase tracking-wider text-neutral-500">
                   {skill.value ? t(skill.value.name) : ''}
                 </span>
-                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 leading-tight">
+                <h2 class="heading-modal leading-tight">
                   {t(action.value.name)}
                 </h2>
                 <p class="text-neutral-600 text-sm leading-normal">{t(action.value.description)}</p>
@@ -163,7 +163,7 @@ export default defineComponent({
               <div
                 class={[
                   'flex justify-between items-center py-1',
-                  isLevelInsufficient.value ? 'text-red-600' : '',
+                  isLevelInsufficient.value ? 'text-error' : '',,
                 ]}
               >
                 <span class="text-sm font-medium">{t('minLevelRequired')}</span>
@@ -195,7 +195,7 @@ export default defineComponent({
               <div
                 class={[
                   'flex justify-between items-start py-1',
-                  hasIngredients.value && hasInsufficientIngredients.value ? 'text-red-600' : '',
+                  hasIngredients.value && hasInsufficientIngredients.value ? 'text-error' : '',,
                 ]}
               >
                 <span class="text-sm font-medium">{t('ui.requiredMaterials')}</span>

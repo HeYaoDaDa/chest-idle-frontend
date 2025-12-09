@@ -89,7 +89,7 @@ export default defineComponent({
         <ModalBox onClose={close}>
           <div class="flex flex-col gap-1">
             <div class="flex flex-col gap-2">
-              <h3 class="text-xl sm:text-2xl font-bold text-neutral-900">{itemName.value}</h3>
+              <h3 class="heading-modal">{itemName.value}</h3>
               {isEquipmentMode.value && slotInfo.value && (
                 <span class="text-sm text-neutral-600">
                   {t('ui.type')}: {t(slotInfo.value.name)}

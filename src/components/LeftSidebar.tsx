@@ -34,7 +34,7 @@ export default defineComponent({
       <div class="flex flex-col gap-0.5 p-0.5 overflow-y-auto h-full">
         <RouterLink
           to="/game/inventory"
-          activeClass="!bg-gradient-to-br !from-primary !to-blue-500 !text-white !shadow-lg"
+          activeClass="nav-link-active"
           class="lg:hidden nav-link"
         >
           <div class="text-xs text-center">{t('ui.inventory').substring(0, 2)}</div>
@@ -42,7 +42,7 @@ export default defineComponent({
 
         <RouterLink
           to="/game/chests"
-          activeClass="!bg-gradient-to-br !from-primary !to-blue-500 !text-white !shadow-lg"
+          activeClass="nav-link-active"
           class="nav-link"
         >
           <div class="lg:hidden text-xs text-center">{t('ui.chests').substring(0, 2)}</div>
@@ -55,7 +55,7 @@ export default defineComponent({
           <RouterLink
             key={skill.id}
             to={`/game/${skill.id}`}
-            activeClass="!bg-gradient-to-br !from-primary !to-blue-500 !text-white !shadow-lg"
+            activeClass="nav-link-active"
             class="nav-link"
           >
             <div class="lg:hidden text-xs text-center">{t(skill.name).substring(0, 2)}</div>
@@ -65,7 +65,7 @@ export default defineComponent({
               <span class="text-[10px] opacity-80">{t('ui.level', { level: skill.level })}</span>
             </div>
             <div class="hidden lg:block w-full">
-              <div class="h-1 bg-neutral-200 rounded-full overflow-hidden">
+              <div class="progress-track-thin">
                 <div
                   class="progress-bar duration-75"
                   style={{ width: skill.upgradeProgress * 100 + '%' }}
@@ -88,7 +88,7 @@ export default defineComponent({
             class={[
               'nav-link flex flex-col gap-0.5 cursor-pointer',
               isCombatActive.value
-                ? '!bg-gradient-to-br !from-primary !to-blue-500 !text-white !shadow-lg'
+                ? 'nav-link-active'
                 : '',
             ]}
           >
@@ -107,7 +107,7 @@ export default defineComponent({
                         {t('ui.level', { level: skill.level })}
                       </span>
                     </div>
-                    <div class="h-1 bg-neutral-200 rounded-full overflow-hidden">
+                    <div class="progress-track-thin">
                       <div
                         class="progress-bar duration-75"
                         style={{ width: skill.upgradeProgress * 100 + '%' }}

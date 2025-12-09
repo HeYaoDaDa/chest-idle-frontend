@@ -97,7 +97,7 @@ export default defineComponent({
         <div id="game-page-layout-container" class={gridClass.value} style={containerStyle.value}>
           <header class="col-span-full row-start-1 panel flex justify-between items-center px-4 py-4 lg:px-12">
             <div class="flex items-center gap-10">
-              <h1 class="m-0 text-4xl font-bold tracking-wide text-neutral-600 hidden lg:block">
+              <h1 class="m-0 heading-page tracking-wide text-neutral-600 hidden lg:block">
                 {t('gameName')}
               </h1>
               <ActionQueue />
