@@ -113,7 +113,6 @@ export default defineComponent({
         const enemyMpStat = (enemyInfo as typeof enemyInfo & { mp?: number }).mp ?? enemyInfo.hp
         const currentMp = isPlayer ? combatStore.maxMp : enemyMpStat
         const maxMp = isPlayer ? combatStore.maxMp : enemyMpStat
-        const avatar = isPlayer ? '🧙' : '👾'
         const progress = isPlayer ? battle.playerAttackProgress || 0 : battle.enemyAttackProgress || 0
         const name = isPlayer ? t('ui.combat.playerStats') : t(enemyInfo.name)
 
@@ -148,10 +147,11 @@ export default defineComponent({
               </div>
             </div>
 
-            {/* 头像区域 */}
-            <div class="flex-1 flex items-center justify-center py-6 bg-white min-h-[160px]">
-              <div class="transform scale-150 text-6xl filter drop-shadow-sm">
-                {avatar}
+            {/* 信息区域（去除图标，保持简洁文字） */}
+            <div class="flex-1 flex items-center justify-center py-6 bg-white min-h-[140px] px-4">
+              <div class="text-center leading-tight">
+                <div class="text-base font-semibold text-neutral-800">{name}</div>
+                <div class="text-xs text-neutral-500 mt-2">{t('ui.combat.autoAttack')}</div>
               </div>
             </div>
 

@@ -22,21 +22,11 @@ export default defineComponent({
             <button
               key={enemy.id}
               type="button"
-              class="w-32 card-item p-2 flex flex-col items-center gap-2 hover:shadow-md transition-shadow"
+              class="card-item w-16 h-16 p-2 text-center"
               onClick={() => handleSelectEnemy(enemy.id)}
               aria-label={t(enemy.name)}
             >
-              {/* 敌人图标占位 */}
-              <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                <span class="text-2xl">👾</span>
-              </div>
-              {/* 敌人名称 */}
-              <div class="text-sm font-semibold text-neutral-900 text-center">{t(enemy.name)}</div>
-              {/* 敌人属性简要 */}
-              <div class="flex gap-2 text-xs text-neutral-500">
-                <span title={t('ui.combat.hp')}>❤️ {enemy.hp}</span>
-                <span title={t('ui.combat.attack')}>⚔️ {enemy.attack}</span>
-              </div>
+              <div class="text-xs font-semibold text-neutral-900 leading-tight">{t(enemy.name)}</div>
             </button>
           ))
         )}

@@ -102,79 +102,55 @@ export default defineComponent({
 
       return (
         <ModalBox onClose={closeModal}>
-          <div class="flex flex-col gap-1 min-w-[min(380px,100%)] compact-base">
+          <div class="flex flex-col gap-3 min-w-[min(380px,100%)] compact-base">
             {/* 标题 */}
-            <div class="flex justify-between items-start gap-2">
-              <div class="flex flex-col gap-2">
-                <span class="text-xs uppercase tracking-wider text-red-500">
-                  {t('ui.combat.title')}
-                </span>
-                <h2 class="text-xl font-bold text-gray-900 leading-tight">
-                  {t(enemy.value.name)}
-                </h2>
-                <p class="text-gray-600 text-sm leading-normal">{t(enemy.value.description)}</p>
-              </div>
-              {/* 敌人图标 */}
-              <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span class="text-4xl">👾</span>
-              </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-xs uppercase tracking-wider text-primary">
+                {t('ui.combat.title')}
+              </span>
+              <h2 class="text-xl font-bold text-neutral-900 leading-tight">
+                {t(enemy.value.name)}
+              </h2>
+              <p class="text-neutral-600 text-sm leading-normal">{t(enemy.value.description)}</p>
             </div>
 
             {/* 敌人属性 */}
-            <div class="flex flex-col gap-1 p-2 bg-gray-50 rounded-md">
-              <h3 class="text-sm font-semibold text-gray-700 mb-1">
-                {t('ui.combat.title')} - {t('ui.combat.enemies')}
+            <div class="flex flex-col gap-1 p-3 bg-surface border border-neutral-100 rounded-md shadow-sm">
+              <h3 class="text-sm font-semibold text-neutral-800 mb-1">
+                {t('ui.combat.title')} · {t('ui.combat.enemies')}
               </h3>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.combat.hp')}</span>
-                <span class="text-sm text-gray-900">
-                  ❤️ {formatNumber(enemy.value.hp, locale.value)}
-                </span>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.hp')}</span>
+                <span class="text-neutral-900">{formatNumber(enemy.value.hp, locale.value)}</span>
               </div>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.combat.attack')}</span>
-                <span class="text-sm text-gray-900">
-                  ⚔️ {formatNumber(enemy.value.attack, locale.value)}
-                </span>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.attack')}</span>
+                <span class="text-neutral-900">{formatNumber(enemy.value.attack, locale.value)}</span>
               </div>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">
-                  {t('ui.combat.attackInterval')}
-                </span>
-                <span class="text-sm text-gray-900">
-                  ⏱️ {enemy.value.attackIntervalSeconds.toFixed(1)}s
-                </span>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.attackInterval')}</span>
+                <span class="text-neutral-900">{enemy.value.attackIntervalSeconds.toFixed(1)}s</span>
               </div>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-gray-700">{t('ui.combat.xpReward')}</span>
-                <span class="text-sm text-gray-900">
-                  ⭐ {formatNumber(enemy.value.xpReward, locale.value)}
-                </span>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.xpReward')}</span>
+                <span class="text-neutral-900">{formatNumber(enemy.value.xpReward, locale.value)}</span>
               </div>
             </div>
 
             {/* 玩家战斗属性 */}
-            <div class="flex flex-col gap-1 p-2 bg-blue-50 rounded-md">
-              <h3 class="text-sm font-semibold text-blue-700 mb-1">{t('ui.combat.playerStats')}</h3>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-blue-700">{t('ui.combat.hp')}</span>
-                <span class="text-sm text-blue-900">
-                  ❤️ {formatNumber(playerMaxHp.value, locale.value)}
-                </span>
+            <div class="flex flex-col gap-1 p-3 bg-surface border border-neutral-100 rounded-md shadow-sm">
+              <h3 class="text-sm font-semibold text-neutral-800 mb-1">{t('ui.combat.playerStats')}</h3>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.hp')}</span>
+                <span class="text-neutral-900">{formatNumber(playerMaxHp.value, locale.value)}</span>
               </div>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-blue-700">{t('ui.combat.attack')}</span>
-                <span class="text-sm text-blue-900">
-                  ⚔️ {formatNumber(playerDamage.value, locale.value)}
-                </span>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.attack')}</span>
+                <span class="text-neutral-900">{formatNumber(playerDamage.value, locale.value)}</span>
               </div>
-              <div class="flex justify-between items-center py-1">
-                <span class="text-sm font-medium text-blue-700">
-                  {t('ui.combat.attackInterval')}
-                </span>
-                <span class="text-sm text-blue-900">
-                  ⏱️ {playerAttackIntervalSeconds.value.toFixed(1)}s
-                </span>
+              <div class="flex justify-between items-center py-1 text-sm text-neutral-700">
+                <span class="font-medium">{t('ui.combat.attackInterval')}</span>
+                <span class="text-neutral-900">{playerAttackIntervalSeconds.value.toFixed(1)}s</span>
               </div>
             </div>
 
