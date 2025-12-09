@@ -1,1 +1,0 @@
-import{a as t,c as e,h as r}from"./vue-CefLld9G.js";import"./vendor-BWkbWOEr.js";const s=t({name:"ErrorNotFoundPage",setup(){return()=>e("div",{class:"h-screen flex justify-center items-center"},[e("h1",{class:"text-6xl font-bold text-gray-800"},[r("404")])])}});export{s as default};
