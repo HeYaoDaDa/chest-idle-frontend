@@ -81,20 +81,6 @@ select:focus {
   --transition-slow: 500ms;
 }
 
-/* 深色模式 CSS 变量覆盖（未来扩展用） */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-surface: #1e293b;
-    --color-surface-muted: #0f172a;
-    --color-neutral-100: #334155;
-    --color-neutral-200: #475569;
-    --color-neutral-500: #cbd5e0;
-    --color-neutral-700: #cbd5e0;
-    --color-neutral-800: #e2e8f0;
-    --color-neutral-900: #f1f5f9;
-  }
-}
-
 /* 工具类 */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -106,4 +92,51 @@ select:focus {
   line-clamp: var(--lines, 2);
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* 动态宽度进度条支持 */
+.dynamic-width {
+  width: var(--width, 0%);
+}
+
+/* Transition 动画类 */
+.transition-fade-slide-in {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.transition-fade-slide-out {
+  transition: opacity 0ms;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+.fade-slide-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.transition-modal-in {
+  transition: all 200ms ease-out;
+}
+
+.transition-modal-out {
+  transition: all 200ms ease-in;
+}
+
+.modal-enter-leave {
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.98);
+}
+
+.transition-notification-in,
+.transition-notification-out {
+  transition: all 200ms;
+}
+
+.notification-enter-leave {
+  opacity: 0;
+  transform: translateX(1.25rem);
 }

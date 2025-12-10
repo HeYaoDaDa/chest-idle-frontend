@@ -103,19 +103,19 @@ export default defineComponent({
             }}
           />
           <Transition
-            enterActiveClass="transition-all duration-200 ease-out"
-            leaveActiveClass="transition-all duration-200 ease-in"
-            enterFromClass="opacity-0 translate-y-3 scale-98"
-            leaveToClass="opacity-0 translate-y-3 scale-98"
+            enterActiveClass="transition-modal-in"
+            leaveActiveClass="transition-modal-out"
+            enterFromClass="modal-enter-leave"
+            leaveToClass="modal-enter-leave"
             appear
           >
-            <div class="relative max-h-[min(720px,90vh)] w-[min(360px,95%)] sm:w-[min(460px,100%)] lg:w-[min(520px,100%)] bg-surface rounded-lg shadow-2xl overflow-auto p-2 sm:p-3 lg:p-4">
+            <div class="modal-container">
               <div
                 ref={dialogRef}
                 tabindex={-1}
                 role="dialog"
                 aria-modal="true"
-                class="outline-none"
+                class="modal-dialog"
               >
                 {slots.default?.()}
               </div>

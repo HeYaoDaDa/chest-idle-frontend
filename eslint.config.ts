@@ -50,4 +50,18 @@ export default defineConfigWithVueTs(
       ],
     },
   },
+
+  // Allow type assertions for CSS variables and other inline style objects
+  {
+    name: 'app/type-assertions',
+    rules: {
+      '@typescript-eslint/consistent-type-assertions': [
+        'error',
+        {
+          assertionStyle: 'as',
+          objectLiteralTypeAssertions: 'allow', // 允许对象字面量类型断言
+        },
+      ],
+    },
+  },
 )

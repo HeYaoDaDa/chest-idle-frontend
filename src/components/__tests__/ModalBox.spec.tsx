@@ -57,7 +57,7 @@ describe('ModalBox Component', () => {
       })
 
       expect(document.body.innerHTML).toContain('bg-surface')
-      expect(document.body.innerHTML).toContain('rounded-lg')
+      expect(document.body.innerHTML).toContain('modal-container')
       wrapper.unmount()
     })
   })
@@ -237,7 +237,7 @@ describe('ModalBox Component', () => {
       })
 
       expect(wrapper.exists()).toBe(true)
-      expect(document.body.innerHTML).toContain('rounded-lg')
+      expect(document.body.innerHTML).toContain('modal-container')
       wrapper.unmount()
     })
 

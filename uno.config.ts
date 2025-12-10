@@ -193,5 +193,15 @@ export default defineConfig({
 
     // ==================== 网格布局 ====================
 
+    // ==================== 通知卡片 ====================
+    'notification-item': 'pointer-events-auto min-w-60 max-w-90 p-2 rounded-none bg-surface shadow-panel flex items-start gap-2 border-l-4 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+    'notification-error': 'notification-item border-error',
+    'notification-warning': 'notification-item border-warning',
+    'notification-info': 'notification-item border-primary',
+
+    // ==================== 模态框容器 ====================
+    'modal-container': 'relative max-h-[min(720px,90vh)] w-[min(360px,95%)] sm:w-[min(460px,100%)] lg:w-[min(520px,100%)] bg-surface rounded-lg shadow-2xl overflow-auto p-2 sm:p-3 lg:p-4',
+    'modal-dialog': 'outline-none',
+
   },
 })

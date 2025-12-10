@@ -36,8 +36,5 @@ setLevel(import.meta.env.PROD ? 'warn' : 'debug')
 if (import.meta.env.PROD) {
   // setTransport will be used to bridge to Sentry or any other remote service
   setTransport(() => {
-    // Placeholder: in future use Sentry.captureMessage or other transports
-    // For now, keep it silent or forward to console
-    // console.log(`[transport:${level}]`, message, meta)
   })
 }

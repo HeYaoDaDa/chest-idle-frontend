@@ -67,8 +67,8 @@ export default defineComponent({
             <div class="hidden lg:block w-full">
               <div class="progress-track-thin">
                 <div
-                  class="progress-bar duration-75"
-                  style={{ width: skill.upgradeProgress * 100 + '%' }}
+                  class="progress-bar duration-75 dynamic-width"
+                  style={{ '--width': skill.upgradeProgress * 100 + '%' } as Record<string, string>}
                   role="progressbar"
                   aria-valuemin="0"
                   aria-valuemax="100"
@@ -109,8 +109,8 @@ export default defineComponent({
                     </div>
                     <div class="progress-track-thin">
                       <div
-                        class="progress-bar duration-75"
-                        style={{ width: skill.upgradeProgress * 100 + '%' }}
+                        class="progress-bar duration-75 dynamic-width"
+                        style={{ '--width': skill.upgradeProgress * 100 + '%' } as Record<string, string>}
                         role="progressbar"
                         aria-valuemin="0"
                         aria-valuemax="100"

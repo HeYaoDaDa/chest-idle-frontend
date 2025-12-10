@@ -79,8 +79,8 @@ export default defineComponent({
                       <div class="w-full order-10">
                         <div class="w-full h-2 bg-neutral-50 rounded-full overflow-hidden">
                           <div
-                            class="h-full bg-primary transition-all"
-                            style={{ width: progress.value }}
+                            class="h-full bg-primary transition-all dynamic-width"
+                            style={{ '--width': progress.value } as Record<string, string>}
                           ></div>
                         </div>
                       </div>

@@ -65,8 +65,8 @@ export default defineComponent({
                 aria-label={t('ui.progressPercentage')}
               >
                 <div
-                  class="h-full progress-bar"
-                  style={{ width: chest.progress * 100 + '%' }}
+                  class="h-full progress-bar dynamic-width"
+                  style={{ '--width': chest.progress * 100 + '%' } as Record<string, string>}
                 ></div>
               </div>
             </button>

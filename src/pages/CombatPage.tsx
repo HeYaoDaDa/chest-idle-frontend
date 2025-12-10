@@ -128,8 +128,8 @@ export default defineComponent({
               {/* HP */}
               <div class="stat-bar-container">
                 <div
-                  class="stat-bar-hp"
-                  style={{ width: `${maxHp === 0 ? 0 : Math.min(100, Math.max(0, (currentHp / maxHp) * 100))}%` }}
+                  class="stat-bar-hp dynamic-width"
+                  style={{ '--width': `${maxHp === 0 ? 0 : Math.min(100, Math.max(0, (currentHp / maxHp) * 100))}%` } as Record<string, string>}
                 />
                 <span class="stat-bar-label">
                   {formatNumber(currentHp, locale.value)}/{formatNumber(maxHp, locale.value)}
@@ -138,8 +138,8 @@ export default defineComponent({
               {/* MP */}
               <div class="stat-bar-container">
                 <div
-                  class="stat-bar-mp"
-                  style={{ width: `${maxMp === 0 ? 0 : Math.min(100, Math.max(0, (currentMp / maxMp) * 100))}%` }}
+                  class="stat-bar-mp dynamic-width"
+                  style={{ '--width': `${maxMp === 0 ? 0 : Math.min(100, Math.max(0, (currentMp / maxMp) * 100))}%` } as Record<string, string>}
                 />
                 <span class="stat-bar-label">
                   {formatNumber(currentMp, locale.value)}/{formatNumber(maxMp, locale.value)}
@@ -158,8 +158,8 @@ export default defineComponent({
             {/* 自动攻击条 */}
             <div class="stat-bar-container h-8 mt-auto border-t border-neutral-200">
               <div
-                class="stat-bar-attack"
-                style={{ width: `${Math.min(100, Math.max(progress * 100, 0))}%` }}
+                class="stat-bar-attack dynamic-width"
+                style={{ '--width': `${Math.min(100, Math.max(progress * 100, 0))}%` } as Record<string, string>}
               />
               <span class="stat-bar-label text-sm">
                 {t('ui.combat.autoAttack')}
@@ -243,8 +243,8 @@ export default defineComponent({
                       </div>
                       <div class="h-1 bg-neutral-200 rounded-full overflow-hidden">
                         <div
-                          class="h-full progress-bar"
-                          style={{ width: skill.upgradeProgress * 100 + '%' }}
+                          class="h-full progress-bar dynamic-width"
+                          style={{ '--width': skill.upgradeProgress * 100 + '%' } as Record<string, string>}
                           role="progressbar"
                           aria-valuemin="0"
                           aria-valuemax="100"

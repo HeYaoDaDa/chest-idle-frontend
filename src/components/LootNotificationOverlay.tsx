@@ -14,10 +14,10 @@ export default defineComponent({
     return () => (
       <div class="flex items-center justify-start pointer-events-none z-50 w-full h-8">
         <Transition
-          enterActiveClass="transition duration-300 ease-out"
-          enterFromClass="opacity-0 translate-y-2"
-          enterToClass="opacity-100 translate-y-0"
-          leaveActiveClass="duration-0"
+          enterActiveClass="transition-fade-slide-in"
+          enterFromClass="fade-slide-enter-from"
+          enterToClass="fade-slide-enter-to"
+          leaveActiveClass="transition-fade-slide-out"
         >
           {store.currentNotification ? (
             <div

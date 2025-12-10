@@ -38,7 +38,7 @@ export function formatPercent(
 /**
  * 格式化时间（毫秒转换为可读字符串或秒数）
  * @param ms 毫秒数
- * @param locale 语言地区（保留以供未来扩展）
+ * @param locale 语言地区（如 'en-US', 'zh-CN'）
  * @param options 选项
  * @param options.maxFractionDigits 秒数的最多小数位数（仅当返回秒数时有效）
  * @param options.compact 是否返回紧凑格式（仅对长时有效）

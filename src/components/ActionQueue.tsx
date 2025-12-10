@@ -137,8 +137,8 @@ export default defineComponent({
               aria-label="HP"
             >
               <div
-                class="h-full stat-bar-hp transition-all duration-300"
-                style={{ width: `${hpProgress.value}%` }}
+                class="h-full stat-bar-hp transition-all duration-300 dynamic-width"
+                style={{ '--width': `${hpProgress.value}%` } as Record<string, string>}
               />
               <span class="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white drop-shadow">
                 {hpDisplayText.value}
@@ -149,8 +149,8 @@ export default defineComponent({
               aria-label="MP"
             >
               <div
-                class="h-full stat-bar-mp transition-all duration-300"
-                style={{ width: `${mpProgress.value}%` }}
+                class="h-full stat-bar-mp transition-all duration-300 dynamic-width"
+                style={{ '--width': `${mpProgress.value}%` } as Record<string, string>}
               />
               <span class="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-white drop-shadow">
                 {mpDisplayText.value}
@@ -169,8 +169,8 @@ export default defineComponent({
                 aria-label={t('ui.progressPercentage')}
               >
                 <div
-                  class="h-full progress-bar duration-75"
-                  style={{ width: progress.value }}
+                  class="h-full progress-bar duration-75 dynamic-width"
+                  style={{ '--width': progress.value } as Record<string, string>}
                 ></div>
               </div>
               {runningActionDurationDisplay.value && (

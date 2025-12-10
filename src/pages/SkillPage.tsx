@@ -122,8 +122,8 @@ export default defineComponent({
             </div>
             <div class="progress-track">
               <div
-                class="h-full progress-bar"
-                style={{ width: skill.value.upgradeProgress * 100 + '%' }}
+                class="h-full progress-bar dynamic-width"
+                style={{ '--width': skill.value.upgradeProgress * 100 + '%' } as Record<string, string>}
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"

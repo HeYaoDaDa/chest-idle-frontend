@@ -25,10 +25,6 @@ export default defineComponent({
     // 侧栏是否应该显示
     const shouldShowSidebar = computed(() => !isInventoryRoute.value)
 
-    const containerStyle = computed(() => ({
-      '--tabs-width': tabsWidth.value + 'px',
-    }))
-
     // 根据侧栏可见性动态调整 grid 布局
     const gridClass = computed(() => {
       const baseCols = 'grid-cols-[56px_minmax(0,1fr)]'
@@ -94,7 +90,11 @@ export default defineComponent({
 
     return () => (
       <div class="h-full p-0.5 box-border relative">
-        <div id="game-page-layout-container" class={gridClass.value} style={containerStyle.value}>
+        <div
+          id="game-page-layout-container"
+          class={gridClass.value}
+          style={{ '--tabs-width': `${tabsWidth.value}px` } as Record<string, string>}
+        >
           <header class="col-span-full row-start-1 panel flex justify-between items-center px-4 py-4 lg:px-12">
             <div class="flex items-center gap-10">
               <h1 class="m-0 heading-page tracking-wide text-neutral-600 hidden lg:block">
@@ -116,8 +116,8 @@ export default defineComponent({
 
           {shouldShowSidebar.value && (
             <aside
-              class="hidden lg:flex lg:col-start-3 lg:row-start-2 panel p-0 flex-row"
-              style={{ width: `${tabsWidth.value}px` }}
+              class="hidden lg:flex lg:col-start-3 lg:row-start-2 panel p-0 flex-row dynamic-width"
+              style={{ '--width': `${tabsWidth.value}px` } as Record<string, string>}
             >
               <div
                 class="w-2 cursor-ew-resize bg-neutral-50 hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition"
